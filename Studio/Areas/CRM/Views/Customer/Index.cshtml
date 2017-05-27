@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Studio.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+	<link href="/App_Themes/CRM/select2.css" rel="stylesheet" type="text/css" />
+}
+@section scripts{
+	<script src="/Scripts/jquery.uniform.js"></script> 
+	<script src="/Scripts/select2.min.js"></script> 
+	<script src="/Scripts/jquery.dataTables.min.js"></script> 
+	<script src="/Scripts/matrix.tables.js"></script>
+}
+<div id="content-header">
+	<div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a><a href="/CRM/customer/index" class="current">客户库</a></div>
+	<h1>客户库</h1>
+</div>
+<div class="container-fluid">
+	<hr />
+	<div class="row-fluid">
+	<div class="span12">
+		<div class="widget-box">
+          <div class="widget-title"> 
+			<div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>@ViewBag.Type</h5>
+			</div>
+			</div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                  <th><i class="icon-resize-vertical"></i></th>
+                  <th>公司名</th>
+                  <th>联系人</th>
+                  <th>称呼</th>
+                  <th>联系电话</th>
+				  <th>联系地址</th>
+				  <th>客户价值</th>
+				  <th style="width: 180px;">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+				@foreach (var item in Model)
+	{
+				<tr>
+					<td></td>
+					<td>@item.CompanyName</td>
+					<td>@item.ContactName</td>
+					<td>@item.Gender</td>
+					<td>@item.Phone</td>
+					<td>@item.Address</td>
+					<td>@item.Type</td>
+					<td>
+						<div class="btn-group">
+							<a data-toggle="dropdown" class="btn btn-success dropdown-toggle">操作<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/CRM/customer/edit/@item.CompanyName">编辑</a></li>
+								<li><a href="/CRM/customer/delete/@item.CompanyName">删除</a></li>
+							</ul>
+						</div>
+						<div class="btn-group">
+							<a class="btn btn-info" href="/CRM/customer/detail/@item.CompanyName">查看详细</a>
+						</div>
+					</td>
+                </tr>
+	}
+              </tbody>
+            </table>
+          </div>
+        </div>
+	</div>
+	</div>
+</div>

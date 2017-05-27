@@ -1,0 +1,262 @@
+﻿@model Studio.Models.Site.ContactViewModel
+@{
+    ViewBag.Title = "联系我们";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+    ViewBag.MetaKeywords = "厦门网站建设公司,厦门网站制作,做网站电话";
+    ViewBag.MetaDescription = "厦门巨易网络科技是一家致力于软件开发,网站建设,网站优化,网站托管,空间域名等服务的公司. 0592-6150545";
+}
+@section scripts{
+    <script type="text/javascript">
+
+        if ($(window).width() > 795) {
+            $('#baidu_map').height(280);
+
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "api.map.baidu.com/api?key=&v=1.1&services=true' type='text/javascript'%3E%3C/script%3E"));
+
+
+            //创建和初始化地图函数：
+            function initMap() {
+                createMap(); //创建地图
+                setMapEvent(); //设置地图事件
+                addMapControl(); //向地图添加控件
+                addMarker(); //向地图中添加marker
+            }
+
+            //创建地图函数：
+            function createMap() {
+                var map = new BMap.Map("baidu_map"); //在百度地图容器中创建一个地图
+                var point = new BMap.Point(118.106626, 24.580488); //定义一个中心点坐标1/坐标是多少，可以用百度提供的拾取坐标系统
+                "http://dev.baidu.com/wiki/static/map/API/tool/getPoint/"
+                map.centerAndZoom(point, 18); //设定地图的中心点和坐标并将地图显示在地图容器中
+                window.map = map; //将map变量存储在全局
+            }
+
+            //地图事件设置函数：
+            function setMapEvent() {
+                map.enableDragging(); //启用地图拖拽事件，默认启用(可不写)
+                map.enableScrollWheelZoom(); //启用地图滚轮放大缩小
+                map.enableDoubleClickZoom(); //启用鼠标双击放大，默认启用(可不写)
+                map.enableKeyboard(); //启用键盘上下左右键移动地图
+            }
+
+            //地图控件添加函数：
+            function addMapControl() {
+                //向地图中添加缩放控件
+                var ctrl_nav = new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_LARGE });
+                map.addControl(ctrl_nav);
+                //向地图中添加缩略图控件
+                var ctrl_ove = new BMap.OverviewMapControl({ anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: 1 });
+                map.addControl(ctrl_ove);
+                //向地图中添加比例尺控件
+                var ctrl_sca = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT });
+                map.addControl(ctrl_sca);
+            }
+
+            //标注点数组
+            var markerArr = [{ title: "厦门巨易网络科技有限公司", content: "Tel：0592-6150545<br/> Email：825595311@qq.com<br/>巨易科技提供创新品牌设计服务", point: "118.106626|24.580488", isOpen: 0, icon: { w: 23, h: 25, l: 46, t: 21, x: 9, lb: 12 } }
+            ];
+            //创建marker
+            function addMarker() {
+                for (var i = 0; i < markerArr.length; i++) {
+                    var json = markerArr[i];
+                    var p0 = json.point.split("|")[0];
+                    var p1 = json.point.split("|")[1];
+                    var point = new BMap.Point(p0, p1);
+                    var iconImg = createIcon(json.icon);
+                    var marker = new BMap.Marker(point, { icon: iconImg });
+                    var iw = createInfoWindow(i);
+                    var label = new BMap.Label(json.title, { "offset": new BMap.Size(json.icon.lb - json.icon.x + 10, -20) });
+                    marker.setLabel(label);
+                    map.addOverlay(marker);
+                    label.setStyle({
+                        borderColor: "#808080",
+                        color: "#333",
+                        cursor: "pointer"
+                    });
+
+                    (function () {
+                        var index = i;
+                        var _iw = createInfoWindow(i);
+                        var _marker = marker;
+                        _marker.addEventListener("click", function () {
+                            this.openInfoWindow(_iw);
+                        });
+                        _iw.addEventListener("open", function () {
+                            _marker.getLabel().hide();
+                        })
+                        _iw.addEventListener("close", function () {
+                            _marker.getLabel().show();
+                        })
+                        label.addEventListener("click", function () {
+                            _marker.openInfoWindow(_iw);
+                        })
+                        if (!!json.isOpen) {
+                            label.hide();
+                            _marker.openInfoWindow(_iw);
+                        }
+                    })()
+                }
+            }
+            //创建InfoWindow
+            function createInfoWindow(i) {
+                var json = markerArr[i];
+                var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>" + json.content + "</div>");
+                return iw;
+            }
+            //创建一个Icon
+            function createIcon(json) {
+                var icon = new BMap.Icon("http://app.baidu.com/map/images/us_mk_icon.png", new BMap.Size(json.w, json.h), {
+                    imageOffset: new BMap.Size(-json.l, -
+
+    json.t), infoWindowOffset: new BMap.Size(json.lb + 5, 1), offset: new BMap.Size(json.x, json.h)
+                })
+                return icon;
+            }
+
+            function MyinitMap() {
+                if (typeof (BMap) == 'undefined') {
+                    setTimeout(MyinitMap, 500);
+                }
+                else {
+                    initMap();
+                }
+            }
+            MyinitMap();
+
+
+        }
+
+    </script>
+}
+<div class="pg-opt pin">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>联系咨询</h2>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li><a href="http://www.henhaoji.com.cn" title="巨易首页">首页</a></li>
+                    <li class="active"><a href="http://www.henhaoji.com.cn/company/contact.html" title="联系咨询">联系咨询</a></li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<section class="slice no-padding">
+    <div id="baidu_map" class="map-canvas no-margin baidu_map"></div>
+</section>
+<section class="slice color-two">
+    <div class="w-section inverse">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>联系我们</h2>
+                    @if (ViewBag.ThankYou == null)
+                    {
+                        <p>
+                            如果您需要全面性的品牌设计服务
+						如果您需要超越您所期望的网站建设创意方案<br />
+                            如果您需要一个可以长期合作与信任的工作团队
+						相信巨易是您可以认真考虑的选择
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            您的请求已经发送成功,我们将在稍后与您取得联系!
+                        </p>
+                    }
+
+                    <h2>Send us a message</h2>
+                    @*<form class="form-default" action="/Company/Contact.html" method="post" role="form">
+                        <div class="form-group">
+                            <input type="text" name="ContactName" class="form-control" value="@Model.ContactName" id="name" placeholder="您的姓名">
+							@Html.ValidationMessageFor(m => m.ContactName)
+                        </div>
+                        <div class="row">
+                        	<div class="col-md-6">
+                                <div class="form-group">
+                            		<input type="email" name="Email" class="form-control" value="@Model.Email" id="email" placeholder="Email地址">
+									@Html.ValidationMessageFor(m => m.Email)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                            		<input type="text" name="PhoneNo" class="form-control"  value="@Model.PhoneNo" id="phone" placeholder="联系电话">
+									@Html.ValidationMessageFor(m => m.PhoneNo)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="Message" id="message" value="@Model.Message" placeholder="把留名写在这" style="height:100px;"></textarea>
+							@Html.ValidationMessageFor(m => m.Message)
+                        </div>
+						<div class="form-group">
+                            <input type="text" name="ValidationCodeMatch" class="form-control" id="subject" placeholder="验证码:@(Model.ValidationCodeSource)">
+							@Html.ValidationMessageFor(m => m.ValidationCodeMatch)
+                        </div>
+						@Html.Hidden("ValidationCodeSource", Model.ValidationCodeSource)
+                        <button type="submit" class="btn btn-three pull-right">发送</button>
+                    </form>*@
+                    <div class="w-box inner">
+                        <div class="comments-wr">
+                            <!-- 多说评论框 start -->
+                            <div class="ds-thread" data-thread-key="0" data-title="联系我们" data-url="http://www.henhaoji.com.cn/company/contact.html"></div>
+                            <!-- 多说评论框 end -->
+                            <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                            <script type="text/javascript">
+                                var duoshuoQuery = { short_name: "henhaoji" };
+                                (function () {
+                                    var ds = document.createElement('script');
+                                    ds.type = 'text/javascript'; ds.async = true;
+                                    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                                    ds.charset = 'UTF-8';
+                                    (document.getElementsByTagName('head')[0]
+                                    || document.getElementsByTagName('body')[0]).appendChild(ds);
+                                })();
+                            </script>
+                            <!-- 多说公共JS代码 end -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-md-offset-1">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2>商务信息</h2>
+                            <div class="contact-info">
+                                <h4>联系人</h4>
+                                <p>吴经理</p>
+
+                                <h4>地址</h4>
+                                <p>厦门市集美区集源路46号611室</p>
+
+                                <h4>Email</h4>
+                                <p>825595311#qq.com</p>
+
+                                <h4>联系电话</h4>
+                                <p>0592 - 6150545 / 187 5021 7031</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2>工作时间</h2>
+                            <div class="contact-info">
+                                <dl>
+                                    <dt>周一 - 周五:</dt>
+                                    <dd>上午8:30 - 下午17:30</dd>
+                                    <dt>周六:</dt>
+                                    <dd>上午8:30 - 中午12:00</dd>
+                                    <dt>周日:</dt>
+                                    <dd>休假</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

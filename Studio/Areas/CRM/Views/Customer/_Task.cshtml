@@ -1,0 +1,20 @@
+﻿@model Studio.Models.Task
+	
+<div class="control-group">
+	<label class="control-label">开始日期 :</label>
+	<div class="controls">
+		@Html.TextBoxFor(m => m.DateCreated, new { @class = "span6", placeholder = "开始日期" })
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">截至日期 :</label>
+	<div class="controls">
+		@Html.TextBoxFor(m => m.DateEnd, new { @class = "span6", placeholder = "截至日期" })
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">内容 :</label>
+	<div class="controls">
+		@Html.TextAreaFor(m => m.Description, new {@class = "span9", rows = 10, placeholder="内容"})
+	</div>
+</div>

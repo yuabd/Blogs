@@ -1,0 +1,373 @@
+﻿@{
+	ViewBag.Title = "上传作品“真情首都服务业”摄影大赛";
+	Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+@section Scripts{
+	<script src="@Url.Content("~/Plugins/uploadify/swfobject.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Plugins/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
+	<script src="/Scripts/validate.js" type="text/javascript"></script>
+	<script src="/Scripts/Form.js" type="text/javascript"></script>
+	<script src="/Scripts/jquery.easyui.js" type="text/javascript"></script>
+	<script>
+		var Img = {};
+		Img.formatImageUrl = function (imgUrl, width, height, style) {
+			if (imgUrl) {
+				if (imgUrl.indexOf("http://") >= 0) {
+					return imgUrl;
+				}
+				var array = imgUrl.split('.');
+				var result = "<img src='../../Content/pictures/vote/"
+                    + array[0] + ".jpg' width='" + width + "' height='" + height + "' style='" + style + "'/>";
+				return result;
+
+			} else {
+				return "../../Content/pictures/vote/NoImage.jpg";
+			}
+		};
+
+		$(function () {
+			$("#uploadify").uploadify({
+				'uploader': "/Plugins/uploadify/uploadify.swf?t=" + new Date().getTime(),
+				'script': "/Photo/Home/UploadImage",
+				'fileDataName': 'Filedata',
+				'scriptData': { 'Type': 'ArticleImage' },
+				'cancelImg': "/Plugins/uploadify/cancel.png",
+				'queueID': 'fileQueue',
+				'folder': '/Content/Pictures/Vote/',
+				'wmode': 'opaque',
+				'auto': true,
+				'multi': true,
+				'buttonImg': "/Plugins/uploadify/UpImg.gif",
+				'width': '65',
+				'height': '27',
+				'fileDesc': '*.gif;*.jpg;*.jpeg;*.png',
+				'fileExt': '*.gif;*.jpg;*.jpeg;*.png',
+				'sizeLimit': 1680 * 1680,
+				'onSelect': function (e, fileObj) {
+				},
+				'onComplete': function (event, queueID, fileObj, response, data) {
+					var obj = eval('(' + response + ')');
+					AddImg(obj.ID, obj.imgUrl);
+					//AddImg(obj.id, obj.imgUrl, Img.formatImageUrl(obj.imgUrl, 100, 100, 0));
+				}
+			});
+			$("#upload-btn").click(function () {
+				if (!$.validatebox.valid()) {
+					return;
+				}
+				//alert(jQuery("#checkboxs").attr("checked"));
+				if (jQuery("#checkboxs").attr("checked") != "checked") {
+					alert("请阅读报名须知.");
+					return;
+				}
+
+				var param = $("#uploadForm").GetPostData();
+				param.Photos = JSON.stringify(imgList);
+
+				if (param.Photos == "") {
+					alert("请在右边上传参赛作品!");
+					return;
+				}
+
+				$.U1Ajax("/Photo/Home/UploadJson", param, function (result) {
+					if (result > 0) {
+						alert("上传成功!");
+						window.location = "/Photo/Home";
+					}
+					else if (result == -10) {
+						alert("验证码错误!");
+						ChangeCheckCode();
+					}
+					else {
+						alert("上传失败!");
+					}
+				}, false);
+			});
+
+			ChangeCheckCode();
+		});
+
+		var imgList = new Array();
+		//新增图片
+		function AddImg(id, url) {
+			if (imgList.length == 0)
+				imgList.push({ ID: id, PictureUrl: url, IsDefault: "Y" });
+			else
+				imgList.push({ ID: id, PictureUrl: url, IsDefault: "N" });
+			CreateImgList();
+		}
+
+		//置顶
+		function SetTop(id) {
+			if (confirm('确定要设置为默认图片？') == true) {
+				for (var i = 0; i < imgList.length; i++) {
+					if (imgList[i].ID == id) {
+						var n = imgList[0];
+						n.IsDefault = "N";
+						imgList[i].IsDefault = "Y";
+						imgList[0] = imgList[i];
+						imgList[i] = n;
+					}
+				}
+				CreateImgList();
+			}
+		}
+
+		//创建图片
+		function CreateImgList() {
+			$("#imgList").empty();
+			var html = new Array();
+			var max = imgList.length;
+			var size = 7;
+			var row = max / size;
+			html.push("<ul class='img_table' >");
+			for (var i = 0; i < row; i++) {
+				//html.push("<tr>");
+				for (var j = i * size; j < i * size + size; j++) {
+					if (max > j) {
+						html.push("<li>");
+						html.push(Img.formatImageUrl(imgList[j].PictureUrl, 100, 100, 'border: 1px solid #C3C3C3;') + '"<div style="text-align:center;" >');
+						if (imgList[j].IsDefault == "N") {
+							html.push('<a href="javascript:void(0);" onclick="SetTop(' + imgList[j].ID + ')">置顶</a> | ');
+						}
+						html.push('<a href="javascript:void(0);" onclick="DelImg(' + imgList[j].ID + ')">删除</a></div>');
+						html.push("</li>");
+					} else {
+						html.push("<li></li>");
+					}
+				}
+				//html.push("</ul>");
+			}
+			html.push("</ul>");
+			$("#imgList").html(html.join(""));
+		}
+		//删除
+		function DelImg(id) {
+			if (confirm('确定删除吗？') == true) {
+				imgList = removeFromArray(imgList, id);
+				CreateImgList();
+			}
+		}
+
+		function removeFromArray(arr, id) {
+			var r = new Array();
+			for (var i = 0; i < arr.length; i++) {
+				if (arr[i].ID != id) {
+					r.push(arr[i]);
+				}
+			}
+			return r;
+		}
+		function ChangeCheckCode() {
+			var url = '/Photo/Home/GetValidateCode';
+			$("#imgCheckCode").attr("src", "" + url + "?time=" + (new Date()).getTime());
+		};
+	</script>
+}
+@section head{
+	<link href="/App_Themes/EasyUI/easyui.css" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Plugins/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+	<style>
+		.img_table li
+		{
+			width: 110px;
+			float: left;
+		}
+		#photo-left
+		{
+			width: 645px;
+			float: left;
+			padding-right: 10px;
+		}
+		#photo-right
+		{
+			width: 264px;
+			float: right;
+		}
+		.form-control
+		{
+			display: block;
+			width: 585px;
+			padding: 6px 12px;
+			font-size: 14px;
+			line-height: 1.42857143;
+			color: #555;
+			background-color: #fff;
+			background-image: none;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+			box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+			-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+			transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+		}
+		.textbox
+		{
+			height: 25px;
+		}
+		.textarea
+		{
+			height: 120px;
+		}
+		label
+		{
+			display: inline-block;
+			margin-bottom: 5px;
+			font-weight: 700;
+		}
+		.form-control:focus
+		{
+			border-color: #66afe9;
+			outline: 0;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+			box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+		}
+		.bs-example
+		{
+			position: relative;
+			padding: 25px 15px 15px;
+			margin: 0 -15px 15px;
+			background-color: #fafafa;
+			box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+			border-color: #e5e5e5 #eee #eee;
+			border-style: solid;
+			border-width: 1px 0;
+		}
+		.bs-example
+		{
+			margin-left: 0;
+			margin-right: 0;
+			background-color: #fff;
+			border-width: 1px;
+			border-color: #ddd;
+			border-radius: 4px 4px 0 0;
+			box-shadow: none;
+		}
+		.btn
+		{
+			display: inline-block;
+			margin-bottom: 0;
+			font-weight: 400;
+			text-align: center;
+			vertical-align: middle;
+			cursor: pointer;
+			background-image: none;
+			border: 1px solid transparent;
+			white-space: nowrap;
+			padding: 6px 12px;
+			font-size: 14px;
+			line-height: 1.42857143;
+			border-radius: 4px;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+		.btn-default
+		{
+			color: #333;
+			background-color: #fff;
+			border-color: #ccc;
+		}
+		.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default
+		{
+			color: #333;
+			background-color: #ebebeb;
+			border-color: #adadad;
+		}
+		.btn:active, .btn.active
+		{
+			outline: 0;
+			background-image: none;
+			-webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+			box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+		}
+		.btn:hover, .btn:focus
+		{
+			color: #333;
+			text-decoration: none;
+		}
+		.row
+		{
+			margin-bottom: 5px;
+		}
+	</style>
+}
+<h1>
+	上传新作品/<span>Photos</span>
+	<span style="float: right;"><a href="/Photo/Home" class="btn-default btn">返回列表</a></span></h1>
+<div id="uploadForm">
+	<div id="photo-left">
+		<div class="bs-example">
+			<div class="row">
+				<label>
+					主题:</label>
+				<input type="text" col="PhotoName" validtype="required(名称)|maxLen(200)" class="form-control textbox" />
+			</div>
+			<div class="row">
+				<label>
+					描述:</label>
+				<textarea class="form-control" validtype="maxLen(400)" col="Description"></textarea>
+			</div>
+			<div class="row">
+				<label>
+					作者:
+				</label>
+				<input type="text" col="Author" validtype="required(作者)|maxLen(200)" class="form-control textbox" />
+			</div>
+			<div class="row">
+				<label>
+					联系电话:
+				</label>
+				<input type="text" col="Phone" validtype="required(联系电话)|Phone" class="form-control textbox" />
+				<span>例:15980755555</span>
+			</div>
+			<div class="row">
+				<label>
+					邮箱:
+				</label>
+				<input type="text" col="Email" validtype="required(邮箱)|email" class="form-control textbox" />
+			</div>
+			<div class="row">
+				<label>
+					验证码:</label><img width="68px" height="30px" title="刷新验证码" id="imgCheckCode" src=""
+						style="margin-left: 3px; vertical-align: middle; cursor: pointer;" onclick="ChangeCheckCode()">（点击更换验证码）
+				<span class="help-inline p_tip hide"></span><span class="help-inline p_chk hide">
+					<input type="text" name="ValidCode" col="ValidCode" value="" class="form-control textbox">
+				</span>
+			</div>
+			<div class="row">
+				<p>
+					<input type="checkbox" id="checkboxs" />
+					请阅读我们的报名须知,和注意事项
+				</p>
+			</div>
+			<div class="row">
+				<a class="btn-default btn" href="javascript:void(0);" id="upload-btn">提交</a>
+			</div>
+		</div>
+	</div>
+	<div id="photo-right" class="bs-example">
+		<div class="row">
+			<div id="uploadify" style="height: 20px;">
+			</div>
+			<div id="fileQueue">
+			</div>
+			<div id="imgList">
+			</div>
+		</div>
+		<div class="row">
+			<label>
+				作品要求:</label>
+			<p>
+				（一）作品所拍摄内容需在北京市范围内，来稿请注明拍摄地点。<br />
+				（二）作品拍摄主题以“真情”为中心思想，因此作品应具备一定的真情传递与感染力，具体表现形式不限，参赛作品冲洗大小为10英寸，不得画框装裱；电子文件需刻成光盘（JPGE格式文件量不小于6MB），光盘需随作品一通寄往大赛组委会。<br />
+				（三）送稿数量不限，不接受电脑特技制作的照片；组照每组4-6幅，每幅照片背后用透明胶连接。<br />
+				（四）作品背面必须附上大赛作品标签（具体形式见附件1），注明作品标题、拍摄地点、作者姓名、通讯地址、邮政编码和联系电话等。<br />
+				（五）本次大赛所评选出的所有获奖作品将继续投往“中国梦·百姓情”群体摄影文化大赛。<br />
+				（六）本次大赛所有作品均不退稿，主办单位拥有使用权（包括用于展览、出版物、媒体网络宣传等），不另付稿酬；所有作品如涉及著作权、版权、肖像权或名誉权纠纷，均由作者本人负责。<br />
+				（七）本次大赛不涉及任何报名及参赛费用。<br />
+			</p>
+		</div>
+	</div>
+</div>

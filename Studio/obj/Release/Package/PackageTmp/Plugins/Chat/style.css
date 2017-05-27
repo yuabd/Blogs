@@ -1,0 +1,78 @@
+﻿#messageBoardContainer
+{
+	position: absolute;
+	overflow: hidden;
+	z-index: 99999999;
+}
+#messageBoard
+{
+	position: absolute;
+}
+#messageBoard .content
+{
+	width: 321px;
+	height: 96px;
+	background: url(images/qq_2.png) left bottom no-repeat;
+}
+#messageBoard .cose
+{
+	width: 39px;
+	height: 39px;
+	background: url(images/bg.png) 0px -547px no-repeat;
+	display: block;
+	float: right;
+}
+#messageBoard .qq
+{
+	width: 300px;
+	height: 86px;
+	display: block;
+	float: left;
+}
+.wrc_icon
+{
+	margin: 0;
+	padding: 0;
+	padding: 2px 0 0 10px !important;
+	position: absolute;
+	width: 16px !important;
+	height: 16px !important;
+	line-height: 16px !important;
+}
+#quirkyPopupShowBtn
+{
+	position: absolute;
+	top: 200px;
+	left: 0px;
+	width: 48px;
+	height: 100px;
+	background: url(images/bg.png) 0px -434px no-repeat;
+}
+
+/* Styles for validation helpers */
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}

@@ -1,0 +1,42 @@
+﻿@model Studio.Models.Website
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+	<link href="/App_Themes/CRM/datepicker.css" rel="stylesheet" type="text/css" />
+	<link href="/App_Themes/CRM/select2.css" rel="stylesheet" type="text/css" />
+}
+@section scripts{
+	@*<script src="/Scripts/jquery.toggle.buttons.html"></script> *@
+	<script src="/Scripts/masked.js"></script> 
+	<script src="/Scripts/jquery.uniform.js"></script> 
+	<script src="/Scripts/select2.min.js"></script> 
+	<script src="/Scripts/matrix.form_common.js"></script> 
+	<script src="/Scripts/bootstrap-datepicker.js"></script>
+}
+
+<div id="content-header">
+	<div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a><a href="/CRM/website/index">论坛库</a><a href="/wesite/edit/@Model.WebsiteID" class="current">编辑论坛</a></div>
+	<h1>编辑@(Model.WebsiteName)</h1>
+</div>
+<div class="container-fluid">
+	<hr />
+	<div class="row-fluid">
+		<div class="span9">
+			<div class="widget-box">
+				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+					<h5>信息填写</h5>
+				</div>
+				<div class="widget-content nopadding">
+					<form action="/CRM/website/edit" method="post" class="form-horizontal">
+					@Html.Partial("_Form")
+					@Html.HiddenFor(m => m.WebsiteID)
+					<div class="form-actions">
+						<button type="submit" class="btn btn-success">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

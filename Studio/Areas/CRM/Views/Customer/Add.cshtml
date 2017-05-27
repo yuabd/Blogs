@@ -1,0 +1,59 @@
+﻿@model Studio.Models.Customer
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+	<link href="/App_Themes/CRM/select2.css" rel="stylesheet" type="text/css" />
+}
+@section scripts{
+	<script src="/Scripts/jquery.uniform.js"></script> 
+	<script src="/Scripts/select2.min.js"></script> 
+	<script src="/Scripts/matrix.form_common.js"></script> 
+}
+
+
+<div id="content-header">
+	<div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a><a href="/website/index">客户库</a><a href="/CRM/wesite/add" class="current">新增客户</a></div>
+	<h1>新增客户</h1>
+</div>
+<div class="container-fluid">
+	<hr />
+	<form action="/CRM/customer/add" method="post" class="form-horizontal">
+		@Html.HiddenFor(m => m.UserID)
+		<div class="row-fluid">
+			<div class="span12">
+				<button type="submit" class="btn btn-success">保存</button>
+				<a href="/CRM/customer/index" class="btn btn-danger">返回</a>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				<div class="widget-box">
+					<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+						<h5>公司信息</h5>
+					</div>
+					<div class="widget-content nopadding">
+						<div class="control-group">
+							<label class="control-label">公司名称 :</label>
+							<div class="controls">
+							@Html.TextBoxFor(m => m.CompanyName, new {@class = "span9", placeholder="公司名称"})
+							</div>
+						</div>
+						@Html.Partial("_Form")
+					</div>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="widget-box">
+					<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+						<h5>联系人信息</h5>
+					</div>
+					<div class="widget-content nopadding">
+						@Html.Partial("_Contact")
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,161 @@
+﻿@model Studio.Models.Case
+@{
+	ViewBag.Title = Model.Name;
+	Layout = "~/Views/Shared/_SiteLayout.cshtml";
+	ViewBag.MetaDescription = Model.ShortDescription;
+	ViewBag.MetaKeywords = Model.Name;
+}
+<div class="pg-opt pin">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<h2>@Model.Name</h2>
+			</div>
+			<div class="col-md-6">
+				<ol class="breadcrumb">
+					<li><a href="http://www.henhaoji.com.cn" title="巨易首页">首页</a></li>
+					<li><a href="http://www.henhaoji.com.cn/company/case.html" title="巨易客户案例">巨易客户案例</a></li>
+					<li class="active"><a href="http://www.henhaoji.com.cn/company/CaseDetail/@(Model.CaseID).html" title="@Model.Name">@Model.Name</a></li>
+				</ol>
+			</div>
+		</div>
+	</div>
+</div>
+@*<section id="workCarousel" class="carousel carousel-4 slide color-two-l" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators hide">
+    	<li data-target="#homepageCarousel" data-slide-to="0" class="active"></li>
+    </ol>
+    
+    <div class="carousel-inner">
+        <div class="item item-dark active">
+            <img src="/images/prv/wkp-img-4.jpg" alt="厦门网站建设案例" class="">
+    	</div>
+        <div class="item item-dark">
+            <img src="/images/prv/wkp-img-2.jpg" alt="厦门网站建设案例" class="">
+    	</div>
+    </div>
+    
+    <!-- Controls -->
+    <a class="left carousel-control" href="#workCarousel" data-slide="prev">
+    	<i class="fa fa-angle-left"></i>
+    </a>
+    <a class="right carousel-control" href="#workCarousel" data-slide="next">
+    	<i class="fa fa-angle-right"></i>
+    </a>
+  
+    <div class="section-title color-three">
+        <h3>@Model.Name</h3>
+        <div class="indicator-down color-three"></div>
+    </div>
+                
+</section>*@
+<section class="slice color-one">
+	<div class="w-section inverse">
+    	<div class="container">
+        	<div class="row">
+                <div class="col-md-6">
+                    <h2>客户简介</h2>
+
+                    <dl class="dl-horizontal">
+                        <dt>项目名称</dt>
+                        <dd>@Model.Name</dd>
+                        <dt>完成日期</dt>
+                        <dd>@Model.DateCreated.ToShortDateString()</dd>
+                        <dt>分类</dt>
+                        <dd>@Model.CategoryID</dd>
+                        <dt>运用的技术</dt>
+                        <dd>HTML, CSS, Asp.Net, jQuery</dd>
+                        <dt>网址</dt>
+                        <dd><a href="@Model.Website" style="color: White;" target="_blank" title="@Model.Name">@Model.Website</a></dd>
+                    </dl>
+                </div>
+                <div class="col-md-5 col-md-offset-1">
+                	<h2>项目详情</h2>
+                    <div class="contrast-box color-one-c">
+                    	@Html.Raw(Model.Description)
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-md-12">
+                    <img data-original="@Model.PictureFolder/Source/@Model.PictureFile" class="img-responsive lazy" alt="@Model.Name" />
+                </div>
+			</div>
+        </div>
+    </div>
+    
+    <div class="section-title color-two">
+        <h3>更多案例</h3>
+        <div class="indicator-down color-two"></div>
+    </div>
+</section>
+<section class="slice animate-hover-slide">
+	<div class="w-section inverse">
+        <div class="container">
+            <div id="carouselWork" class="carousel-3 slide animate-hover-slide">
+                <div class="carousel-nav">
+                    <a data-slide="prev" class="left color-two" href="#carouselWork"><i class="fa fa-angle-left"></i></a>
+                    <a data-slide="next" class="right color-two" href="#carouselWork"><i class="fa fa-angle-right"></i></a>
+                </div>
+                
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="row">
+							@foreach (var item in new Studio.Services.SiteHelp().GetCases().Take(4).ToList())
+	   {
+                            <div class="col-md-3">
+                                <figure>
+                                    <img alt="@item.Name" src="@item.PictureFolder/@item.PictureThumbnail" class="img-responsive">
+                                    <figcaption class="color-two-t">
+                                        <a href="@item.PictureFolder/Source/@item.PictureThumbnail" title="@item.Name" class="btn btn-lg btn-one theater"><i class="fa fa-search-plus"></i></a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+	   }
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="row">
+                            @foreach (var item in new Studio.Services.SiteHelp().GetCases().Skip(4).Take(4).ToList())
+							{
+                            <div class="col-md-3">
+                                <figure>
+                                    <img alt="@item.Name" src="@item.PictureFolder/@item.PictureThumbnail" class="img-responsive">
+                                    <figcaption class="color-two-t">
+										<a href="@item.PictureFolder/Source/@item.PictureThumbnail" title="@item.Name" class="btn btn-lg btn-one theater"><i class="fa fa-search-plus"></i></a>
+                                        <a href="@item.PictureFolder/Source/@item.PictureThumbnail" title="@item.Name" class="btn btn-lg btn-one theater"><i class="fa fa-search-plus"></i></a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+							}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+@*
+@section head{
+    <link href="/App_Themes/Site/lightbox.css" rel="stylesheet" type="text/css" media="screen" />
+}
+
+@section scripts{
+    <script src="/scripts/lightbox.js" type="text/javascript"></script>
+}
+
+<h1>案例:<span>@Model.Name</span></h1>
+<div id="caseText" class="box">
+	<p>@Html.Raw(Model.Description)</p>
+	<p>
+		日期：@Model.DateCreated<br /><br />
+		网址：<a href="http://@Model.Website" target="_blank" title="@Model.Name">@Model.Website</a>
+	</p>
+</div>
+<div id="casePhoto">
+	<a href="@Model.PictureFolder/@Model.PictureFile" rel="lightbox[gallery]"><img src="@Model.PictureFolder/@Model.PictureFile" style="width: 630px;" alt="@Model.Name" /></a>
+</div>*@

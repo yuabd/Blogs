@@ -1,0 +1,221 @@
+﻿@model Studio.Models.Site.BlogsViewModel
+@{
+    ViewBag.Title = ViewBag.PageTitle;
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+    ViewBag.MetaKeywords = "厦门网站建设公司,厦门网站建设,厦门巨易网络科技有限公司,厦门锤子网站建设工作室";
+    ViewBag.MetaDescription = "厦门巨易网络科技是一家致力于软件开发,网站建设,网站优化,网站托管,空间域名等服务的公司. 0592-6150545";
+}
+<div class="pg-opt pin">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>@ViewBag.PageTitle</h2>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li><a href="http://www.henhaoji.com.cn" title="巨易首页">首页1</a></li>
+                    <li class="active"><a href="" title="@ViewBag.PageTitle">@ViewBag.PageTitle</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="slice color-one">
+	<div class="w-section inverse">
+    	<div class="container">
+        	<div class="row">
+                <div class="col-md-12">
+                	<div class="text-center">
+                        <h2>这里有我们的每一个脚印</h2>
+                        <p>
+                            这里记录着我们的点点滴滴
+                            <br />
+                        </p>
+                        <span class="clearfix"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-title color-three">
+        <h3>@ViewBag.PageTitle</h3>
+        <div class="indicator-down color-three"></div>
+    </div>
+    
+</section>
+<section class="slice animate-hover-slide">
+	<div class="w-section inverse blog-grid">
+    	<div class="container">
+        	<div class="row">
+                <div class="col-md-8">
+                	<div class="row">
+						@foreach (var item in Model.Blogs)
+      {
+						<div class="col-md-6">
+                        	<div class="w-box">
+                                <figure style="min-height: 313px;">
+                                    <img alt="@item.BlogTitle" data-original="@item.PictureFolder/@item.PictureThumbnail" style="max-height: 161px;" class="img-responsive lazy" />
+                                    <span class="date-over"><strong>@item.BlogCategory.CategoryName</strong></span>
+                                    <h2><a href="/blog/post/@(item.Slug).html" title="@item.BlogTitle">@item.BlogTitle</a></h2>
+                                    <p>
+                                        @foreach (var tag in item.BlogTags.Take(3).ToList())
+                                        {
+											  <span> @tag.Tag </span>
+                                        }
+                                    </p>
+                                    <span class="w-footer">
+                                    	<span class="pull-left"><small>发布于 @item.DateCreated 访问量: @item.PageVisits 作者: @item.AuthorID </small></span>
+                                        <a href="/blog/post/@(item.Slug).html" title="@item.BlogTitle" class="btn btn-xs btn-two pull-right">更多</a>
+                                        <span class="clearfix"></span>
+                                    </span>
+                                </figure>
+                            </div>
+                        </div>
+      }
+                    </div>
+					<div class="row">
+						@Model.Blogs.Pager("pager")
+					</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="widget">
+                        @*<form class="form-inline" action="/Blog/index.html" method="post">*@
+                            <div class="input-group">
+                                <input type="text" id="key1" name="keywords" onkeydown="if (event.keyCode == 13) Sumbit1()" class="form-control" placeholder="搜索信息..." />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" onclick="Sumbit1()">Go!</button>
+                                </span>
+                            </div>
+                        @*</form>*@
+                        <script>
+                            function Sumbit1() {
+                                var key = $("#key1").val();
+                                window.location.href = "/blog/index.html?keywords=" + key;
+                            }
+                        </script>
+                    </div>
+
+                    <div class="widget">
+                        <h4 class="widget-heading">分类</h4>
+                        <ul class="categories highlight">
+							@foreach (var item in Model.Categories)
+       {
+							<li><a href="/Blog/Categories/@(item.CategoryID).html" title="@item.CategoryName">@item.CategoryName</a></li>
+       }
+                        </ul>
+                    </div>
+
+					<div class="widget">
+                        <h4 class="widget-heading">归档</h4>
+
+                        <ul class="categories highlight">
+							@foreach (var item in Model.Archives)
+       {
+           if (!string.IsNullOrEmpty(item.Month))
+           {
+			<li><a href="/Blog/Archives/@(item.Year).html/?month=@item.Month">@item.Month (@item.Count)</a></li>
+           }
+           else
+           {
+			<li><a href="/Blog/Archives/@(item.Year).html">@item.Year (@item.Count)</a></li>
+           }
+       }
+                        </ul>
+                    </div>
+                    <div class="widget">
+                        <h4 class="widget-heading hide">推荐</h4>
+                        <div class="tabs">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#one" data-toggle="tab"> 随机文章</a></li>
+								<li><a href="#two" data-toggle="tab"> 最新评论</a></li>
+								<li><a href="#three" data-toggle="tab"> 热门新闻</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="one">
+									<ul class="popular">
+										@foreach (var item in new Studio.Services.BlogHelp().GetBlogs().Where(m => m.IsPublic == true).OrderBy(m => Guid.NewGuid()).Take(6))
+          {
+										<li>
+											<img data-original="@item.PictureFolder/@item.PictureThumbnail" alt="@item.BlogTitle" class="img-thumbnail pull-left lazy" />
+                                            <p>
+                                                <a href="/Blog/Post/@(item.Slug).html" title="@item.BlogTitle">@item.BlogTitle</a>
+                                                <i>@item.DateCreated</i>
+                                            </p>
+                                        </li>
+          }
+									</ul>
+								</div>
+                                <div class="tab-pane" id="two">
+									<ul class="popular">
+									<!-- 多说最新评论 start -->
+										<div class="ds-recent-comments" data-num-items="5" data-show-avatars="1" data-show-time="1" data-show-title="1" data-show-admin="1" data-excerpt-length="70"></div>
+									<!-- 多说最新评论 end -->
+									<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+									<script type="text/javascript">
+									    var duoshuoQuery = { short_name: "henhaoji" };
+									    (function () {
+									        var ds = document.createElement('script');
+									        ds.type = 'text/javascript'; ds.async = true;
+									        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									        ds.charset = 'UTF-8';
+									        (document.getElementsByTagName('head')[0]
+											 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									    })();
+										</script>
+									<!-- 多说公共JS代码 end -->
+									</ul>
+									@*
+										@foreach (var item in new Studio.Services.BlogHelp().GetComments().Where(m => m.IsPublic == true).Take(6))
+		  {
+										<li>
+											<img data-original="http://www.gravatar.com/avatar/@item.GravatarHash?d=monsterid" alt="@item.Name" class="lazy img-thumbnail pull-left" />
+											<p>
+												@item.Message
+												<i>@(item.Name) 在 <a href="/Blog/Post/@(item.Blog.Slug).html" title="@item.Blog.BlogTitle">@item.Blog.BlogTitle</a>中评论</i>
+											</p>
+                                        </li>
+		  }
+									*@
+								</div>
+								<div class="tab-pane" id="three">
+                                    <ul class="popular">
+                                        @foreach (var item in new Studio.Services.BlogHelp().GetBlogs().Where(m => m.IsPublic == true).OrderByDescending(m => m.PageVisits).Take(5).ToList())
+                                        {
+										<li>
+                                            <img data-original="@item.PictureFolder/@item.PictureThumbnail" alt="@item.BlogTitle" class="lazy img-thumbnail pull-left">
+                                            <p>
+                                                <a href="/Blog/Post/@(item.Slug).html" title="@item.BlogTitle">@item.BlogTitle</a>
+                                                <i>@item.DateCreated</i>
+                                            </p>
+                                        </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget">
+						<h4 class="widget-heading">最近访客</h4>
+						<ul class="ds-recent-visitors" data-num-items="30" data-show-time="0" data-avatar-size="50"></ul>
+						<script>
+						    if (typeof DUOSHUO !== 'undefined')
+						        DUOSHUO.RecentVisitors('.ds-recent-visitors');
+						</script>
+					</div>
+                    <div class="widget tags-wr">
+                        <h4 class="widget-heading">话题</h4>
+                        <ul class="tags-list">
+							@foreach (var item in Model.PopularTags)
+       {
+							<li><i class="fa fa-tags"></i> <a href="/Blog/Tags/@(item.Tag).html" title="@item.Tag">@(item.Tag)(@item.Num)</a></li>
+       }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

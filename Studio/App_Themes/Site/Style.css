@@ -1,0 +1,123 @@
+﻿.responsive-section {
+width: 100%;
+color: #5f7f9f;
+background: #293c50;
+}
+.responsive-section .holder:after, 
+.responsive-section:after{
+    display:block;
+    content:'';
+    clear:both;
+}
+.responsive-ipad {
+float: right;
+width: 724px;
+height: 858px;
+padding: 74px 200px 192px 82px;
+background: url(images/ipad-hand.png) no-repeat;
+margin: 0 -151px 0 0;
+position: relative;
+-webkit-transition: 1s;
+-moz-transition: 1s;
+-ms-transition: 1s;
+-o-transition: 1s;
+transition: 1s;
+opacity: 0;
+left: 200px;
+}
+.responsive-iphone {
+float: right;
+width: 704px;
+height: 904px;
+padding: 99px 268px 238px 122px;
+background: url(images/iphone-hand.png) no-repeat;
+margin: 0 -144px 0 0;
+-webkit-transition: 1s;
+-moz-transition: 1s;
+-ms-transition: 1s;
+-o-transition: 1s;
+transition: 1s;
+opacity: 0;
+left: 200px;
+position: relative;
+}
+.responsive-section .frame {
+float: left;
+padding: 113px 0 0;
+width: 470px;
+}
+.responsive-section h2{
+    font-size:58px;
+    white-space:nowrap;
+    line-height:70px;
+    margin:0 0 39px;
+    color:#5f7f9f;
+}
+.responsive-section p{margin:0 0 80px;}
+.mobile-list {
+overflow: hidden;
+font-size: 18px;
+line-height: 24px;
+}
+.mobile-list li {
+float: left;
+width: 150px;
+margin: 0 39px 0 0;
+list-style: none;
+}
+
+.mobile-list div {
+display: block;
+color: #6b8db0;
+text-align: center;
+}
+
+.mobile-list div:hover{
+    text-decoration:none;
+}
+.mobile-list div span {
+display: block;
+margin: 0 0 12px;
+background: #344d67;
+border-top: 2px solid #293c50;
+border-radius: 5px;
+height: 150px;
+position: relative;
+}
+
+.mobile-list div.selected span{
+    background:#54718f;
+    border-color:#6d86a0;
+    -webkit-transition:0.3s;
+    -moz-transition:0.3s;
+    -ms-transition:0.3s;
+    -o-transition:0.3s;
+    transition:0.3s;
+}
+.mobile-list div.selected:hover span {
+cursor: pointer;
+background: #6886a2;
+border-color: #7f98b0;
+}
+
+
+.mobile-list .mobile span:before {
+position: absolute;
+content: '';
+top: 29px;
+left: 51px;
+width: 48px;
+height: 88px;
+background: url(images/sprite.png) no-repeat -186px -121px;
+}
+.mobile-list .mobile.selected span:before{background-position:-130px -121px}
+.mobile-list .tablet span:before {
+position: absolute;
+content: '';
+top: 29px;
+left: 43px;
+width: 64px;
+height: 88px;
+background: url(images/sprite.png) no-repeat -245px -121px;
+}
+.mobile-list .tablet.selected span:before{background-position:-320px -121px}

@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /App_Themes
+Disallow: /Areas
+Disallow: /assets
+Disallow: /logfiles
+Disallow: /css
+Disallow: /font-awesome
+Disallow: /images
+Disallow: /js
+Disallow: /Plugins
+Disallow: /Scripts
+Sitemap: http://www.henhaoji.com.cn/sitemap.xml

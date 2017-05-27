@@ -1,0 +1,61 @@
+﻿	<h2>博客分类</h2>
+	<div class="sidebar-box">
+		<ul class="bottom-list">
+			@foreach (var item in Model.Categories)
+   {
+			<li><a href="/Blog/Categories/@item.Slug" title="@item.CategoryName">@item.CategoryName</a></li>
+   }
+		</ul>
+	</div>
+	<div class="sidebar-box-footer"></div>
+
+	<h2>热门话题</h2>
+	<div class="sidebar-box">
+		<ul class="bottom-list">
+			@foreach (var item in Model.PopularTags)
+   {
+		<li><a href="/Blog/Tags/@item" title="@item">@item</a></li>
+   }
+		</ul>
+	</div>
+	<div class="sidebar-box-footer"></div>
+
+	<h2>Archive</h2>
+	<div class="sidebar-box">
+		<ul class="bottom-list">
+			@foreach (var item in Model.Archives)
+   {
+	   if (item.Month != null)
+	   {
+			<li><a href="/Blog/Archives/@item.Year/?month=@item.Month">@item.Month (@item.Count)</a></li>
+	   }
+	   else
+	   {
+			<li><a href="/Blog/Archives/@item.Year">@item.Year (@item.Count)</a></li>
+	   }
+   }
+		</ul>
+	</div>
+	<div class="sidebar-box-footer"></div>
+
+	<h2>最近文章</h2>
+	<div class="sidebar-box">
+		<ul class="bottom-list">
+			@foreach (var item in Studio.Helpers.ListHelper.GetBlogList())
+   {
+	   <li><a href="/Blog/Post/@item.Slug" title="@item.BlogTitle">@item.BlogTitle</a></li>
+   }
+		</ul>
+	</div>
+	<div class="sidebar-box-footer"></div>
+
+	<h2>近期评论</h2>
+	<div class="sidebar-box">
+		<ul class="bottom-list">
+			@foreach (var item in Studio.Helpers.ListHelper.GetBlogComments())
+   {
+	   <li>@item.Name 在<a href="/Blog/Post/@Studio.Helpers.LabelHelper.GetBlog(item.BlogID).Slug" title="@Studio.Helpers.LabelHelper.GetBlog(item.BlogID).BlogTitle">@Studio.Helpers.LabelHelper.GetBlog(item.BlogID).BlogTitle</a>的评论</li>   
+   }
+		</ul>
+	</div>
+	<div class="sidebar-box-footer"></div>

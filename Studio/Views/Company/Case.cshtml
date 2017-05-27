@@ -1,0 +1,98 @@
+﻿@model Studio.Models.Others.Paginated<Studio.Models.Case>
+@{
+	ViewBag.Title = "客户案例";
+	Layout = "~/Views/Shared/_SiteLayout.cshtml";
+	ViewBag.MetaKeywords = "企业网站,网站建设案例,厦门网站建设,厦门网站制作,巨易,网站建设,厦门网站优化,厦门网站托管";
+	ViewBag.MetaDescription = "专业的视角,我们过往完成的网站建设案例.";
+}
+@section scripts{
+	<script type="text/javascript" src="/assets/mixitup/jquery.mixitup.js"></script>
+	<script type="text/javascript" src="/assets/mixitup/jquery.mixitup.init.js"></script>
+	<script>
+		// Sortable list
+		$('#ulSorList').mixitup();
+	</script>
+}
+<div class="pg-opt pin">
+	<div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>巨易客户案例</h2>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li><a href="http://www.henhaoji.com.cn" title="巨易首页">首页</a></li>
+                    <li class="active"><a href="http://www.henhaoji.com.cn/company/case.html" title="巨易客户案例">巨易客户案例</a></li>
+                </ol>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<section class="slice color-one">
+  <div class="w-section inverse">
+    	<div class="container">
+        	<div class="row">
+                <div class="col-md-12">
+                	<div class="text-center">
+                        <h2>你们的成功，我们的追求。</h2>
+                        <p>
+                            每一次的合作，都力求品牌的极致表现。
+                            <br />
+                            Every cooperation, have sought expression brand.
+                        </p>
+                        <span class="clearfix"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-title color-three">
+        <h3>成功案例</h3>
+        <div class="indicator-down color-three"></div>
+    </div>
+    
+</section>
+<section class="slice animate-hover-slide">
+	<div class="w-section inverse work">
+    	<div class="container">
+        	<div class="row">
+            	<div class="col-md-12">
+                    <div class="sort-list-btn">
+                        <button type="button" class="btn btn-one filter" data-filter="all"><i class="fa fa-th-large"></i> 所有</button>
+						@foreach (var item in ViewBag.Category)
+	  {
+						<button type="button" title="@item.CategoryName" class="btn btn-two filter" data-filter="category_@(item.CategoryID)">@item.CategoryName</button>
+	  }
+                    </div>
+                </div>
+            </div>
+            
+        	<div class="row">          
+                <div id="ulSorList">
+					@foreach (var item in Model)
+	 {
+					<div class="mix category_@(item.CategoryID) col-lg-3 col-md-4 col-sm-6" data-cat="@(item.CategoryID)">
+                    	<div class="w-box">
+                            <figure>
+                                <img alt="@item.Name" data-original="@item.PictureFolder/@item.PictureThumbnail" class="img-responsive lazy" />
+                                <figcaption class="color-one">
+                                    <a href="/Company/CaseDetail/@(item.CaseID).html" title="@item.Name" class="btn btn-xs btn-one">更多</a>
+                                    <a href="@item.PictureFolder/Source/@item.PictureThumbnail" title="@item.Name" class="btn btn-xs btn-one theater"><i class="fa fa-camera"></i> 查看图片</a>
+                                </figcaption>
+        					</figure>
+                            <h2><a href="/Company/CaseDetail/@(item.CaseID).html" title="@item.Name">@item.Name</a></h2>
+                        </div>
+                    </div>	 
+	 }
+                    <div class="gap"></div>
+                </div>        
+            </div>
+			<div class="row">
+				@Model.Pager("pager")
+			</div>
+        </div>
+    </div>
+
+</section>
