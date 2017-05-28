@@ -76,9 +76,9 @@ namespace Studio.Models.Others
 			for (int i = prevLimit; i <= nextLimit; i++)
 			{
 				if (i != currentPage)
-					pagesList += string.Format("<a class=\"btn btn-two\" href=\"" + pageParameter + "{1}\">{0}</a> ", i, urlParameters);
+					pagesList += string.Format("<li><a href=\"" + pageParameter + "{1}\">{0}</a></li> ", i, urlParameters);
 				else
-					pagesList += string.Format("<a href=\"\" class=\"btn btn-three\">{0}</a> ", i);
+					pagesList += string.Format("<li class=\"active\"><a>{0}</a></li> ", i);
 			}
 			//pagesList += "</div>";
 
@@ -86,11 +86,11 @@ namespace Studio.Models.Others
 			if (Continued)
 			{
 				if (prevLimit - PageRange > 0)
-					pagesList = string.Format("<a class=\"btn btn-two\" href=\"" + pageParameter + "{2}\">...</a> {1}",
+					pagesList = string.Format("<li><a class=\"btn btn-two\" href=\"" + pageParameter + "{2}\">...</a></li> {1}",
 						prevLimit - PageRange, pagesList, urlParameters);
 
 				if (prevLimit + PageRange <= TotalPages)
-					pagesList = string.Format("{1} <a class=\"btn btn-two\" href=\"" + pageParameter + "{2}\">...</a>",
+					pagesList = string.Format("{1} <li><a href=\"" + pageParameter + "{2}\">...</a></li>",
 						prevLimit + PageRange, pagesList, urlParameters);
 			}
 
@@ -98,19 +98,19 @@ namespace Studio.Models.Others
 			if (PreviousNext)
 			{
 				if (currentPage > 1)
-					pagesList = string.Format("<a class=\"btn btn-two\" href=\"" + pageParameter + "{2}\">上一页</a> {1}",
+					pagesList = string.Format("<li class=\"PagedList-skipToPrevious\"><a href=\"" + pageParameter + "{2}\">Prev</a></li> {1}",
 						currentPage - 1, pagesList, urlParameters);
 
 				if (currentPage + 1 <= TotalPages)
-					pagesList = string.Format("{1} <a class=\"btn btn-two\" href=\"" + pageParameter + "{2}\">下一页</a>",
+					pagesList = string.Format("{1} <li class=\"PagedList-skipToNext\"><a href=\"" + pageParameter + "{2}\">Next</a></li>",
 						currentPage + 1, pagesList, urlParameters);
 			}
 
 			// advanced
-			if (Advanced)
-				pagesList = string.Format("{0}<span> 总计： {1}</span>", pagesList, TotalRecords, currentPage, TotalPages);
+			//if (Advanced)
+			//	pagesList = string.Format("{0}<span> 总计： {1}</span>", pagesList, TotalRecords, currentPage, TotalPages);
 
-			pagesList = string.Format("<div class=\"col-md-12\">{0}</div>", pagesList);
+			pagesList = string.Format("<ul class=\"pagination\">{0}</ul>", pagesList);
 
 			_pageList = MvcHtmlString.Create(pagesList);
 

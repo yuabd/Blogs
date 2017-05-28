@@ -27,17 +27,11 @@ namespace Studio.Models
 		public string Message { get; set; }
 		public bool IsPublic { get; set; }
 		public DateTime DateCreated { get; set; }
-
-		//public virtual Blog Blog { get; set; }
-
+        
+		[NotMapped, Required]
+		public string CaptchaCode { get; set; }
 		[NotMapped]
-		public string ValidationCodeSource { get; set; }
-		[Required(ErrorMessage = "Required")]
-		[Compare("ValidationCodeSource", ErrorMessage = "验证码错误！")]
-		[NotMapped]
-		public string ValidationCodeMatch { get; set; }
-		[NotMapped]
-		public Blog Blog { get { return new Studio.Services.BlogHelp().GetBlog(BlogID); } }
+		public Blog Blog { get { return new Studio.Services.BlogService().GetBlog(BlogID); } }
 		[NotMapped]
 		public string GravatarHash { get { return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(Email.Trim().ToLower(), "MD5").ToLower(); } }
 	}

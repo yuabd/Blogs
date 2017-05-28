@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>新闻动态</title>
+
+    <link href="/App_Themes/home/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/App_Themes/home/css/style.css" rel="stylesheet"/>
+
+    <script src="/App_Themes/home/scripts/jquery-3.1.1.js"></script>
+<script src="/App_Themes/home/scripts/bootstrap.min.js"></script>
+
+    
+    
+
+</head>
+<body>
+    <header class="ediblog-header">
+        <h1 class="hidden">
+            <a href="/">yuabd</a>
+        </h1>
+        <div class="nav-container navbar-fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-ediblog " role="navigation" id="slide-nav">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="animbrand">
+                            <a class="navbar-brand animate hidden-xs" id="ediwang-logo" href="/">
+                                YUABD
+                            </a>
+                        </div>
+                        <a class="navbar-brand logo-mobile visible-xs" href="/">edi.wang</a>
+                    </div>
+
+                    <div id="slidemenu">
+                        <form class="navbar-form navbar-right visible-xs" role="form" action="/search/keyword">
+                            <div class="form-group">
+                                <input id="search-mobile" class="form-control" type="text" value="" title="Search" placeholder="Search" name="term" maxlength="30">
+                            </div>
+                            <button class="btn btn-success" type="submit"><i class="fa fa-search"></i> Search</button>
+                        </form>
+                        <form action="/search/keyword" class="navbar-form navbar-right hidden-xs" method="get" role="search">
+                            <div class="form-group disp-flex">
+                                <input class="form-control" id="search" maxlength="30" name="term" placeholder="Search" title="Search" type="text" value="性能" />
+
+                                <button type="submit" class="btn-search">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </form>            <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle animate" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                    POSTS
+                                    <b class="caret"></b>
+                                </a>
+
+                                <ul class="dropdown-menu category-menu" id="archives">
+                                    <li><a href="/Blog">All Posts</a></li>
+                                        <li>
+                                            <a href="/blog/Categories/1"
+                                               title="技术讨论">
+                                                技术讨论
+                                            </a>
+                                        </li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle animate" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+                                    ARCHIVE
+                                    <b class="caret"></b>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="/tags">Tags</a>
+                                    </li>
+                                    <li>
+                                        <a href="/archive">Time</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/home/about.html" class="animate">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    ABOUT
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div id="page-content" class="content">
+        <div class="container">
+            <div class="row">
+                
+
+<section class="col-lg-9 col-md-12">
+
+
+    <h3 class="h3-cat-list">
+        <a class="pull-right hidden-xs" href="/subscription/rss" target="_blank" title="Subscribe Top 20 Posts">
+            <i class="fa fa-rss"></i>
+        </a>
+        <span>
+            All Posts
+        </span>
+        <span class="badge hidden-xs">1</span>
+        <span class="badge visible-xs pull-right">1</span>
+    </h3>
+    <hr />
+        <article class="article-post-summary">
+            <div class="post-date-box hidden-xs">
+                <h1 class="post-date-day">27</h1>
+                <div class="post-date-month">
+                    5
+                </div>
+            </div>
+            <div class="post-summary-box">
+                <time datetime="2017/5/27 11:03:12" class="none">2017/5/27 11:03:12</time>
+
+                <h4 class="post-summary-title">
+                    <a href="/blog/post/Linq-如何去除重复的记录-并返回IEnumerable" title="607 Reads, 8 Comments">Linq 如何去除重复的记录，并返回IEnumerable</a>
+                </h4>
+
+                <p class="post-summary-text">
+                    <p>先声明一个类：<pre class='line mt-10 q-content' accuse='qContent' style='margin-top: 10px; margin-bottom: 0px; padding: 0px; font-family: arial, 'courier new', courier, 宋体, monospace; white-space: pre-wrap; word-wrap: break-word; word-break: break-all; color: rgb(51, 51, 51); font-size: 14px; line-height: 24px;'>public class BlogTag</pre><pre class='line mt-10 q-content' accuse='qContent' style='margin-top: 10px; margin-bottom: 0px; padding: 0px; font-family: arial, 'courier new', courier, 宋体, monospace; white-space: pre-wrap; word-wrap: break-word; word-break: break-all; color: rgb(51, 51, 51); font-size: 14px; line-height: 24px;'>{<span style='font-family: Arial, Verdana, sans-serif; font-size: 12px; white-space: pre;'>		</span><span style='font-family: Arial, Verdana, sans-serif; font-size: 12px;'>public int BlogID { get; set; }</span></pre></p><p>	<span style='white-space:pre'>		</span>public string Tag { get; set; }<br />	</p><p>	}</p><p>	以下是方法：</p><p>	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;class MyComparer : IEqualityComparer&lt;BlogTag&gt;</p><span style='white-space:pre'>		</span>{<br /><span style='white-space:pre'>			</span>public bool Equals(BlogTag x, BlogTag y)<br /><span style='white-space:pre'>			</span>{<br /><span style='white-space:pre'>				</span>if (x == null &amp;&amp; y == null)<br /><span style='white-space:pre'>				</span>{<br /><span style='white-space:pre'>					</span>return false;<br /><span style='white-space:pre'>				</span>}<br /><span style='white-space:pre'>				</span>else<br /><span style='white-space:pre'>				</span>{<br /><span style='white-space:pre'>					</span>return x.Tag == y.Tag;<br /><span style='white-space:pre'>				</span>}<br /><span style='white-space:pre'>			</span>}<br /><br /><br /><span style='white-space:pre'>			</span>public int GetHashCode(BlogTag obj)<br /><span style='white-space:pre'>			</span>{<br /><span style='white-space:pre'>				</span>return obj.Tag.GetHashCode();<br /><span style='white-space:pre'>			</span>}<br /><span style='white-space:pre'>		</span>}<br /><br />效果,取出所有的BlogTag，去除掉其中Tag字段相同的记录，并放回IEnumerable<br /><span style='white-space:pre'>		</span>public IEnumerable&lt;BlogTag&gt; GetTags()<br /><span style='white-space:pre'>		</span>{<br /><p>	<span style='white-space:pre'>			</span>var tags = (from l in db.BlogTags<span style='white-space:pre'>						</span></p><p>	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; select l).ToList().Distinct(new MyComparer());</p><span style='white-space:pre'>			</span>return tags;<br /><p>	<span style='white-space:pre'>		</span>}</p><p>	<br />	</p>
+                </p>
+
+                <div class="post-summary-tags">
+                </div>
+            </div>
+        </article>
+        <div class="bor hidden-xs"></div>
+        <hr class="hidden-xs">
+    
+    <div class="pull-right">
+        <div><ul class="pagination"><li class="disabled PagedList-skipToPrevious"><a>Prev</a></li><li class="active"><a>1</a></li><li><a href="/?page=2">2</a></li><li><a href="/?page=3">3</a></li><li><a href="/?page=4">4</a></li><li><a href="/?page=5">5</a></li><li><a href="/?page=6">6</a></li><li><a href="/?page=7">7</a></li><li><a href="/?page=8">8</a></li><li><a href="/?page=9">9</a></li><li><a href="/?page=10">10</a></li><li class="disabled PagedList-ellipses"><a>…</a></li><li class="PagedList-skipToNext"><a href="/?page=2">Next</a></li><li class="PagedList-skipToLast"><a href="/?page=29">»»</a></li></ul></div>
+    </div>
+</section>
+
+
+<!-- 侧边栏 -->
+
+<aside class="col-lg-3 hidden-md hidden-sm hidden-xs">
+    <div class="hidden-xs">
+        <section class="blog-info-phone visible-xs">
+            <div class="card-bkimg-container">
+                <img class="card-bkimg" alt="" src="/content/Images/bloggerhead.jpg">
+            </div>
+            <div class="media">
+                <a class="pull-left" href="/about">
+                    <img src="/content/Images/bloggerhead.jpg" alt="Edi Wang" class="media-object img-circle blogger-head-pic">
+                </a>
+                <div class="media-body">
+                    <p>
+                        .NET, Web and Windows 10 Developer
+                    </p>
+                    <div class="btn-group btn-group-justified">
+                        <a href="mailto:Edi.Wang@outlook.com" class="btn btn-success">
+                            <i class="fa fa-envelope"></i>
+                            Email
+                        </a>
+                        <a href="https://github.com/EdiWang" target="_blank" class="btn btn-primary" title="GayHub">
+                            <i class="fa fa-github"></i>
+                            GitHub
+                        </a>
+                        <a href="http://weibo.com/wyjexplorer" target="_blank" class="btn btn-warning">
+                            <i class="fa fa-weibo"></i>
+                            Weibo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container visible-md visible-sm animate">
+            <div class="media">
+                <a class="pull-left" href="/about">
+                    <img src="/content/Images/bloggerhead.jpg" alt="Edi Wang" class="media-object img-circle blogger-head-pic">
+                </a>
+                <div class="media-body">
+                    <p>
+                        .NET, Web, Windows 10 Developer
+                    </p>
+                    <div class="btn-group">
+                        <a href="mailto:Edi.Wang@outlook.com" class="btn btn-success">
+                            <i class="fa fa-envelope"></i>
+                            Email
+                        </a>
+                        <a href="https://github.com/EdiWang" target="_blank" class="btn btn-primary" title="GayHub">
+                            <i class="fa fa-github"></i>
+                            GitHub
+                        </a>
+                        <a href="http://weibo.com/wyjexplorer" target="_blank" class="btn btn-warning">
+                            <i class="fa fa-weibo"></i>
+                            Weibo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="blog-info-desktop-lg visible-lg">
+            <div class="card-bkimg-container">
+                <img class="card-bkimg" alt="" src="/content/Images/bloggerhead.jpg">
+            </div>
+            <div class="blog-info-photo-text text-center">
+                <a href="/about">
+                    <img src="/content/Images/bloggerhead.jpg" alt="Edi Wang" class="media-object img-circle center-block blogger-head-pic">
+                </a>
+                <div class="bor"></div>
+                <div>
+                    <h3 class="marginzero">
+                        Edi Wang
+                    </h3>
+                    <div class="bor"></div>
+                    <p>
+                        .NET, Web, Windows 10 Developer
+                    </p>
+                </div>
+            </div>
+            <div class="bor"></div>
+            <div class="btn-group btn-group-justified">
+                <a href="mailto:Edi.Wang@outlook.com" class="btn btn-success">
+                    <i class="fa fa-envelope"></i>
+                    Email
+                </a>
+                <a href="https://github.com/EdiWang" target="_blank" class="btn btn-primary">
+                    <i class="fa fa-github"></i>
+                    GitHub
+                </a>
+                <a href="http://weibo.com/wyjexplorer" target="_blank" class="btn btn-warning">
+                    <i class="fa fa-weibo"></i>
+                    Weibo
+                </a>
+            </div>
+        </section>
+
+        <div class="bor"></div>
+    </div>
+    <div class="bor"></div>
+    <section class="top-tags">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top Tags</div>
+            <div class="panel-body">
+                <div class="toptags-list">
+                    <a href="/tags/list/aspdotnet" rel="34">ASP.NET</a>
+                    <a href="/tags/list/windows-10" rel="30">Windows 10</a>
+                    <a href="/tags/list/uwp" rel="25">UWP</a>
+                    <a href="/tags/list/azure" rel="20">Azure</a>
+                    <a href="/tags/list/wp" rel="20">WP</a>
+                    <a href="/tags/list/iis" rel="15">IIS</a>
+                    <a href="/tags/list/iot" rel="15">IoT</a>
+                    <a href="/tags/list/jquery" rel="14">jQuery</a>
+                    <a href="/tags/list/raspberry-pi" rel="14">Raspberry Pi</a>
+                    <a href="/tags/list/csharp" rel="13">C#</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="bor"></div>
+    <section class="recent-comments">
+        <div class="panel panel-default">
+            <div class="panel-heading">Recent Comments</div>
+            <div class="list-group">
+                <div class="list-group-item">
+                    <strong data-toggle="tooltip" data-placement="top" title="" data-original-title="5/20/2017 9:08:39 AM">
+                        <i class="fa fa-user"></i>
+                        Mashiro
+                    </strong>
+                    <p class="justifytext text-muted recent-comment-item-content">
+                        阿里云那段时间发了好多短信来，然后&amp;#183;&amp;#183;&amp;#183;&amp;#183;&amp;#183;果断转出到GoDaddy了
+                    </p>
+                </div>
+                <div class="recent-comment-item-footer">
+                    <a href="http://edi.wang/post/2017/4/18/edi-wang-dns-fucked" target="_blank"><i class="fa fa-bookmark-o"></i> edi.wang 域名被端事件始末</a>
+                </div>
+                <div class="list-group-item">
+                    <strong data-toggle="tooltip" data-placement="top" title="" data-original-title="5/8/2017 5:14:36 AM">
+                        <i class="fa fa-user"></i>
+                        Pickaxe
+                    </strong>
+                    <p class="justifytext text-muted recent-comment-item-content">
+                        科技无国界，不窘于一处，哈哈哈
+                    </p>
+                </div>
+                <div class="recent-comment-item-footer">
+                    <a href="http://edi.wang/post/2017/4/18/edi-wang-dns-fucked" target="_blank"><i class="fa fa-bookmark-o"></i> edi.wang 域名被端事件始末</a>
+                </div>
+                <div class="list-group-item">
+                    <strong data-toggle="tooltip" data-placement="top" title="" data-original-title="5/5/2017 4:19:43 PM">
+                        <i class="fa fa-user"></i>
+                        jiqixia
+                    </strong>
+                    <p class="justifytext text-muted recent-comment-item-content">
+                        早日转移到万网
+                    </p>
+                </div>
+                <div class="recent-comment-item-footer">
+                    <a href="http://edi.wang/post/2017/4/18/edi-wang-dns-fucked" target="_blank"><i class="fa fa-bookmark-o"></i> edi.wang 域名被端事件始末</a>
+                </div>
+                <div class="list-group-item">
+                    <strong data-toggle="tooltip" data-placement="top" title="" data-original-title="5/4/2017 10:36:58 PM">
+                        <i class="fa fa-user"></i>
+                        Grammy
+                    </strong>
+                    <p class="justifytext text-muted recent-comment-item-content">
+                        逼格高度与蛋疼痛度是成正比还是反比？
+                    </p>
+                </div>
+                <div class="recent-comment-item-footer">
+                    <a href="http://edi.wang/post/2015/4/22/how-to-read-webconfig-appsettings-with-bigiblity" target="_blank"><i class="fa fa-bookmark-o"></i> 如何高逼格读取Web.config中的AppSettings</a>
+                </div>
+                <div class="list-group-item">
+                    <strong data-toggle="tooltip" data-placement="top" title="" data-original-title="4/27/2017 4:14:13 AM">
+                        <i class="fa fa-user"></i>
+                        Anonymous
+                    </strong>
+                    <p class="justifytext text-muted recent-comment-item-content">
+                        域名实名认证确实烦，同个人博客，早就实名认证过了，最近又要实名认证一次，不认证就停止解析，不知道怎么想的
+                    </p>
+                </div>
+                <div class="recent-comment-item-footer">
+                    <a href="http://edi.wang/post/2017/4/18/edi-wang-dns-fucked" target="_blank"><i class="fa fa-bookmark-o"></i> edi.wang 域名被端事件始末</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <div class="bor"></div>
+    <section class="friend-anks">
+        <div class="panel panel-default">
+            <div class="panel-heading">Friends Link</div>
+
+            <ul class="list-group">
+                
+            </ul>
+        </div>
+    </section>
+</aside>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

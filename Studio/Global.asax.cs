@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,6 +8,8 @@ using Studio.Models;
 using System.Web.Security;
 using System.IO;
 using Studio.Services;
+using Studio.App_Start;
+using System.Web.Optimization;
 
 namespace Studio
 {
@@ -35,8 +36,12 @@ namespace Studio
 
             //routes.MapRoute("NoAction", "{controller}.html", new { controller = "Company", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//无Action的匹配
             routes.MapRoute("NoID", "{controller}/{action}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//无ID的匹配
-            routes.MapRoute("Default", "{controller}/{action}/{id}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//默认匹配
+            routes.MapRoute("Html", "{controller}/{action}/{id}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//html的匹配
+            //routes.MapRoute("Default", "{controller}/{action}/{id}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//默认匹配
             routes.MapRoute("Root", "", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//根目录匹配
+
+
+            routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//默认匹配
             //routes.MapRoute("Admin", "{areas}/{controller}/{action}/{id}", new { controller = "Blog", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Areas.Admin.Controllers" });//根目录匹配
         }
 
@@ -48,6 +53,8 @@ namespace Studio
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
         //protected void Application_Error(object s, EventArgs e)
@@ -104,7 +111,7 @@ namespace Studio
                 {
                     var ii = url.Split('/').LastOrDefault();
 
-                    new BlogHelp().GetBlog(ii.Split('.')[0]);
+                    new BlogService().GetBlog(ii.Split('.')[0]);
                 }
                 
                 var finalurl = new GlobalHelper().GetUrl(url);

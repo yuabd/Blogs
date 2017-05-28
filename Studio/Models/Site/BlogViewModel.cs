@@ -11,25 +11,25 @@ namespace Studio.Models.Site
 	{
 		public Blog Blog { get; private set; }
 
-		public IEnumerable<BlogComment> BlogComments { get; private set; }
+		public List<BlogComment> BlogComments { get; private set; }
 
 		public BlogComment BlogComment { get; private set; }
 
-		public IEnumerable<BlogCategory> Categories { get; private set; }
+		public List<BlogCategory> Categories { get; private set; }
 
-		public IEnumerable<Anonymous> PopularTags { get; private set; }
+		public List<Anonymous> PopularTags { get; private set; }
 
-		public IEnumerable<Archive> Archives { get; private set; }
+		public List<Archive> Archives { get; private set; }
 
 		public PreNextBlog PreNextBlog { get; set; }
 
 		public BlogViewModel(
 			Blog blog,
 			BlogComment blogComment,
-			IEnumerable<BlogComment> blogComments,
-			IEnumerable<BlogCategory> categories,
-			IEnumerable<Anonymous> popularTags,
-			IEnumerable<Archive> archives, PreNextBlog preNextBlog)
+            List<BlogComment> blogComments,
+            List<BlogCategory> categories,
+            List<Anonymous> popularTags,
+            List<Archive> archives, PreNextBlog preNextBlog)
 		{
 			Blog = blog;
 			BlogComments = blogComments;

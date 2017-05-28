@@ -8,324 +8,6 @@ using Studio.Models.Others;
 
 namespace Studio.Services
 {
-	public class BlogHelp
-	{
-		public void InsertBlog(Blog blog, HttpPostedFileBase file)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.InsertBlog(blog, file);
-			}
-		}
-
-		public Blog GetBlog(int blogID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlog(blogID);
-			}
-		}
-
-		public void UpdateBlog(Blog blog, HttpPostedFileBase file)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.UpdateBlog(blog, file);
-			}
-		}
-
-		public void DeleteBlog(int blogID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.DeleteBlog(blogID);
-			}
-		}
-
-		public Blog GetBlog(string slug)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlog(slug);
-			}
-		}
-
-		public Blog GetLastBlog()
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetLastBlog();
-			}
-		}
-
-		public List<Blog> GetBlogs()
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogs();
-			}
-		}
-
-		public List<Blog> GetBlogs(string languageID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogs(languageID);
-			}
-		}
-
-		public List<Blog> GetBlogsByCategory(int id)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogsByCategory(id);
-			}
-		}
-
-		public List<Blog> GetBlogsByTag(string tag)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogsByTag(tag);
-			}
-		}
-
-		public List<Blog> GetBlogsByTag(string tag, string languageID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogsByTag(tag, languageID);
-			}
-		}
-
-		public List<Blog> GetBlogsByArchive(string year, string month, string type)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogsByArchive(year, month, type);
-			}
-		}
-
-		public List<Blog> GetBlogsByArchive(string year, string month, string type, string languageID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogsByArchive(year, month, type, languageID);
-			}
-		}
-
-		// Blog Comment
-
-		public void InsertBlogComment(BlogComment blogComment)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.InsertBlogComment(blogComment);
-			}
-		}
-
-		public void UpdateBlogComment(BlogComment blogComment)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.UpdateBlogComment(blogComment);
-			}
-		}
-
-		public void DeleteBlogComment(int commentID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.DeleteBlogComment(commentID);
-			}
-		}
-
-		public BlogComment GetBlogComment(int commentID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogComment(commentID);
-			}
-		}
-
-		public List<BlogComment> GetBlogComments(int blogID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogComments(blogID);
-			}
-		}
-
-		public void ApproveBlogComment(int commentID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.ApproveBlogComment(commentID);
-			}
-		}
-
-		public List<BlogComment> GetComments()
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetComments();
-			}
-		}
-
-		public List<Blog> GetBlogsWithPendingComments()
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogsWithPendingComments();
-			}
-		}
-
-		// Blog Category
-
-		public void InsertBlogCategory(BlogCategory blogCategory)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.InsertBlogCategory(blogCategory);
-			}
-		}
-
-		public BlogCategory GetBlogCategory(int id)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogCategory(id);
-			}
-		}
-
-		public void UpdateBlogCategory(BlogCategory blogCategory)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.UpdateBlogCategory(blogCategory);
-			}
-		}
-
-		public void DeleteBlogCategory(int categoryID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.DeleteBlogCategory(categoryID);
-			}
-		}
-
-		public List<BlogCategory> GetBlogCategories()
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogCategories();
-			}
-		}
-
-		public List<BlogCategory> GetBlogCategories(string languageID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogCategories(languageID);
-			}
-		}
-
-		//Blog Tag
-
-		public List<Anonymous> GetPopularTags()
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetPopularTags();
-			}
-		}
-
-		public List<String> GetPopularTags(string languageID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetPopularTags(languageID);
-			}
-		}
-
-		public List<BlogTag> GetBlogTags(int blogID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetBlogTags(blogID);
-			}
-		}
-
-		public void SaveBlogTags(Blog blog, List<BlogTag> blogTags)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.SaveBlogTags(blog, blogTags);
-			}
-		}
-
-		public void InsertBlogTag(BlogTag blogTag)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.InsertBlogTag(blogTag);
-			}
-		}
-
-		public void DeleteBlogTag(BlogTag blogTag)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.DeleteBlogTag(blogTag);
-			}
-		}
-
-		public PreNextBlog GetPreNextBlog(int id)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetPreNextBlog(id);
-			}
-		}
-
-		// Others
-
-		public List<Archive> GetArchives()
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetArchives();
-			}
-		}
-
-		// TODO: improve this, factorize better
-		public List<Archive> GetArchives(string languageID)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				return bl.GetArchives(languageID);
-			}
-		}
-
-		// Files
-
-		public void UploadBlogPicture(Blog blog, HttpPostedFileBase file)
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.UploadBlogPicture(blog, file);
-			}
-		}
-
-		public void Save()
-		{
-			using (BlogService bl = new BlogService())
-			{
-				bl.Save();
-			}
-		}
-	}
-
 	public class BlogService : DbAccess
 	{
 		//private SiteDataContext db = new SiteDataContext();
@@ -343,7 +25,7 @@ namespace Studio.Services
 			db.SaveChanges();
 
 			// add slug after (depends on ID)
-			blog.Slug = blog.BlogID.ToString();
+			blog.Slug = Guid.NewGuid().ToString();
 
 			// file
 			if (file.ContentLength > 0)
@@ -361,9 +43,7 @@ namespace Studio.Services
 		public void UpdateBlog(Blog blog, HttpPostedFileBase file)
 		{
 			var b = GetBlog(blog.BlogID);
-
-			//b.Slug = ;
-
+            
 			b.CategoryID = blog.CategoryID;
 			b.BlogTitle = blog.BlogTitle;
 			b.BlogContent = blog.BlogContent;
@@ -371,7 +51,7 @@ namespace Studio.Services
 			b.PageTitle = blog.PageTitle;
 			b.MetaDescription = blog.MetaDescription;
 			b.MetaKeywords = blog.MetaKeywords;
-			b.Slug = blog.BlogID.ToString();
+			//b.Slug = blog.BlogID.ToString();
 			b.IsPublic = blog.IsPublic;
 
 			// file
@@ -414,50 +94,50 @@ namespace Studio.Services
 			return db.Blogs.OrderByDescending(m => m.DateCreated).Where(m => m.IsPublic == true).Take(1).SingleOrDefault();
 		}
 
-		public List<Blog> GetBlogs()
+		public IQueryable<Blog> GetBlogs()
 		{
-			return db.Blogs.OrderByDescending(b => b.DateCreated).ToList();
+			return db.Blogs.OrderByDescending(b => b.DateCreated);
 		}
 
-		public List<Blog> GetBlogs(string languageID)
+		public IQueryable<Blog> GetBlogs(string languageID)
 		{
-			return db.Blogs.Where(m => m.BlogCategory.LanguageID == languageID).OrderByDescending(b => b.DateCreated).ToList();
+			return db.Blogs.Where(m => m.BlogCategory.LanguageID == languageID).OrderByDescending(b => b.DateCreated);
 		}
 
-		public List<Blog> GetBlogsByCategory(int id)
+		public IQueryable<Blog> GetBlogsByCategory(int id)
 		{
 			var l = (from b in db.Blogs
 					 //join bc in db.BlogCategories on b.CategoryID equals bc.CategoryID
 					 where b.CategoryID == id
 					 orderby b.DateCreated descending
-					 select b).ToList();
+					 select b);
 
 			return l;
 		}
 
-		public List<Blog> GetBlogsByTag(string tag)
+		public IQueryable<Blog> GetBlogsByTag(string tag)
 		{
 			var l = (from b in db.Blogs
 					 join bc in db.BlogTags on b.BlogID equals bc.BlogID
 					 where bc.Tag == tag
 					 orderby b.DateCreated descending
-					 select b).ToList();
+					 select b);
 
 			return l;
 		}
 
-		public List<Blog> GetBlogsByTag(string tag, string languageID)
+		public IQueryable<Blog> GetBlogsByTag(string tag, string languageID)
 		{
 			var l = (from b in db.Blogs
 					 join bc in db.BlogTags on b.BlogID equals bc.BlogID
 					 where bc.Tag == tag && b.BlogCategory.LanguageID == languageID
 					 orderby b.DateCreated descending
-					 select b).ToList();
+					 select b);
 
 			return l;
 		}
 
-		public List<Blog> GetBlogsByArchive(string year, string month, string type)
+		public IQueryable<Blog> GetBlogsByArchive(string year, string month, string type)
 		{
             if (string.IsNullOrEmpty(month))
             {
@@ -483,12 +163,12 @@ namespace Studio.Services
 			else if (type == "month")
 				toTime = fromTime.AddMonths(1);
 
-			return db.Blogs.Where(b => b.DateCreated >= fromTime && b.DateCreated <= toTime).OrderByDescending(b => b.DateCreated).ToList();
+			return db.Blogs.Where(b => b.DateCreated >= fromTime && b.DateCreated <= toTime).OrderByDescending(b => b.DateCreated);
 		}
 
-		public List<Blog> GetBlogsByArchive(string year, string month, string type, string languageID)
+		public IQueryable<Blog> GetBlogsByArchive(string year, string month, string type, string languageID)
 		{
-			return GetBlogsByArchive(year, month, type).Where(m => m.BlogCategory.LanguageID == languageID).ToList();
+			return GetBlogsByArchive(year, month, type).Where(m => m.BlogCategory.LanguageID == languageID);
 		}
 
 		// Blog Comment
@@ -500,32 +180,32 @@ namespace Studio.Services
 			db.BlogComments.Add(blogComment);
 			db.SaveChanges();
 
-			try
-			{
-				var subject = "有新的评论需要您审核-厦门巨易网络科技有限公司";
+			//try
+			//{
+			//	var subject = "有新的评论需要您审核-厦门巨易网络科技有限公司";
 
-				var message = string.Format("<p>Hi {0},</p>" +
-					"<p>评论信息:</p>" +
-					"{1}" +
-					"<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}'>{3}</a></p>" +
-					"<p><a href='http://www.henhaoji.com.cn/admin/blog/PendingComments'>点击审核</a></p>",
-					blogComment.Name,
-					blogComment.Message,
-					blogComment.Blog.Slug,
-					blogComment.Blog.BlogTitle
-					);
+			//	var message = string.Format("<p>Hi {0},</p>" +
+			//		"<p>评论信息:</p>" +
+			//		"{1}" +
+			//		"<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}'>{3}</a></p>" +
+			//		"<p><a href='http://www.henhaoji.com.cn/admin/blog/PendingComments'>点击审核</a></p>",
+			//		blogComment.Name,
+			//		blogComment.Message,
+			//		blogComment.Blog.Slug,
+			//		blogComment.Blog.BlogTitle
+			//		);
+            
+			//	Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
 
-				Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
-
-				mailBag.ToMailAddress = "jerry@henhaoji.com.cn";
-				mailBag.CcMailAddress = "yuabd1991@gmail.com";
-				mailBag.Subject = subject;
-				mailBag.Message = message;
-				mailBag.Send(true);
-			}
-			catch (Exception e)
-			{
-			}
+			//	mailBag.ToMailAddress = "jerry@henhaoji.com.cn";
+			//	mailBag.CcMailAddress = "yuabd1991@gmail.com";
+			//	mailBag.Subject = subject;
+			//	mailBag.Message = message;
+			//	mailBag.Send(true);
+			//}
+			//catch (Exception e)
+			//{
+			//}
 		}
 
 		public void UpdateBlogComment(BlogComment blogComment)
@@ -547,87 +227,60 @@ namespace Studio.Services
 			return db.BlogComments.Find(commentID);
 		}
 
-		public List<BlogComment> GetBlogComments(int blogID)
+		public IQueryable<BlogComment> GetBlogComments(int blogID)
 		{
-			return db.BlogComments.Where(p => p.BlogID == blogID).OrderByDescending(m => m.DateCreated).ToList();
+			return db.BlogComments.Where(p => p.BlogID == blogID).OrderByDescending(m => m.DateCreated);
 		}
 
 		public void ApproveBlogComment(int commentID)
 		{
 			var c = db.BlogComments.FirstOrDefault(m => m.CommentID == commentID);
-			c.ValidationCodeMatch = "1";
-			c.ValidationCodeSource = "1";
 			c.IsPublic = true;
 			//c.BlogID
 			db.SaveChanges();
 
 			// notify posting user
 
-			try
-			{
-				var subject = "您的评论已经审核通过-厦门巨易网络科技有限公司";
-
-				var message = string.Format("<p>Hi {0},</p>" +
-					"<p>您的评论已经被审核通过:</p>" +
-					"{1}" +
-					"<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}.html'>{3}</a></p>",
-					c.Name,
-					c.Message,
-					c.Blog.Slug,
-					c.Blog.BlogTitle
-					);
-
-				Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
-
-				mailBag.ToMailAddress = c.Email;
-				mailBag.Subject = subject;
-				mailBag.Message = message;
-				mailBag.Send(true);
-			}
-			catch (Exception e)
-			{
-			}
-
-			// notify everybody else
-
-			//var others = from bc in db.BlogComments
-			//             where bc.BlogID == c.BlogID && bc.Email != c.Email
-			//             select bc;
-
-			//foreach (var item in others)
+			//try
 			//{
-			//    subject = string.Format("New comment on: {0}", c.Blog.BlogTitle);
+			//	var subject = "您的评论已经审核通过-厦门巨易网络科技有限公司";
 
-			//    message = string.Format("<p>Hi {0},</p>" +
-			//        "<p>A new message has been posted by <b>{1}</b> on <a href='/Blog/Post/{2}'>{3}</a>:</p>" +
-			//        "{4}",
-			//        item.Name,
-			//        c.Name,
-			//        c.Blog.Slug,
-			//        c.Blog.BlogTitle,
-			//        c.Message
-			//        );
+			//	var message = string.Format("<p>Hi {0},</p>" +
+			//		"<p>您的评论已经被审核通过:</p>" +
+			//		"{1}" +
+			//		"<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}.html'>{3}</a></p>",
+			//		c.Name,
+			//		c.Message,
+			//		c.Blog.Slug,
+			//		c.Blog.BlogTitle
+			//		);
 
-			//    mailBag.ToMailAddress = item.Email;
-			//    mailBag.Subject = subject;
-			//    mailBag.Message = message;
-			//    mailBag.Send(false);
+			//	Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
+
+			//	mailBag.ToMailAddress = c.Email;
+			//	mailBag.Subject = subject;
+			//	mailBag.Message = message;
+			//	mailBag.Send(true);
+			//}
+			//catch (Exception e)
+			//{
 			//}
 		}
 
-		public List<BlogComment> GetComments()
+		public IQueryable<BlogComment> GetComments()
 		{
 			var list = (from l in db.BlogComments
 						orderby l.DateCreated descending
-						select l).ToList();
+						select l);
+
 			return list;
 		}
 
-		public List<Blog> GetBlogsWithPendingComments()
+		public IQueryable<Blog> GetBlogsWithPendingComments()
 		{
 			var r = (from b in db.Blogs
 					 where db.BlogComments.Any(c => c.IsPublic == false && c.BlogID == b.BlogID)
-					 select b).ToList();
+					 select b);
 
 			return r;
 		}
@@ -642,14 +295,9 @@ namespace Studio.Services
 			}
 			db.BlogCategories.Add(blogCategory);
 
-			db.SaveChanges();
+            blogCategory.Slug = Guid.NewGuid().ToString();
 
-
-			if (string.IsNullOrEmpty(blogCategory.Slug))
-			{
-				blogCategory.Slug = Studio.Helpers.Utilities.GenerateSlug(blogCategory.CategoryName, 50) + blogCategory.CategoryID;
-			}
-			db.SaveChanges();
+            db.SaveChanges();
 		}
 
 		public BlogCategory GetBlogCategory(int id)
@@ -660,12 +308,7 @@ namespace Studio.Services
 		public void UpdateBlogCategory(BlogCategory blogCategory)
 		{
 			var bc = GetBlogCategory(blogCategory.CategoryID);
-
-			if (string.IsNullOrEmpty(blogCategory.Slug))
-			{
-				bc.Slug = Studio.Helpers.Utilities.GenerateSlug(blogCategory.CategoryName, 50);
-			}
-
+            
 			bc.CategoryName = blogCategory.CategoryName;
 			bc.PageTitle = blogCategory.PageTitle;
 			bc.MetaDescription = blogCategory.MetaDescription;
@@ -684,42 +327,48 @@ namespace Studio.Services
 			db.SaveChanges();
 		}
 
-		public List<BlogCategory> GetBlogCategories()
+		public IQueryable<BlogCategory> GetBlogCategories()
 		{
-			return db.BlogCategories.OrderBy(m => m.SortOrder).ToList();
+			return db.BlogCategories.OrderBy(m => m.SortOrder);
 		}
 
-		public List<BlogCategory> GetBlogCategories(string languageID)
+		public IQueryable<BlogCategory> GetBlogCategories(string languageID)
 		{
-			return GetBlogCategories().Where(m => m.LanguageID == languageID).ToList();
+			return GetBlogCategories().Where(m => m.LanguageID == languageID);
 		}
+
+
 
 		//Blog Tag
-
-		public List<Anonymous> GetPopularTags()
+		public IQueryable<Anonymous> GetPopularTags()
 		{
 			var pt = (from p in db.BlogTags
 					  group p by new { p.Tag } into t
 					  orderby t.Count() descending
-                      select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
+                      select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10);
 
 			return pt;
 		}
 
-		public List<String> GetPopularTags(string languageID)
+		public IQueryable<String> GetPopularTags(string languageID)
 		{
 			var pt = (from p in db.BlogTags
 					  where p.Blog.BlogCategory.LanguageID == languageID
 					  group p by new { p.Tag } into t
 					  orderby t.Count() descending
-					  select t.Key.Tag).ToList();
+					  select t.Key.Tag);
 
 			return pt;
 		}
 
-		public List<BlogTag> GetBlogTags(int blogID)
+        public IQueryable<BlogTag> GetTags()
+        {
+            return db.BlogTags;
+        }
+
+		public IQueryable<BlogTag> GetBlogTags(int blogID)
 		{
-			return db.BlogTags.Where(b => b.BlogID == blogID).ToList();
+			return db.BlogTags.Where(b => b.BlogID == blogID);
 		}
 
 		public void SaveBlogTags(Blog blog, List<BlogTag> blogTags)
@@ -784,8 +433,7 @@ namespace Studio.Services
 		}
 
 		// Others
-
-		public List<Archive> GetArchives()
+		public IEnumerable<Archive> GetArchives()
 		{
 			// Get months list
 			DateTime dt = new DateTime(2012, 1, 1);
@@ -826,11 +474,11 @@ namespace Studio.Services
 				}
 			}
 
-			return Archives.ToList();
+			return Archives;
 		}
 
 		// TODO: improve this, factorize better
-		public List<Archive> GetArchives(string languageID)
+		public IEnumerable<Archive> GetArchives(string languageID)
 		{
 			// Get months list
 			DateTime dt = new DateTime(2012, 1, 1);
@@ -871,14 +519,14 @@ namespace Studio.Services
 				}
 			}
 
-			return Archives.ToList();
+			return Archives;
 		}
 
 		// Files
 
 		public void UploadBlogPicture(Blog blog, HttpPostedFileBase file)
 		{
-			var fileName = string.Format("{0}-{1}", blog.BlogID, Studio.Helpers.Utilities.GenerateSlug(blog.BlogTitle, 43));
+			var fileName = string.Format("{0}-{1}", blog.BlogID, blog.Slug);
 
             blog.PictureFile = Studio.Helpers.IO.UploadImageFile(file.InputStream, blog.PictureFolder, fileName, 800, 400, Studio.ImageHelper.ImageSaveType.Cut);
 		}

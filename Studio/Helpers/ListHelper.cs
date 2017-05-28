@@ -10,11 +10,11 @@ namespace Studio.Helpers
 {
 	public class ListHelper
 	{
-		public static IEnumerable<SelectListItem> GetBlogCategoryList()
+		public static IList<SelectListItem> GetBlogCategoryList()
 		{
 			using (SiteDataContext db = new SiteDataContext())
 			{
-				var list = from l in db.BlogCategories.AsEnumerable()
+				var list = from l in db.BlogCategories.AsNoTracking()
 						   orderby l.CategoryName
 						   select new SelectListItem { Value = l.CategoryID.ToString(), Text = l.CategoryName };
 
@@ -45,73 +45,73 @@ namespace Studio.Helpers
 		//    }
 		//}
 
-		public static IEnumerable<BlogComment> GetBlogComments()
-		{
-			using (SiteDataContext db = new SiteDataContext())
-			{
-				var list = from l in db.BlogComments.AsEnumerable()
-						   orderby l.DateCreated
-						   select l;
+		//public static IQueryable<BlogComment> GetBlogComments()
+		//{
+		//	using (SiteDataContext db = new SiteDataContext())
+		//	{
+		//		var list = from l in db.BlogComments.AsNoTracking()
+		//				   orderby l.DateCreated
+		//				   select l;
 
-				return list.ToList();
-			}
-		}
+		//		return list;
+		//	}
+		//}
 
-		public static IEnumerable<SelectListItem> GetRoleList()
-		{
-			using (SiteDataContext db = new SiteDataContext())
-			{
-				var list = from l in db.UserRoles.AsEnumerable()
-						   orderby l.RoleID
-						   select new SelectListItem { Value = l.RoleID.ToString(), Text = l.RoleID };
+		//public static IEnumerable<SelectListItem> GetRoleList()
+		//{
+		//	using (SiteDataContext db = new SiteDataContext())
+		//	{
+		//		var list = from l in db.UserRoles.AsEnumerable()
+		//				   orderby l.RoleID
+		//				   select new SelectListItem { Value = l.RoleID.ToString(), Text = l.RoleID };
 
-				return list.ToList();
-			}
-		}
+		//		return list.ToList();
+		//	}
+		//}
 
-		public static IEnumerable<SelectListItem> GetCaseList()
-		{
-			using (SiteDataContext db = new SiteDataContext())
-			{
-				var list = from l in db.CaseCategories.AsEnumerable()
-						   select new SelectListItem { Value = l.CategoryID.ToString(), Text = l.CategoryName };
-				return list.ToList();
-			}
-		}
+		//public static IEnumerable<SelectListItem> GetCaseList()
+		//{
+		//	using (SiteDataContext db = new SiteDataContext())
+		//	{
+		//		var list = from l in db.CaseCategories.AsEnumerable()
+		//				   select new SelectListItem { Value = l.CategoryID.ToString(), Text = l.CategoryName };
+		//		return list.ToList();
+		//	}
+		//}
 
-		public static IEnumerable<Case> GetCases()
-		{
-			using (SiteDataContext db = new SiteDataContext())
-			{
-				var list = from l in db.Cases.AsEnumerable()
-						   orderby l.DateCreated descending
-						   select l;
-				return list.ToList();
-			}
-		}
+		//public static IQueryable<Case> GetCases()
+		//{
+		//	using (SiteDataContext db = new SiteDataContext())
+		//	{
+		//		var list = from l in db.Cases.AsNoTracking()
+		//				   orderby l.DateCreated descending
+		//				   select l;
+		//		return list;
+		//	}
+		//}
 
-		public static IEnumerable<CaseCategory> GetCaseCategories()
-		{
-			using (SiteDataContext db = new SiteDataContext())
-			{
-				var list = from l in db.CaseCategories.AsEnumerable()
-						   select l;
-				return list.ToList();
-			}
-		}
+		//public static IQueryable<CaseCategory> GetCaseCategories()
+		//{
+		//	using (SiteDataContext db = new SiteDataContext())
+		//	{
+		//		var list = from l in db.CaseCategories.AsNoTracking()
+		//				   select l;
+		//		return list;
+		//	}
+		//}
 
-		public static IEnumerable<Anonymous> GetTags()
-		{
-			using (SiteDataContext db = new SiteDataContext())
-			{
-				var pt = from p in db.BlogTags.AsEnumerable()
-						 group p by new { p.Tag } into t
-						 orderby t.Count() descending
-						 select new Anonymous { Num = t.Count(), Tag = t.Key.Tag };
+		//public static IQueryable<Anonymous> GetTags()
+		//{
+		//	using (SiteDataContext db = new SiteDataContext())
+		//	{
+		//		var pt = from p in db.BlogTags.AsNoTracking()
+		//				 group p by new { p.Tag } into t
+		//				 orderby t.Count() descending
+		//				 select new Anonymous { Num = t.Count(), Tag = t.Key.Tag };
 
-				return pt.ToList();
-			}
-		}
+		//		return pt;
+		//	}
+		//}
 
 		public static IEnumerable<SelectListItem> GetWebisteTypeList()
 		{
@@ -171,17 +171,16 @@ namespace Studio.Helpers
 			return list.ToList();
 		}
 
-		public static IEnumerable<SelectListItem> GetIndustryList()
-		{
-			using (SiteDataContext db = new SiteDataContext())
-			{
-				var list = from l in db.Industries.AsEnumerable()
-						   orderby l.IndustryName
-						   select new SelectListItem { Text = l.IndustryName, Value = l.IndustryID.ToString() };
+		//public static IQueryable<SelectListItem> GetIndustryList()
+		//{
+		//	using (SiteDataContext db = new SiteDataContext())
+		//	{
+		//		var list = from l in db.Industries
+		//				   orderby l.IndustryName
+		//				   select new SelectListItem { Text = l.IndustryName, Value = l.IndustryID.ToString() };
 
-				return list.ToList();
-			}
-		}
-
+		//		return list;
+		//	}
+		//}
 	}
 }

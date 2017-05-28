@@ -14,16 +14,14 @@ namespace Studio.Controllers
     [TestFilter]
     public class BlogController : BaseController
     {
-        //BlogService blogService = new BlogService();
-        //
-        // GET: /Blog/
+        private BlogService bs = new BlogService();
 
-        //[GenerateStaticFileAttribute]
-        //[OutputCache(Duration = 5, VaryByParam = "*")]
+        // GET: /Blog/
+        [GenerateStaticFileAttribute]
         public ActionResult Index(int? page, string keywords)
         {
-            var blogs = db.Blogs.Where(m => m.IsPublic == true).OrderByDescending(m => m.DateCreated).ToList();
-
+            var blogs = bs.GetBlogs().Where(m => m.IsPublic == true);
+            
             if (!string.IsNullOrEmpty(keywords))
             {
                 var key = keywords.Split(' ');
@@ -31,23 +29,23 @@ namespace Studio.Controllers
                 {
                     blogs = (from l in blogs
                              where l.BlogTitle.Contains(item) || l.BlogContent.Contains(item)
-                             select l).ToList();
+                             select l);
                 }
             }
 
-            var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
+            var pBlogs = new Paginated<Blog>(blogs.ToList(), page ?? 1, 8);
 
-            var categories = new BlogHelp().GetBlogCategories().ToList();
+            var categories = bs.GetBlogCategories().ToList();
 
-            var popularTags = (from p in db.BlogTags
+            var popularTags = (from p in bs.GetTags()
                                group p by new { p.Tag } into t
                                orderby t.Count() descending
                                select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
 
-            var archives = new BlogHelp().GetArchives().ToList();
+            var archives = bs.GetArchives().ToList();
 
             var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
-            ViewBag.PageTitle = string.IsNullOrEmpty(keywords) ? "新闻动态" : "搜索结果: " + keywords;
+            ViewBag.PageTitle = string.IsNullOrEmpty(keywords) ? "All Post" : "搜索结果: " + keywords;
             ViewBag.Blog = "current";
 
             return View(model);
@@ -57,17 +55,17 @@ namespace Studio.Controllers
         public ActionResult Categories(int? id, int? page)
         {
             var ids = id.Uint();
-            var blogs = new BlogHelp().GetBlogsByCategory(ids).Where(m => m.IsPublic == true).ToList();
+            var blogs = bs.GetBlogsByCategory(ids).Where(m => m.IsPublic == true);
 
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
-            var categories = new BlogHelp().GetBlogCategories().ToList();
-            var popularTags = new BlogHelp().GetPopularTags().ToList();
-            var archives = new BlogHelp().GetArchives().ToList();
+            var categories = bs.GetBlogCategories().ToList();
+            var popularTags = bs.GetPopularTags().ToList();
+            var archives = bs.GetArchives().ToList();
 
             var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
 
-            ViewBag.PageTitle = Studio.Helpers.LabelHelper.GetBlogCategoryName(ids);
+            ViewBag.PageTitle = bs.GetBlogCategory(id.Value).CategoryName;//.GetBlogCategoryName(ids);
             ViewBag.Blog = "current";
 
             return View("Index", model);
@@ -76,12 +74,12 @@ namespace Studio.Controllers
         //[GenerateStaticFileAttribute]
         public ActionResult Tags(string id, int? page)
         {
-            var blogs = new BlogHelp().GetBlogsByTag(id).Where(m => m.IsPublic == true).ToList();
+            var blogs = bs.GetBlogsByTag(id).Where(m => m.IsPublic == true);
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
-            var categories = new BlogHelp().GetBlogCategories().ToList();
-            var popularTags = new BlogHelp().GetPopularTags().Take(10).ToList();
-            var archives = new BlogHelp().GetArchives().ToList();
+            var categories = bs.GetBlogCategories().ToList();
+            var popularTags = bs.GetPopularTags().Take(10).ToList();
+            var archives = bs.GetArchives().ToList();
 
             var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
 
@@ -106,12 +104,12 @@ namespace Studio.Controllers
                 id = DateTime.Now.Year.ToString();
             }
 
-            var blogs = new BlogHelp().GetBlogsByArchive(id, month, type).Where(m => m.IsPublic == true);
+            var blogs = bs.GetBlogsByArchive(id, month, type).Where(m => m.IsPublic == true);
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
-            var categories = new BlogHelp().GetBlogCategories().ToList();
-            var popularTags = new BlogHelp().GetPopularTags().Take(10).ToList();
-            var archives = new BlogHelp().GetArchives().ToList();
+            var categories = bs.GetBlogCategories().ToList();
+            var popularTags = bs.GetPopularTags().Take(10).ToList();
+            var archives = bs.GetArchives().ToList();
 
             var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
 
@@ -124,7 +122,7 @@ namespace Studio.Controllers
         //[GenerateStaticFileAttribute]
         public ActionResult Post(string id)
         {
-            var blog = new BlogHelp().GetBlog(id);
+            var blog = bs.GetBlog(id);
 
             if (blog == null)
             {
@@ -143,50 +141,64 @@ namespace Studio.Controllers
             //blogComment.IsPublic = true;
             //blogComment.ValidationCodeSource = DateTime.Now.Millisecond.ToString();
 
-            var blogComments = new BlogHelp().GetBlogComments(blogID).Where(m => m.IsPublic == true).ToList();
-            var categories = new BlogHelp().GetBlogCategories().ToList();
-            var popularTags = new BlogHelp().GetPopularTags().Take(10).ToList();
-            var archives = new BlogHelp().GetArchives().ToList();
+            var blogComments = bs.GetBlogComments(blogID).Where(m => m.IsPublic == true).ToList();
+            var categories = bs.GetBlogCategories().ToList();
+            var popularTags = bs.GetPopularTags().Take(10).ToList();
+            var archives = bs.GetArchives().ToList();
 
-            var preNextBlog = new BlogHelp().GetPreNextBlog(blogID);
+            var preNextBlog = bs.GetPreNextBlog(blogID);
             var model = new BlogViewModel(blog, new BlogComment(), blogComments, categories, popularTags, archives, preNextBlog);
 
             ViewBag.Blog = "current";
             return View(model);
         }
 
-        [HttpPost]
+        public ActionResult Captcha()
+        {
+            Captcha captcha = new Captcha(85, 32, 5, 25f);
+            Session["Captcha"] = captcha.Text;
+            return File(captcha.ImageData, "image/jpeg");
+        }
+
+        public ActionResult GetApprovedCommentOfPost(int id)
+        {
+            var comments = bs.GetComments().Where(m => m.IsPublic == true && m.BlogID == id).ToList();
+
+            return View(comments);
+        }
+
         public ActionResult AddComment(BlogComment blogComment)
         {
-            var blog = new BlogHelp().GetBlog(blogComment.BlogID);
-            var blogComments = new BlogHelp().GetBlogComments(blog.BlogID).ToList();
-            var categories = new BlogHelp().GetBlogCategories().ToList();
-            var popularTags = new BlogHelp().GetPopularTags().Take(10).ToList();
-            var archives = new BlogHelp().GetArchives().ToList();
-            var preNextBlog = new BlogHelp().GetPreNextBlog(blog.BlogID);
+            //var blog = bs.GetBlog(blogComment.BlogID);
+            //var blogComments = bs.GetBlogComments(blog.BlogID).ToList();
+            //var categories = bs.GetBlogCategories().ToList();
+            //var popularTags = bs.GetPopularTags().Take(10).ToList();
+            //var archives = bs.GetArchives().ToList();
+            //var preNextBlog = bs.GetPreNextBlog(blog.BlogID);
 
             if (ModelState.IsValid)
             {
-                new BlogHelp().InsertBlogComment(blogComment);
+                bs.InsertBlogComment(blogComment);
 
-                var template = new Studio.Models.Others.MessageTemplate("/content/post.htm");
-                template.Set("ContactName", blogComment.Name);
-                template.Set("Email", blogComment.Email);
-                template.Set("Message", blogComment.Message);
+                //var template = new Studio.Models.Others.MessageTemplate("/content/post.htm");
+                //template.Set("ContactName", blogComment.Name);
+                //template.Set("Email", blogComment.Email);
+                //template.Set("Message", blogComment.Message);
 
-                var mail = new Studio.Models.Others.MailBag();
-                mail.ToMailAddress = blogComment.Email;
-                mail.Message = template.Content;
-                mail.CcMailAddress = "yuabd1991@gmail.com";
-                mail.Subject = template.Subject;
-                mail.Send(true);
-
-                return RedirectToAction("Post", new { id = blog.Slug });
+                //var mail = new Studio.Models.Others.MailBag();
+                //mail.ToMailAddress = blogComment.Email;
+                //mail.Message = template.Content;
+                //mail.CcMailAddress = "yuabd1991@gmail.com";
+                //mail.Subject = template.Subject;
+                //mail.Send(true);
             }
 
-            var model = new BlogViewModel(blog, blogComment, blogComments, categories, popularTags, archives, preNextBlog);
+            return RedirectToAction("GetApprovedCommentOfPost", new { id = blogComment.BlogID });
 
-            return View("Post", model);
+
+            //var model = new BlogViewModel(blog, blogComment, blogComments, categories, popularTags, archives, preNextBlog);
+
+            //return View("Post", model);
         }
 
     }

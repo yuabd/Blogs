@@ -14,14 +14,14 @@ namespace Studio.Areas.Admin.Controllers
     [Authorize(Roles = "Administrator")]
     public class BlogController : Controller
     {
-        //BlogService blogService = new BlogService();
+        BlogService blogService = new BlogService();
 
         //
         // GET: /Admin/Blog/
 
         public ActionResult Index(int? page)
         {
-            var blogs = new BlogHelp().GetBlogs().ToList();
+            var blogs = blogService.GetBlogs();
             var pblogs = new Paginated<Blog>(blogs, page ?? 1, 25);
 
             return View(pblogs);
@@ -57,10 +57,10 @@ namespace Studio.Areas.Admin.Controllers
                     }
                 }
 
-                new BlogHelp().InsertBlog(blog, file);
+                blogService.InsertBlog(blog, file);
 
 
-                new BlogHelp().SaveBlogTags(blog, blogTags);
+                blogService.SaveBlogTags(blog, blogTags);
 
                 return RedirectToAction("Edit", new { id = blog.BlogID });
             }
@@ -73,8 +73,8 @@ namespace Studio.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            var blog = new BlogHelp().GetBlog(id);
-            var blogTags = new BlogHelp().GetBlogTags(id);
+            var blog = blogService.GetBlog(id);
+            var blogTags = blogService.GetBlogTags(id);
 
             var model = new BlogViewModel(blog, blogTags);
 
@@ -98,8 +98,8 @@ namespace Studio.Areas.Admin.Controllers
                     }
                 }
 
-                new BlogHelp().UpdateBlog(blog, file);
-                new BlogHelp().SaveBlogTags(blog, blogTags);
+                blogService.UpdateBlog(blog, file);
+                blogService.SaveBlogTags(blog, blogTags);
 
                 return RedirectToAction("Index");
             }
@@ -112,7 +112,7 @@ namespace Studio.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            new BlogHelp().DeleteBlog(id);
+            blogService.DeleteBlog(id);
 
             return RedirectToAction("Index");
         }
@@ -122,7 +122,8 @@ namespace Studio.Areas.Admin.Controllers
 
         public ActionResult PendingComments()
         {
-            var blogs = new BlogHelp().GetBlogsWithPendingComments().ToList();
+            var blogs = blogService.GetBlogsWithPendingComments().ToList();
+
             return View(blogs);
         }
 
@@ -132,7 +133,7 @@ namespace Studio.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                new BlogHelp().InsertBlogComment(comment);
+                blogService.InsertBlogComment(comment);
 
                 return "Thank you for your comment";
             }
@@ -144,13 +145,13 @@ namespace Studio.Areas.Admin.Controllers
 
         public ActionResult ApproveComment(int id)
         {
-            new BlogHelp().ApproveBlogComment(id);
+            blogService.ApproveBlogComment(id);
             return RedirectToAction("PendingComments");
         }
 
         public ActionResult DeleteComment(int id)
         {
-            new BlogHelp().DeleteBlogComment(id);
+            blogService.DeleteBlogComment(id);
 
             return RedirectToAction("PendingComments");
         }
@@ -160,7 +161,7 @@ namespace Studio.Areas.Admin.Controllers
 
         public ActionResult Categories()
         {
-            var categories = new BlogHelp().GetBlogCategories().ToList();
+            var categories = blogService.GetBlogCategories().ToList();
 
             return View(categories);
         }
@@ -172,11 +173,11 @@ namespace Studio.Areas.Admin.Controllers
             {
                 if (category.CategoryID > 0)
                 {
-                    new BlogHelp().UpdateBlogCategory(category);
+                    blogService.UpdateBlogCategory(category);
                 }
                 else
                 {
-                    new BlogHelp().InsertBlogCategory(category);
+                    blogService.InsertBlogCategory(category);
                 }
 
                 return RedirectToAction("Categories");
@@ -189,7 +190,7 @@ namespace Studio.Areas.Admin.Controllers
 
         public ActionResult DeleteCategory(int id)
         {
-            new BlogHelp().DeleteBlogCategory(id);
+            blogService.DeleteBlogCategory(id);
             //blogService.Save();
 
             return RedirectToAction("Categories");

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link href="/App_Themes/home/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/App_Themes/home/css/style.css" rel="stylesheet"/>
+
+    <script src="/App_Themes/home/scripts/jquery-3.1.1.js"></script>
+<script src="/App_Themes/home/scripts/bootstrap.min.js"></script>
+
+    
+</head>
+<body>
+    <header class="ediblog-header">
+        <h1 class="hidden">
+            <a href="/">yuabd</a>
+        </h1>
+        <div class="nav-container navbar-fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-ediblog " role="navigation" id="slide-nav">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="animbrand">
+                            <a class="navbar-brand animate hidden-xs" id="ediwang-logo" href="/">
+                                YUABD
+                            </a>
+                        </div>
+                        <a class="navbar-brand logo-mobile visible-xs" href="/">edi.wang</a>
+                    </div>
+
+                    <div id="slidemenu">
+                        <form class="navbar-form navbar-right visible-xs" role="form" action="/search/keyword">
+                            <div class="form-group">
+                                <input id="search-mobile" class="form-control" type="text" value="" title="Search" placeholder="Search" name="term" maxlength="30">
+                            </div>
+                            <button class="btn btn-success" type="submit"><i class="fa fa-search"></i> Search</button>
+                        </form>
+                        <form action="/search/keyword" class="navbar-form navbar-right hidden-xs" method="get" role="search">
+                            <div class="form-group disp-flex">
+                                <input class="form-control" id="search" maxlength="30" name="term" placeholder="Search" title="Search" type="text" value="性能" />
+
+                                <button type="submit" class="btn-search">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </form>            <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle animate" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                    POSTS
+                                    <b class="caret"></b>
+                                </a>
+
+                                <ul class="dropdown-menu category-menu" id="archives">
+                                    <li><a href="/Post">All Posts</a></li>
+                                    <li>
+                                        <a href="/category/list/angerofjustice"
+                                           title="Hacking and Cracking">
+                                            Anger of Justice
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/aspnet"
+                                           title="ASP.NET / MVC">
+                                            ASP.NET
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/csharpdotnet"
+                                           title="C# and .NET">
+                                            C# and .NET
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/itjobs"
+                                           title="Career and Workplace">
+                                            Career and Workplace
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/database"
+                                           title="SQL Server, ADO.NET and Entity Framework">
+                                            Database
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/devops"
+                                           title="DevOps">
+                                            DevOps
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/essays"
+                                           title="Essays">
+                                            Essays
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/iis"
+                                           title="IIS">
+                                            IIS
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/iot"
+                                           title="Raspberry Pi, Windows 10 IoT Core">
+                                            Internet of Things
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/azure"
+                                           title="Microsoft Azure Cloud Computing">
+                                            Microsot Azure
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/software"
+                                           title="Software">
+                                            Software
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/webfront"
+                                           title="HTML, JavaScript, CSS">
+                                            Web Front-End
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/category/list/windowsxaml"
+                                           title="Windows, WPF, and Xaml based Windows Apps">
+                                            Windows / XAML
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle animate" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+                                    ARCHIVE
+                                    <b class="caret"></b>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="/tags">Tags</a>
+                                    </li>
+                                    <li>
+                                        <a href="/archive">Time</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/home/about.html" class="animate">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    ABOUT
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div>
+        
+
+
+<h2>All Post</h2>
+
+
+    </div>
+</body>
+</html>

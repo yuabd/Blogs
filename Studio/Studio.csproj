@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Studio</RootNamespace>
     <AssemblyName>Studio</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <FileUpgradeFlags>
@@ -85,7 +85,9 @@
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -117,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Controllers\CaseController.cs" />
@@ -137,11 +140,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BaseController.cs" />
+    <Compile Include="Helpers\Captcha.cs" />
     <Compile Include="Helpers\GenerateStaticFileAttribute.cs" />
     <Compile Include="Helpers\GlobalHelper.cs" />
     <Compile Include="Helpers\HttpErrorModule.cs" />
     <Compile Include="Helpers\IO.cs" />
-    <Compile Include="Helpers\LabelHelper.cs" />
     <Compile Include="Helpers\ListHelper.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
     <Compile Include="Helpers\Utilities.cs" />
@@ -197,6 +200,12 @@
   <ItemGroup>
     <Content Include="404.html" />
     <Content Include="505.html" />
+    <Content Include="App_Themes\home\css\bootstrap.min.css" />
+    <Content Include="App_Themes\home\css\style.css" />
+    <Content Include="App_Themes\home\scripts\bootstrap.min.js" />
+    <Content Include="App_Themes\home\scripts\jquery-3.1.1.js" />
+    <Content Include="App_Themes\home\scripts\jquery-3.1.1.min.js" />
+    <Content Include="App_Themes\home\scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="App_Themes\Site\images\ipad-hand.png" />
     <Content Include="App_Themes\Site\images\ipad-screen.gif" />
     <Content Include="App_Themes\Site\images\iphone-hand.png" />
@@ -674,6 +683,12 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Blog\GetApprovedCommentOfPost.cshtml" />
+    <Content Include="App_Themes\home\fonts\fontawesome-webfont.woff2" />
+    <Content Include="App_Themes\home\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="App_Themes\home\fonts\KlavikaMedium-Plain.woff2" />
+    <Content Include="App_Themes\home\fonts\SegoeUI-Light.woff" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -874,7 +889,6 @@
     <Content Include="Views\Company\CaseDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Blog\Categories.cshtml" />
     <Content Include="Views\Blog\_BlogSidebar.cshtml" />
   </ItemGroup>
   <PropertyGroup>

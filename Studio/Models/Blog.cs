@@ -35,19 +35,15 @@ namespace Studio.Models
 		public string MetaKeywords { get; set; }
 		[MaxLength(56)]	//50 + "-" + 99,000
 		public string Slug { get; set; }
-
-		//public virtual ICollection<BlogComment> BlogComments { get; set; }
-		//public virtual BlogCategory BlogCategory { get; set; }
-		//public virtual ICollection<BlogTag> BlogTags { get; set; }
-
+        
 		[NotMapped]
 		public string PictureFolder { get { return "/Content/Pictures/Blog"; } }
 		[NotMapped]
-		public List<BlogTag> BlogTags { get { return new BlogHelp().GetBlogTags(BlogID); } }
+		public List<BlogTag> BlogTags { get { return new BlogService().GetBlogTags(BlogID).ToList(); } }
 		[NotMapped]
-		public List<BlogComment> BlogComments { get { return new BlogHelp().GetBlogComments(BlogID); } }
+		public List<BlogComment> BlogComments { get { return new BlogService().GetBlogComments(BlogID).ToList(); } }
 		[NotMapped]
-		public BlogCategory BlogCategory { get { return new BlogHelp().GetBlogCategory(CategoryID); } }
+		public BlogCategory BlogCategory { get { return new BlogService().GetBlogCategory(CategoryID); } }
 		[NotMapped]
 		public string PictureThumbnail { get { return string.IsNullOrEmpty(PictureFile) ? "default.jpg" : PictureFile; } }
 	}

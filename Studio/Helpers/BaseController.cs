@@ -9,11 +9,11 @@ namespace Studio.Helpers
 {
     public class BaseController : Controller
     {
-        protected SiteDataContext db = new SiteDataContext();
+        //protected SiteDataContext db = new SiteDataContext();
 
-        public void Dispose()
-        {
-            db.Dispose();
-        }
+        //public void Dispose()
+        //{
+        //    db.Dispose();
+        //}
     }
 }
