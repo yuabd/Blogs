@@ -25,7 +25,7 @@ namespace Studio.Services
 			db.SaveChanges();
 
 			// add slug after (depends on ID)
-			blog.Slug = Guid.NewGuid().ToString();
+			blog.Slug =  blog.BlogID.ToString();
 
 			// file
 			if (file.ContentLength > 0)
@@ -51,7 +51,7 @@ namespace Studio.Services
 			b.PageTitle = blog.PageTitle;
 			b.MetaDescription = blog.MetaDescription;
 			b.MetaKeywords = blog.MetaKeywords;
-			//b.Slug = blog.BlogID.ToString();
+			b.Slug = blog.BlogID.ToString();
 			b.IsPublic = blog.IsPublic;
 
 			// file
@@ -91,7 +91,7 @@ namespace Studio.Services
 
 		public Blog GetLastBlog()
 		{
-			return db.Blogs.OrderByDescending(m => m.DateCreated).Where(m => m.IsPublic == true).Take(1).SingleOrDefault();
+			return db.Blogs.Where(m => m.IsPublic == true).OrderByDescending(m => m.DateCreated).Take(1).FirstOrDefault();
 		}
 
 		public IQueryable<Blog> GetBlogs()
@@ -295,10 +295,12 @@ namespace Studio.Services
 			}
 			db.BlogCategories.Add(blogCategory);
 
-            blogCategory.Slug = Guid.NewGuid().ToString();
+            db.SaveChanges();
+
+            blogCategory.Slug = blogCategory.CategoryID.ToString();
 
             db.SaveChanges();
-		}
+        }
 
 		public BlogCategory GetBlogCategory(int id)
 		{

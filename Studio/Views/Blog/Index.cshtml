@@ -7,12 +7,10 @@
 }
 
 <section class="col-lg-9 col-md-12">
-
-
     <h3 class="h3-cat-list">
-        <a class="pull-right hidden-xs" href="/subscription/rss" target="_blank" title="Subscribe Top 20 Posts">
+        @*<a class="pull-right hidden-xs" href="" target="_blank" title="Subscribe Top 20 Posts">
             <i class="fa fa-rss"></i>
-        </a>
+        </a>*@
         <span>
             All Posts
         </span>
@@ -33,7 +31,7 @@
                 <time datetime="@item.DateCreated" class="none">@item.DateCreated</time>
 
                 <h4 class="post-summary-title">
-                    <a href="/blog/post/@item.Slug" title="607 Reads, 8 Comments">@item.BlogTitle</a>
+                    <a href="/blog/post/@(item.Slug).html" title="607 Reads, 8 Comments">@item.BlogTitle</a>
                 </h4>
 
                 <p class="post-summary-text">
@@ -43,7 +41,7 @@
                 <div class="post-summary-tags">
                     @foreach (var tag in item.BlogTags)
                     {
-                        <a href="/blog/tags/@tag.Tag" class="post-summary-tag">@tag.Tag</a>
+                        <a href="/blog/tags/@(tag.Tag).html" class="post-summary-tag">@tag.Tag</a>
                     }
                 </div>
             </div>
@@ -53,7 +51,7 @@
     }
 
     <div class="pull-right">
-        <div class="row">
+        <div>
             @Model.Blogs.Pager("pager")
         </div>
     </div>
@@ -65,16 +63,10 @@
 <aside class="col-lg-3 hidden-md hidden-sm hidden-xs">
     <div class="hidden-xs">
         <section class="blog-info-phone visible-xs">
-            @*<div class="card-bkimg-container">
-                <img class="card-bkimg" alt="" src="/content/Images/bloggerhead.jpg">
-            </div>*@
             <div class="media">
-                @*<a class="pull-left" href="/home/about">
-                    <img src="/content/Images/bloggerhead.jpg" alt="yuabd" class="media-object img-circle blogger-head-pic">
-                </a>*@
                 <div class="media-body">
                     <p>
-                        .NET, Web
+                        .NET, Web Developer
                     </p>
                     <div class="btn-group btn-group-justified">
                         <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
@@ -96,12 +88,12 @@
 
         <div class="container visible-md visible-sm animate">
             <div class="media">
-                @*<a class="pull-left" href="/home/about">
-                    <img src="/content/Images/bloggerhead.jpg" alt="Edi Wang" class="media-object img-circle blogger-head-pic">
-                </a>*@
+                <a class="pull-left" href="/home/about.html">
+                    <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle blogger-head-pic">
+                </a>
                 <div class="media-body">
                     <p>
-                        .NET, Web
+                        .NET, Web Developer
                     </p>
                     <div class="btn-group">
                         <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
@@ -122,13 +114,13 @@
         </div>
 
         <section class="blog-info-desktop-lg visible-lg">
-            @*<div class="card-bkimg-container">
-                <img class="card-bkimg" alt="" src="/content/Images/bloggerhead.jpg">
-            </div>*@
+            <div class="card-bkimg-container">
+                <img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
+            </div>
             <div class="blog-info-photo-text text-center">
-                @*<a href="/home/about">
-                    <img src="/content/Images/bloggerhead.jpg" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
-                </a>*@
+                <a href="/home/about.html">
+                    <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
+                </a>
                 <div class="bor"></div>
                 <div>
                     <h3 class="marginzero">
@@ -136,7 +128,7 @@
                     </h3>
                     <div class="bor"></div>
                     <p>
-                        .NET, Web
+                        .NET, Web Developer
                     </p>
                 </div>
             </div>
@@ -167,7 +159,7 @@
                 <div class="toptags-list">
                     @foreach (var item in Model.PopularTags)
                     {
-                        <a href="/blog/tags/@item.Tag">@item.Tag</a>
+                        <a href="/blog/tags/@(item.Tag).html">@item.Tag</a>
                     }
                 </div>
             </div>
@@ -190,7 +182,7 @@
                         </p>
                     </div>
                     <div class="recent-comment-item-footer">
-                        <a href="/blog/post/@item.Blog.Slug" target="_blank"><i class="fa fa-bookmark-o"></i> @item.Blog.BlogTitle</a>
+                        <a href="/blog/post/@(item.Blog.Slug).html" target="_blank"><i class="fa fa-bookmark-o"></i> @item.Blog.BlogTitle</a>
                     </div>
                 }
             </div>
