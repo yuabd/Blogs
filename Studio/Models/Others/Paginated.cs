@@ -86,7 +86,7 @@ namespace Studio.Models.Others
 			if (Continued)
 			{
 				if (prevLimit - PageRange > 0)
-					pagesList = string.Format("<li><a class=\"btn btn-two\" href=\"" + pageParameter + "{2}\">...</a></li> {1}",
+					pagesList = string.Format("<li><a href=\"" + pageParameter + "{2}\">...</a></li> {1}",
 						prevLimit - PageRange, pagesList, urlParameters);
 
 				if (prevLimit + PageRange <= TotalPages)

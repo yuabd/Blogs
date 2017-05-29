@@ -17,7 +17,7 @@ namespace Studio.Controllers
         private BlogService bs = new BlogService();
 
         // GET: /Blog/
-        [GenerateStaticFileAttribute]
+        //[GenerateStaticFileAttribute]
         public ActionResult Index(int? page, string keywords)
         {
             var blogs = bs.GetBlogs().Where(m => m.IsPublic == true);
@@ -167,38 +167,15 @@ namespace Studio.Controllers
             return View(comments);
         }
 
+        [HttpPost]
         public ActionResult AddComment(BlogComment blogComment)
         {
-            //var blog = bs.GetBlog(blogComment.BlogID);
-            //var blogComments = bs.GetBlogComments(blog.BlogID).ToList();
-            //var categories = bs.GetBlogCategories().ToList();
-            //var popularTags = bs.GetPopularTags().Take(10).ToList();
-            //var archives = bs.GetArchives().ToList();
-            //var preNextBlog = bs.GetPreNextBlog(blog.BlogID);
-
             if (ModelState.IsValid)
             {
                 bs.InsertBlogComment(blogComment);
-
-                //var template = new Studio.Models.Others.MessageTemplate("/content/post.htm");
-                //template.Set("ContactName", blogComment.Name);
-                //template.Set("Email", blogComment.Email);
-                //template.Set("Message", blogComment.Message);
-
-                //var mail = new Studio.Models.Others.MailBag();
-                //mail.ToMailAddress = blogComment.Email;
-                //mail.Message = template.Content;
-                //mail.CcMailAddress = "yuabd1991@gmail.com";
-                //mail.Subject = template.Subject;
-                //mail.Send(true);
             }
 
             return RedirectToAction("GetApprovedCommentOfPost", new { id = blogComment.BlogID });
-
-
-            //var model = new BlogViewModel(blog, blogComment, blogComments, categories, popularTags, archives, preNextBlog);
-
-            //return View("Post", model);
         }
 
     }

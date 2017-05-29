@@ -36,18 +36,18 @@ namespace Studio
 
             //routes.MapRoute("NoAction", "{controller}.html", new { controller = "Company", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//无Action的匹配
             routes.MapRoute("NoID", "{controller}/{action}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//无ID的匹配
-            routes.MapRoute("Html", "{controller}/{action}/{id}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//html的匹配
-            //routes.MapRoute("Default", "{controller}/{action}/{id}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//默认匹配
+            //routes.MapRoute("Html", "{controller}/{action}/{id}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//html的匹配
+            routes.MapRoute("Default", "{controller}/{action}/{id}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//默认匹配
             routes.MapRoute("Root", "", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//根目录匹配
 
 
-            routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//默认匹配
+            //routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//默认匹配
             //routes.MapRoute("Admin", "{areas}/{controller}/{action}/{id}", new { controller = "Blog", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Areas.Admin.Controllers" });//根目录匹配
         }
 
         protected void Application_Start()
         {
-            Database.SetInitializer<SiteDataContext>(new SiteDataContextInitializer());
+            //Database.SetInitializer<SiteDataContext>(new SiteDataContextInitializer());
 
             AreaRegistration.RegisterAllAreas();
 
