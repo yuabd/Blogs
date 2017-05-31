@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Studio.Controllers
 {
+    [TestFilter]
     public class HomeController : Controller
     {
         private BlogService bs = new BlogService();
@@ -29,6 +30,8 @@ namespace Studio.Controllers
                              select l);
                 }
             }
+
+            ViewBag.Count = blogs.Select(m => m.BlogID).Count();
 
             var pBlogs = new Paginated<Blog>(blogs.ToList(), page ?? 1, 8);
 

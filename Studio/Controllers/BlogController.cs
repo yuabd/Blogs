@@ -33,6 +33,8 @@ namespace Studio.Controllers
                 }
             }
 
+            ViewBag.Count = blogs.Select(m => m.BlogID).Count();
+
             var pBlogs = new Paginated<Blog>(blogs.ToList(), page ?? 1, 8);
 
             var categories = bs.GetBlogCategories().ToList();
@@ -57,6 +59,8 @@ namespace Studio.Controllers
             var ids = id.Uint();
             var blogs = bs.GetBlogsByCategory(ids).Where(m => m.IsPublic == true);
 
+            ViewBag.Count = blogs.Select(m => m.BlogID).Count();
+
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
             var categories = bs.GetBlogCategories().ToList();
@@ -75,6 +79,9 @@ namespace Studio.Controllers
         public ActionResult Tags(string id, int? page)
         {
             var blogs = bs.GetBlogsByTag(id).Where(m => m.IsPublic == true);
+
+            ViewBag.Count = blogs.Select(m => m.BlogID).Count();
+
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
             var categories = bs.GetBlogCategories().ToList();
@@ -105,6 +112,9 @@ namespace Studio.Controllers
             }
 
             var blogs = bs.GetBlogsByArchive(id, month, type).Where(m => m.IsPublic == true);
+
+            ViewBag.Count = blogs.Select(m => m.BlogID).Count();
+
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
             var categories = bs.GetBlogCategories().ToList();

@@ -1,61 +1,139 @@
-﻿	<h2>博客分类</h2>
-	<div class="sidebar-box">
-		<ul class="bottom-list">
-			@foreach (var item in Model.Categories)
-   {
-			<li><a href="/Blog/Categories/@item.Slug" title="@item.CategoryName">@item.CategoryName</a></li>
-   }
-		</ul>
-	</div>
-	<div class="sidebar-box-footer"></div>
+﻿@model Studio.Models.Site.BlogsViewModel
+<aside class="col-lg-3 hidden-md hidden-sm hidden-xs">
+    <div class="hidden-xs">
+        <section class="blog-info-phone visible-xs">
+            <div class="media">
+                <div class="media-body">
+                    <p>
+                        .NET, Web Developer
+                    </p>
+                    <div class="btn-group btn-group-justified">
+                        <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
+                            <i class="fa fa-envelope"></i>
+                            Email
+                        </a>
+                        <a href="https://github.com/yuabd" target="_blank" class="btn btn-primary" title="Github">
+                            <i class="fa fa-github"></i>
+                            GitHub
+                        </a>
+                        <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
+                            <i class="fa fa-weibo"></i>
+                            Weibo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-	<h2>热门话题</h2>
-	<div class="sidebar-box">
-		<ul class="bottom-list">
-			@foreach (var item in Model.PopularTags)
-   {
-		<li><a href="/Blog/Tags/@item" title="@item">@item</a></li>
-   }
-		</ul>
-	</div>
-	<div class="sidebar-box-footer"></div>
+        <div class="container visible-md visible-sm animate">
+            <div class="media">
+                <a class="pull-left" href="/home/about.html">
+                    <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle blogger-head-pic">
+                </a>
+                <div class="media-body">
+                    <p>
+                        .NET, Web Developer
+                    </p>
+                    <div class="btn-group">
+                        <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
+                            <i class="fa fa-envelope"></i>
+                            Email
+                        </a>
+                        <a href="https://github.com/yuabd" target="_blank" class="btn btn-primary" title="Github">
+                            <i class="fa fa-github"></i>
+                            GitHub
+                        </a>
+                        <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
+                            <i class="fa fa-weibo"></i>
+                            Weibo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<h2>Archive</h2>
-	<div class="sidebar-box">
-		<ul class="bottom-list">
-			@foreach (var item in Model.Archives)
-   {
-	   if (item.Month != null)
-	   {
-			<li><a href="/Blog/Archives/@item.Year/?month=@item.Month">@item.Month (@item.Count)</a></li>
-	   }
-	   else
-	   {
-			<li><a href="/Blog/Archives/@item.Year">@item.Year (@item.Count)</a></li>
-	   }
-   }
-		</ul>
-	</div>
-	<div class="sidebar-box-footer"></div>
+        <section class="blog-info-desktop-lg visible-lg">
+            <div class="card-bkimg-container">
+                <img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
+            </div>
+            <div class="blog-info-photo-text text-center">
+                <a href="/home/about.html">
+                    <img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
+                </a>
+                <div class="bor"></div>
+                <div>
+                    <h3 class="marginzero">
+                        chen
+                    </h3>
+                    <div class="bor"></div>
+                    <p>
+                        .NET, Web Developer
+                    </p>
+                </div>
+            </div>
+            <div class="bor"></div>
+            <div class="btn-group btn-group-justified">
+                <a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
+                    <i class="fa fa-envelope"></i>
+                    Email
+                </a>
+                <a href="https://github.com/yuabd" target="_blank" class="btn btn-primary">
+                    <i class="fa fa-github"></i>
+                    GitHub
+                </a>
+                <a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
+                    <i class="fa fa-weibo"></i>
+                    Weibo
+                </a>
+            </div>
+        </section>
 
-	<h2>最近文章</h2>
-	<div class="sidebar-box">
-		<ul class="bottom-list">
-			@foreach (var item in Studio.Helpers.ListHelper.GetBlogList())
-   {
-	   <li><a href="/Blog/Post/@item.Slug" title="@item.BlogTitle">@item.BlogTitle</a></li>
-   }
-		</ul>
-	</div>
-	<div class="sidebar-box-footer"></div>
+        <div class="bor"></div>
+    </div>
+    <div class="bor"></div>
+    <section class="top-tags">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top Tags</div>
+            <div class="panel-body">
+                <div class="toptags-list">
+                    @foreach (var item in Model.PopularTags)
+                    {
+                        <a href="/blog/tags/@(item.Tag).html">@item.Tag</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="bor"></div>
+    <section class="recent-comments">
+        <div class="panel panel-default">
+            <div class="panel-heading">Recent Comments</div>
+            <div class="list-group">
+                @foreach (var item in new Studio.Services.BlogService().GetComments().Where(m => m.IsPublic == true).Take(10).ToList())
+                {
+                    <div class="list-group-item">
+                        <strong data-toggle="tooltip" data-placement="top" title="" data-original-title="@item.DateCreated">
+                            <i class="fa fa-user"></i>
+                            @item.Name
+                        </strong>
+                        <p class="justifytext text-muted recent-comment-item-content">
+                            @item.Message
+                        </p>
+                    </div>
+                    <div class="recent-comment-item-footer">
+                        <a href="/blog/post/@(item.Blog.Slug).html" target="_blank"><i class="fa fa-bookmark-o"></i> @item.Blog.BlogTitle</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    <div class="bor"></div>
+    <section class="friend-anks">
+        <div class="panel panel-default">
+            <div class="panel-heading">Friends Link</div>
 
-	<h2>近期评论</h2>
-	<div class="sidebar-box">
-		<ul class="bottom-list">
-			@foreach (var item in Studio.Helpers.ListHelper.GetBlogComments())
-   {
-	   <li>@item.Name 在<a href="/Blog/Post/@Studio.Helpers.LabelHelper.GetBlog(item.BlogID).Slug" title="@Studio.Helpers.LabelHelper.GetBlog(item.BlogID).BlogTitle">@Studio.Helpers.LabelHelper.GetBlog(item.BlogID).BlogTitle</a>的评论</li>   
-   }
-		</ul>
-	</div>
-	<div class="sidebar-box-footer"></div>
+            <ul class="list-group">
+            </ul>
+        </div>
+    </section>
+</aside>
