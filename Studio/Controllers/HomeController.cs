@@ -35,16 +35,16 @@ namespace Studio.Controllers
 
             var pBlogs = new Paginated<Blog>(blogs.ToList(), page ?? 1, 8);
 
-            var categories = bs.GetBlogCategories().ToList();
+            //var categories = bs.GetBlogCategories().ToList();
 
             var popularTags = (from p in bs.GetTags()
                                group p by new { p.Tag } into t
                                orderby t.Count() descending
                                select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
 
-            var archives = bs.GetArchives().ToList();
+            //var archives = bs.GetArchives().ToList();
 
-            var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
+            var model = new BlogsViewModel(pBlogs, null, popularTags, null);
             ViewBag.PageTitle = "yuabd's Blog";
             ViewBag.Blog = "current";
 

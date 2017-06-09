@@ -60,12 +60,12 @@
                                     <li><a href="/blog/index.html">All Posts</a></li>
                                     @foreach (var item in new Studio.Services.BlogService().GetBlogCategories().ToList())
                                     {
-                                    <li>
-                                        <a href="/blog/Categories/@(item.CategoryID).html"
-                                           title="@item.CategoryName">
-                                            @item.CategoryName
-                                        </a>
-                                    </li>
+                                        <li>
+                                            <a href="/blog/Categories/@(item.CategoryID).html"
+                                               title="@item.CategoryName">
+                                                @item.CategoryName
+                                            </a>
+                                        </li>
                                     }
                                 </ul>
                             </li>
@@ -74,6 +74,13 @@
                                 <a href="/home/about.html" class="animate">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                     ABOUT
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/json.html" class="animate">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    Json在线编辑器
                                 </a>
                             </li>
                         </ul>
@@ -184,29 +191,30 @@
                 @RenderBody()
             </div>
         </div>
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", false)
 
-    <script>
+    <script type="text/javascript">
         var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?80fb7adcf09e179855b314a2f2c794de";
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(hm, s);
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?80fb7adcf09e179855b314a2f2c794de";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
 
-          var bp = document.createElement('script');
-          var curProtocol = window.location.protocol.split(':')[0];
-          if (curProtocol === 'https') {
-              bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-          }
-          else {
-              bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-          }
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(bp, s);
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
         })();
     </script>
 </body>

@@ -37,16 +37,16 @@ namespace Studio.Controllers
 
             var pBlogs = new Paginated<Blog>(blogs.ToList(), page ?? 1, 8);
 
-            var categories = bs.GetBlogCategories().ToList();
+            //var categories = bs.GetBlogCategories().ToList();
 
             var popularTags = (from p in bs.GetTags()
                                group p by new { p.Tag } into t
                                orderby t.Count() descending
                                select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
 
-            var archives = bs.GetArchives().ToList();
+            //var archives = bs.GetArchives().ToList();
 
-            var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
+            var model = new BlogsViewModel(pBlogs, null, popularTags, null);
             ViewBag.PageTitle = string.IsNullOrEmpty(keywords) ? "All Post" : "搜索结果: " + keywords;
             ViewBag.Blog = "current";
 
@@ -151,13 +151,13 @@ namespace Studio.Controllers
             //blogComment.IsPublic = true;
             //blogComment.ValidationCodeSource = DateTime.Now.Millisecond.ToString();
 
-            var blogComments = bs.GetBlogComments(blogID).Where(m => m.IsPublic == true).ToList();
-            var categories = bs.GetBlogCategories().ToList();
+            ViewBag.CommentCount = bs.GetBlogComments(blogID).Where(m => m.IsPublic == true).Select(m => m.BlogID).Count();
+            //var categories = bs.GetBlogCategories().ToList();
             var popularTags = bs.GetPopularTags().Take(10).ToList();
-            var archives = bs.GetArchives().ToList();
+            //var archives = bs.GetArchives().ToList();
 
             var preNextBlog = bs.GetPreNextBlog(blogID);
-            var model = new BlogViewModel(blog, new BlogComment(), blogComments, categories, popularTags, archives, preNextBlog);
+            var model = new BlogViewModel(blog, new BlogComment(), null, null, popularTags, null, preNextBlog);
 
             ViewBag.Blog = "current";
             return View(model);

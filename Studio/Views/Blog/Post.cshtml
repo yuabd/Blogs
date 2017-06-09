@@ -36,8 +36,6 @@
             <div class="visible-xs">
                 <div class="post-publish-info">
                     <time datetime="@Model.Blog.DateCreated">@Model.Blog.DateCreated</time>
-
-                    @*<span>(Last Edit @Model.Blog.)</span>*@
                 </div>
             </div>
 
@@ -73,18 +71,6 @@
         <section class="post-content clearfix">
             @Html.Raw(Model.Blog.BlogContent)
         </section>
-        @*<div class="post-slug-actions clearfix">
-                <div class="pull-right">
-                    <button class="btn icon-btn btn-success btn-ratings" data-postid="8fccb47b-dc32-4926-afa9-a695372b9440" data-islike="true">
-                        <span class="glyphicon btn-glyphicon glyphicon-thumbs-up img-circle text-success"></span>Like (<span class="likehits-num">14</span>)
-                    </button>
-
-                    <button class="btn icon-btn btn-primary" data-toggle="modal" data-target="#qrcode-window">
-                        <span class="glyphicon btn-glyphicon glyphicon-qrcode img-circle text-primary"></span>QR Code
-                    </button>
-                </div>
-                <span class="text-muted none ratemessage">Thanks For Your Rating</span>
-            </div>*@
         <div class="bor visible-xs"></div>
     </article>
     <div class="hidden-print">
@@ -125,7 +111,7 @@
 
         <div class="bor"></div>
         <div class="panel panel-primary comment-form-containter">
-            <div class="panel-heading">Comments <span class="badge pull-right">@Model.BlogComments.Count</span></div>
+            <div class="panel-heading">Comments <span class="badge pull-right">@ViewBag.CommentCount</span></div>
             <div class="panel-body">
                 <div>
                     <form action="/Blog/AddComment.html" data-ajax="true" data-ajax-complete="commentComplete" data-ajax-failure="commentBlowUp" data-ajax-loading="#loadingIndicator" data-ajax-mode="replace" data-ajax-success="commentSuccess" data-ajax-update="#ajaxTarget" id="form0" method="post" novalidate="novalidate">
@@ -188,4 +174,6 @@
         <div class="bor"></div>
     </div>
 </section>
-@Html.Partial("_BlogSidebar", Model)
+
+
+@Html.Partial("~/Views/Shared/_BlogSidebar.cshtml", Model.PopularTags)

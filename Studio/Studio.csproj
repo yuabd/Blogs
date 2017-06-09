@@ -135,6 +135,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -233,6 +234,20 @@
     <Content Include="App_Themes\home\scripts\jquery.lazyload.min.js" />
     <Content Include="App_Themes\home\scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="App_Themes\home\scripts\prettify.js" />
+    <Content Include="App_Themes\json\css\app.css" />
+    <Content Include="App_Themes\json\css\core.css" />
+    <Content Include="App_Themes\json\css\jquery.reject.css" />
+    <Content Include="App_Themes\json\css\jsoneditor.css" />
+    <Content Include="App_Themes\json\images\jsoneditor-icons.png" />
+    <Content Include="App_Themes\json\scripts\app.js" />
+    <Content Include="App_Themes\json\scripts\bejsoncommon20161019-1.js" />
+    <Content Include="App_Themes\json\scripts\jquery.js" />
+    <Content Include="App_Themes\json\scripts\jquery.reject.360.js" />
+    <Content Include="App_Themes\json\scripts\jquery.reject.js" />
+    <Content Include="App_Themes\json\scripts\jsoneditor.js" />
+    <Content Include="App_Themes\json\scripts\jsonlint.js" />
+    <Content Include="App_Themes\json\scripts\notify.js" />
+    <Content Include="App_Themes\json\scripts\splitter.js" />
     <Content Include="App_Themes\Site\images\ipad-hand.png" />
     <Content Include="App_Themes\Site\images\ipad-screen.gif" />
     <Content Include="App_Themes\Site\images\iphone-hand.png" />
@@ -719,6 +734,7 @@
     <Content Include="App_Themes\home\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="App_Themes\home\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="App_Themes\home\fonts\KlavikaMedium-Plain.woff" />
+    <Content Include="Views\Json\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "JSON在线编辑器";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewBag.MetaKeywords = "在线编辑器, JSON在线格式化工具, JSON验证工具, JSON Editor Online";
+    ViewBag.MetaDescription = "在线编辑器, JSON在线格式化工具, JSON验证工具, JSON Editor Online";
+}
+
+<section class="col-lg-12 col-md-12">
+    <div class="aw-content-wrap clearfix">
+        <div class=" aw-main-content" style="min-height:700px;max-height:2000px">
+
+            <div style="clear:both"></div>
+            <style>
+                .a2016 {
+                    color: white;
+                    font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu;
+                    text-align: center;
+                    background: red;
+                    border-radius: 2px;
+                }
+            </style>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <link rel="stylesheet" type="text/css" href="~/App_Themes/json/css/core.css" />
+                    <style type="text/css">
+                        * {
+                            font-size: 13px;
+                        }
+
+                        #body-wrapper {
+                            width: 100%;
+                        }
+
+                        #content-wrapper {
+                            width: 100%;
+                            height: 100%;
+                            padding: 0px;
+                            padding-top: 18px;
+                            padding-bottom: 88px;
+                            margin-bottom: -85px;
+                            text-align: left;
+                            -moz-box-sizing: border-box;
+                            -webkit-box-sizing: border-box;
+                            box-sizing: border-box;
+                        }
+
+                        #copyright-wrapper {
+                            margin: 0 auto;
+                            margin-bottom: 0px;
+                        }
+                    </style>
+
+                    <div id="content-wrapper" style="height:600px">
+                        <div id="jsonformatter"></div>
+                        <div id="splitter"></div>
+                        <div id="jsoneditor"></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+
+                    <link rel="stylesheet" type="text/css" href="~/App_Themes/json/css/app.css">
+                    <link rel="stylesheet" type="text/css" href="~/App_Themes/json/css/jsoneditor.css">
+                    <script type="text/javascript" src="~/App_Themes/json/scripts/jsoneditor.js"></script>
+                    <script type="text/javascript" src="~/App_Themes/json/scripts/notify.js"></script>
+                    <script type="text/javascript" src="~/App_Themes/json/scripts/splitter.js"></script>
+                    <script type="text/javascript" src="~/App_Themes/json/scripts/app.js"></script>
+                    <script type="text/javascript" src="~/App_Themes/json/scripts/jsonlint.js"></script>
+
+                    <link rel="stylesheet" type="text/css" href="~/App_Themes/json/css/jquery.reject.css" />
+                    <script type="text/javascript" src="~/App_Themes/json/scripts/jquery.js"></script>
+                    <script type="text/javascript" src="~/App_Themes/json/scripts/jquery.reject.js"></script>
+                    <script type="text/javascript" src="~/App_Themes/json/scripts/jquery.reject.360.js"></script>
+                    <script type="text/javascript">
+                        try {
+                            app.load();
+                            app.resize();
+                        }
+                        catch (e) {
+                        }
+                    </script>
+
+                </div>
+                <input type="hidden" id="tabsize" value="1" />
+                <div class="panel-footer"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@*<script src="~/App_Themes/json/scripts/bejsoncommon20161019-1.js"></script>*@

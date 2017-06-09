@@ -1,4 +1,4 @@
-﻿@model Studio.Models.Site.BlogsViewModel
+﻿@model IList<Studio.Models.Others.Anonymous>
 <aside class="col-lg-3 hidden-md hidden-sm hidden-xs">
     <div class="hidden-xs">
         <section class="blog-info-phone visible-xs">
@@ -96,7 +96,7 @@
             <div class="panel-heading">Top Tags</div>
             <div class="panel-body">
                 <div class="toptags-list">
-                    @foreach (var item in Model.PopularTags)
+                    @foreach (var item in Model)
                     {
                         <a href="/blog/tags/@(item.Tag).html">@item.Tag</a>
                     }
@@ -136,4 +136,30 @@
             </ul>
         </div>
     </section>
+    <div class="bor"></div>
+    <section class="visible-lg visible-xs visible-md visible-sm visible-xs">
+        <a data-type="13" data-tmpl="230x312" data-tmplid="210" data-rd="2" data-style="2" data-border="1" href="#"></a>
+        <a data-type="5" data-tmpl="210x200" data-tmplid="135" data-style="2" data-border="1" href="#">淘宝充值</a>
+    </section>
 </aside>
+
+
+<script type="text/javascript">
+    (function(win,doc){
+        var s = doc.createElement("script"), h = doc.getElementsByTagName("head")[0];
+        if (!win.alimamatk_show) {
+            s.charset = "gbk";
+            s.async = true;
+            s.src = "https://alimama.alicdn.com/tkapi.js";
+            h.insertBefore(s, h.firstChild);
+        };
+        var o = {
+            pid: "mm_43017247_26536259_104164351",/*推广单元ID，用于区分不同的推广渠道*/
+            appkey: "",/*通过TOP平台申请的appkey，设置后引导成交会关联appkey*/
+            unid: "",/*自定义统计字段*/
+            type: "click" /* click 组件的入口标志 （使用click组件必设）*/
+        };
+        win.alimamatk_onload = win.alimamatk_onload || [];
+        win.alimamatk_onload.push(o);
+    })(window,document);
+</script>

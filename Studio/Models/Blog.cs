@@ -36,17 +36,18 @@ namespace Studio.Models
 		[MaxLength(56)]	//50 + "-" + 99,000
 		public string Slug { get; set; }
         
-		[NotMapped]
-		public string PictureFolder { get { return "/Content/Pictures/Blog"; } }
-		[NotMapped]
-		public List<BlogTag> BlogTags { get { return new BlogService().GetBlogTags(BlogID).ToList(); } }
-		[NotMapped]
-		public List<BlogComment> BlogComments { get { return new BlogService().GetBlogComments(BlogID).ToList(); } }
-		[NotMapped]
-		public BlogCategory BlogCategory { get { return new BlogService().GetBlogCategory(CategoryID); } }
+		
+		public virtual List<BlogTag> BlogTags { get { return new BlogService().GetBlogTags(BlogID).ToList(); } }
+		
+		public virtual List<BlogComment> BlogComments { get { return new BlogService().GetBlogComments(BlogID).ToList(); } }
+		
+		public virtual BlogCategory BlogCategory { get { return new BlogService().GetBlogCategory(CategoryID); } }
+
 		[NotMapped]
 		public string PictureThumbnail { get { return string.IsNullOrEmpty(PictureFile) ? "default.jpg" : PictureFile; } }
-	}
+        [NotMapped]
+        public string PictureFolder { get { return "/Content/Pictures/Blog"; } }
+    }
 
 	public class PreNextBlog
 	{

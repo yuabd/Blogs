@@ -1,0 +1,5 @@
+jQuery(function(){try{var $option={};$option["imagePath"]="/misc/browsers/";$option["reject"]={all:true};$option["display"]=['chrome','firefox','safari','opera'],$option["browserInfo"]={safari:{text:"Apple Safari"},opera:{text:"Opera"}};$option["header"]="<span class=\"bold red\">红色警报</span>",$option["paragraph1"]="您目前使用的浏览器有可能无法正常使用JSON工具!";$option["paragraph2"]="为了不影响您的正常使用, 同时也为了方便您的开发, 我们推荐安装下列浏览器:";$option["closeLink"]="好的, 我知道了!";$option["closeMessage"]="关闭本窗口, 意味着您接受无法正常使用的可能性.";var $reject=false;var $browser=navigator.userAgent.toLowerCase();if($browser.indexOf('360ee')!==-1||$browser.indexOf('360se')!==-1){$reject=true;$option.paragraph1="本站不推荐您用现在的 <span class=\"bold red\">邪恶360浏览器</span>! 它将严重侵犯您的隐私!";$option.paragraph2="为了您的隐私安全, 请换用下列浏览器:";$option.closeLink="我希望隐私被泄露!";$option.closeMessage="<span class=\"bold red\">关闭本窗口, 意味着您接受隐私泄露的可能性</span>.";}
+if($.browser.msie)
+$reject=true;if($reject)
+$.reject($option);}
+catch(e){}});

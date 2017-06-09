@@ -34,7 +34,7 @@ namespace Studio
             //    new[] { "Studio.Controllers" }
             //);
 
-            //routes.MapRoute("NoAction", "{controller}.html", new { controller = "Company", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//无Action的匹配
+            routes.MapRoute("NoAction", "{controller}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//无Action的匹配
             routes.MapRoute("NoID", "{controller}/{action}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//无ID的匹配
             //routes.MapRoute("Html", "{controller}/{action}/{id}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//html的匹配
             routes.MapRoute("Default", "{controller}/{action}/{id}.html", new { controller = "Home", action = "index", id = UrlParameter.Optional }, new[] { "Studio.Controllers" });//默认匹配
