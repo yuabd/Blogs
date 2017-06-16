@@ -98,5 +98,10 @@ G:\github\Blogs\Studio\bin\System.Web.Razor.xml
 G:\github\Blogs\Studio\bin\System.Web.WebPages.xml
 G:\github\Blogs\Studio\bin\System.Web.WebPages.Deployment.xml
 G:\github\Blogs\Studio\bin\System.Web.WebPages.Razor.xml
+G:\github\Blogs\Studio\obj\Release\Studio.csprojResolveAssemblyReference.cache
+G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate.resources
+G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate1.resources
+G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate2.resources
+G:\github\Blogs\Studio\obj\Release\Studio.csproj.GenerateResource.Cache
 G:\github\Blogs\Studio\obj\Release\Studio.dll
 G:\github\Blogs\Studio\obj\Release\Studio.pdb

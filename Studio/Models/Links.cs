@@ -6,25 +6,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Studio.Models
 {
-	public class Website
-	{
-		public int WebsiteID { get; set; }
-		public int IndustryID { get; set; }
-		[MaxLength(20)]
-		[Required]
-		public string WebsiteName { get; set; }
-		[MaxLength(20)]
-		[Required]
-		public string Type { get; set; }
-		[Required]
-		[MaxLength(300)]
-		public string WebsiteUrl { get; set; }
-		public DateTime DateCreated { get; set; }
-
-		public virtual ICollection<WebsiteDetail> WebsiteDetails { get; set; }
-		public virtual ICollection<WebsiteUser> WebsiteUsers { get; set; }
-	}
-
 	public class Links
 	{
 		[Key]

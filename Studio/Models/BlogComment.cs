@@ -28,10 +28,9 @@ namespace Studio.Models
 		public bool IsPublic { get; set; }
 		public DateTime DateCreated { get; set; }
         
-		[NotMapped, Required]
-		public string CaptchaCode { get; set; }
-		[NotMapped]
-		public Blog Blog { get { return new Studio.Services.BlogService().GetBlog(BlogID); } }
+		//[NotMapped, Required]
+		//public string CaptchaCode { get; set; }
+		public virtual Blog Blog { get; set; }
 		[NotMapped]
 		public string GravatarHash { get { return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(Email.Trim().ToLower(), "MD5").ToLower(); } }
 	}

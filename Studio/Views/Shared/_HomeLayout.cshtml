@@ -2,8 +2,11 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - Yuabd's Blog</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="@ViewBag.MetaDescription" />
+    <meta name="keywords" content="@ViewBag.MetaKeywords" />
 
     @Styles.Render("~/bundles/bootstrap")
 
@@ -69,17 +72,21 @@
                                     }
                                 </ul>
                             </li>
-
+                            <li>
+                                <a href="http://www.henhaoji.com.cn/blog/post/google-hosts.html" class="animate">
+                                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                    最新hosts下载
+                                </a>
+                            </li>
                             <li>
                                 <a href="/home/about.html" class="animate">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                     ABOUT
                                 </a>
                             </li>
-
                             <li>
                                 <a href="/json.html" class="animate">
-                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-console" aria-hidden="true"></span>
                                     Json在线编辑器
                                 </a>
                             </li>
@@ -191,9 +198,9 @@
                 @RenderBody()
             </div>
         </div>
-
+        
     </div>
-
+    
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", false)
 

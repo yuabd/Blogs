@@ -75,6 +75,8 @@
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -122,21 +124,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BlogController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\LinksController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
-    <Compile Include="Areas\CRM\Controllers\CustomerController.cs" />
-    <Compile Include="Areas\CRM\Controllers\HomeController.cs" />
-    <Compile Include="Areas\CRM\Controllers\OrderController.cs" />
-    <Compile Include="Areas\CRM\Controllers\TaskController.cs" />
-    <Compile Include="Areas\CRM\Controllers\WebsiteController.cs" />
     <Compile Include="Areas\CRM\CRMAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
-    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsonController.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -149,19 +144,25 @@
     <Compile Include="Helpers\ListHelper.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
     <Compile Include="Helpers\Utilities.cs" />
+    <Compile Include="Migrations\201706130737241_InitialCreate.cs" />
+    <Compile Include="Migrations\201706130737241_InitialCreate.Designer.cs">
+      <DependentUpon>201706130737241_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706130825474_InitialCreate1.cs" />
+    <Compile Include="Migrations\201706130825474_InitialCreate1.Designer.cs">
+      <DependentUpon>201706130825474_InitialCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706131121536_InitialCreate2.cs" />
+    <Compile Include="Migrations\201706131121536_InitialCreate2.Designer.cs">
+      <DependentUpon>201706131121536_InitialCreate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin\BaseObject.cs" />
     <Compile Include="Models\Admin\BlogViewModel.cs" />
     <Compile Include="Models\Blog.cs" />
     <Compile Include="Models\BlogCategory.cs" />
     <Compile Include="Models\BlogComment.cs" />
     <Compile Include="Models\BlogTag.cs" />
-    <Compile Include="Models\Case.cs" />
-    <Compile Include="Models\CaseCategory.cs" />
-    <Compile Include="Models\CRM\CustomerViewModel.cs" />
-    <Compile Include="Models\CRM\WebsiteViewModel.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Industry.cs" />
-    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Others\Anonymous.cs" />
     <Compile Include="Models\Others\Archive.cs" />
     <Compile Include="Models\Others\MailBag.cs" />
@@ -169,34 +170,21 @@
     <Compile Include="Models\Others\Paginated.cs" />
     <Compile Include="Models\Others\SiteSettings.cs" />
     <Compile Include="Models\Others\xheditorModel.cs" />
-    <Compile Include="Models\Photo.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductOrderJoin.cs" />
-    <Compile Include="Models\Project.cs" />
     <Compile Include="Models\SiteDataContext.cs" />
     <Compile Include="Models\Site\BlogsViewModel.cs" />
     <Compile Include="Models\Site\BlogViewModel.cs" />
     <Compile Include="Models\Site\ContactViewModel.cs" />
     <Compile Include="Models\Site\ContentViewModel.cs" />
     <Compile Include="Models\Site\LoginViewModel.cs" />
-    <Compile Include="Models\Picture.cs" />
-    <Compile Include="Models\Task.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserRoleJoin.cs" />
-    <Compile Include="Models\Website.cs" />
-    <Compile Include="Models\WebsiteDetail.cs" />
-    <Compile Include="Models\WebsiteUser.cs" />
+    <Compile Include="Models\Links.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BlogService.cs" />
-    <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\MembershipService.cs" />
-    <Compile Include="Services\OrderService.cs" />
-    <Compile Include="Services\PhotoService.cs" />
     <Compile Include="Services\SiteService.cs" />
-    <Compile Include="Services\TaskService.cs" />
-    <Compile Include="Services\WebsiteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
@@ -229,10 +217,12 @@
     <Content Include="App_Themes\home\images\dog-sniffing-ground.png" />
     <Content Include="App_Themes\home\scripts\bootstrap.ediblog.slidemenu.min.js" />
     <Content Include="App_Themes\home\scripts\bootstrap.min.js" />
+    <Content Include="App_Themes\home\scripts\btvideo.app.js" />
     <Content Include="App_Themes\home\scripts\jquery-3.1.1.js" />
     <Content Include="App_Themes\home\scripts\jquery-3.1.1.min.js" />
     <Content Include="App_Themes\home\scripts\jquery.lazyload.min.js" />
     <Content Include="App_Themes\home\scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="App_Themes\home\scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="App_Themes\home\scripts\prettify.js" />
     <Content Include="App_Themes\json\css\app.css" />
     <Content Include="App_Themes\json\css\core.css" />
@@ -848,13 +838,6 @@
     <None Include="Plugins\uploadify\com\adobe\webapis\URLLoaderBase.as" />
     <None Include="Properties\PublishProfiles\Main.pubxml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Company\Service.cshtml" />
-    <Content Include="Views\Company\Brand.cshtml" />
-    <Content Include="Views\Company\Hostting.cshtml" />
-    <Content Include="Views\Company\DingZhi.cshtml" />
-    <Content Include="Views\Company\Error.cshtml" />
-    <Content Include="Views\Company\NotFound.cshtml" />
-    <Content Include="Views\Company\Sitemap.cshtml" />
     <Content Include="Views\Blog\NotFound.cshtml" />
     <Content Include="Views\Shared\_NotFound.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
@@ -864,22 +847,7 @@
     <Content Include="Views\Blog\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_SiteLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Company\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Company\About.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Company\Case.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Blog\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Company\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Web.config" />
@@ -887,10 +855,10 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Areas\CRM\Controllers\" />
     <Folder Include="Areas\CRM\Models\" />
     <Folder Include="Areas\CRM\Views\Shared\" />
     <Folder Include="Html\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Blog\Add.cshtml" />
@@ -929,10 +897,18 @@
     <Content Include="Views\Blog\_Comment.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Company\CaseDetail.cshtml" />
+    <Content Include="Views\Shared\_BlogSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_BlogSidebar.cshtml" />
+    <EmbeddedResource Include="Migrations\201706130737241_InitialCreate.resx">
+      <DependentUpon>201706130737241_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706130825474_InitialCreate1.resx">
+      <DependentUpon>201706130825474_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706131121536_InitialCreate2.resx">
+      <DependentUpon>201706131121536_InitialCreate2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

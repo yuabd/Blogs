@@ -43,28 +43,28 @@ namespace Studio.Models
         public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
         public DbSet<BlogTag> BlogTags { get; set; }
-        public DbSet<Case> Cases { get; set; }
-        public DbSet<CaseCategory> CaseCategories { get; set; }
+        //public DbSet<Case> Cases { get; set; }
+        //public DbSet<CaseCategory> CaseCategories { get; set; }
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserRoleJoin> UserRoleJoins { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
 
-        public DbSet<Picture> Pictures { get; set; }
+        //public DbSet<Picture> Pictures { get; set; }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Industry> Industries { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
+        //public DbSet<Industry> Industries { get; set; }
+        //public DbSet<Order> Orders { get; set; }
+        //public DbSet<Task> Tasks { get; set; }
 
-        public DbSet<Website> Websites { get; set; }
-        public DbSet<WebsiteDetail> WebsiteDetails { get; set; }
-        public DbSet<WebsiteUser> WebsiteUsers { get; set; }
+        //public DbSet<Website> Websites { get; set; }
+        //public DbSet<WebsiteDetail> WebsiteDetails { get; set; }
+        //public DbSet<WebsiteUser> WebsiteUsers { get; set; }
 
-        public DbSet<Photo> Photos { get; set; }
-        public DbSet<PhotoDetail> PhotoDetails { get; set; }
-        public DbSet<PhotoVote> PhotoVotes { get; set; }
+        //public DbSet<Photo> Photos { get; set; }
+        //public DbSet<PhotoDetail> PhotoDetails { get; set; }
+        //public DbSet<PhotoVote> PhotoVotes { get; set; }
 
         public DbSet<Links> Links { get; set; }
 

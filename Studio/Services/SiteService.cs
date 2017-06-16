@@ -14,119 +14,119 @@ namespace Studio.Services
 
         }
 
-        public void InsertCase(Case _case, HttpPostedFileBase file)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                ss.InsertCase(_case, file);
-            }
-        }
+        //public void InsertCase(Case _case, HttpPostedFileBase file)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        ss.InsertCase(_case, file);
+        //    }
+        //}
 
-        public Case GetCase(int caseID)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                return ss.GetCase(caseID);
-            }
-        }
+        //public Case GetCase(int caseID)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        return ss.GetCase(caseID);
+        //    }
+        //}
 
-        public void UpdateCase(Case _case, HttpPostedFileBase file)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                ss.UpdateCase(_case, file);
-            }
-        }
+        //public void UpdateCase(Case _case, HttpPostedFileBase file)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        ss.UpdateCase(_case, file);
+        //    }
+        //}
 
-        public void Delete(int caseID)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                ss.Delete(caseID);
-            }
-        }
+        //public void Delete(int caseID)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        ss.Delete(caseID);
+        //    }
+        //}
 
-        public List<Case> GetCases()
-        {
-            using (SiteService ss = new SiteService())
-            {
-                return ss.GetCases();
-            }
-        }
+        //public List<Case> GetCases()
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        return ss.GetCases();
+        //    }
+        //}
 
-        public List<Case> GetCases(int? categoryID)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                return ss.GetCases(categoryID);
-            }
-        }
+        //public List<Case> GetCases(int? categoryID)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        return ss.GetCases(categoryID);
+        //    }
+        //}
 
-        public List<Case> GetCases(int categoryID)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                return ss.GetCases(categoryID);
-            }
-        }
+        //public List<Case> GetCases(int categoryID)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        return ss.GetCases(categoryID);
+        //    }
+        //}
 
-        public void UploadCasePicture(Case _case, HttpPostedFileBase file)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                ss.UploadCasePicture(_case, file);
-            }
-        }
+        //public void UploadCasePicture(Case _case, HttpPostedFileBase file)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        ss.UploadCasePicture(_case, file);
+        //    }
+        //}
 
-        //case category
-        public void InsertCaseCategory(CaseCategory caseCategory)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                ss.InsertCaseCategory(caseCategory);
-            }
-        }
+        ////case category
+        //public void InsertCaseCategory(CaseCategory caseCategory)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        ss.InsertCaseCategory(caseCategory);
+        //    }
+        //}
 
-        public CaseCategory GetCaseCategory(int caseCategoryID)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                return ss.GetCaseCategory(caseCategoryID);
-            }
-        }
+        //public CaseCategory GetCaseCategory(int caseCategoryID)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        return ss.GetCaseCategory(caseCategoryID);
+        //    }
+        //}
 
-        public void UpdateCaseCategory(CaseCategory caseCategory)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                ss.UpdateCaseCategory(caseCategory);
-            }
-        }
+        //public void UpdateCaseCategory(CaseCategory caseCategory)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        ss.UpdateCaseCategory(caseCategory);
+        //    }
+        //}
 
-        public void DeleteCaseCategory(int caseCategoryID)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                ss.DeleteCaseCategory(caseCategoryID);
-            }
-        }
+        //public void DeleteCaseCategory(int caseCategoryID)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        ss.DeleteCaseCategory(caseCategoryID);
+        //    }
+        //}
 
-        public List<CaseCategory> GetCaseCategories()
-        {
-            using (SiteService ss = new SiteService())
-            {
-                return ss.GetCaseCategories();
-            }
-        }
+        //public List<CaseCategory> GetCaseCategories()
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        return ss.GetCaseCategories();
+        //    }
+        //}
 
 
-        public BaseObject<int> InsertPicture(Picture picture)
-        {
-            using (SiteService ss = new SiteService())
-            {
-                return ss.InsertPicture(picture);
-            }
-        }
+        //public BaseObject<int> InsertPicture(Picture picture)
+        //{
+        //    using (SiteService ss = new SiteService())
+        //    {
+        //        return ss.InsertPicture(picture);
+        //    }
+        //}
 
 		public BaseObject InsertLink(Links links)
 		{
@@ -172,139 +172,139 @@ namespace Studio.Services
 	public class SiteService : DbAccess
 	{
 		//Case 
-		public void InsertCase(Case _case, HttpPostedFileBase file)
-		{
-			db.Cases.Add(_case);
-			Save();
+		//public void InsertCase(Case _case, HttpPostedFileBase file)
+		//{
+		//	db.Cases.Add(_case);
+		//	Save();
 
-			if (file != null)
-			{
-				UploadCasePicture(_case, file);
-			}
+		//	if (file != null)
+		//	{
+		//		UploadCasePicture(_case, file);
+		//	}
 
-            Save();
-		}
+  //          Save();
+		//}
 
-		public Case GetCase(int caseID)
-		{
-			return db.Cases.Find(caseID);
-		}
+		//public Case GetCase(int caseID)
+		//{
+		//	return db.Cases.Find(caseID);
+		//}
 
-		public void UpdateCase(Case _case, HttpPostedFileBase file)
-		{
-			var c = GetCase(_case.CaseID);
+		//public void UpdateCase(Case _case, HttpPostedFileBase file)
+		//{
+		//	var c = GetCase(_case.CaseID);
 
-			c.DateCreated = _case.DateCreated;
-			c.CategoryID = _case.CategoryID;
-			c.Description = _case.Description;
-			c.Name = _case.Name;
-			c.ShortDescription = _case.ShortDescription;
-			c.Website = _case.Website;
+		//	c.DateCreated = _case.DateCreated;
+		//	c.CategoryID = _case.CategoryID;
+		//	c.Description = _case.Description;
+		//	c.Name = _case.Name;
+		//	c.ShortDescription = _case.ShortDescription;
+		//	c.Website = _case.Website;
 
-			if (file != null)
-			{
-				UploadCasePicture(c, file);
-			}
+		//	if (file != null)
+		//	{
+		//		UploadCasePicture(c, file);
+		//	}
 
-            Save();
-		}
+  //          Save();
+		//}
 
-		public void Delete(int caseID)
-		{
-			var c = GetCase(caseID);
-			db.Cases.Remove(c);
+		//public void Delete(int caseID)
+		//{
+		//	var c = GetCase(caseID);
+		//	db.Cases.Remove(c);
 
-            Save();
-		}
+  //          Save();
+		//}
 
-		public List<Case> GetCases()
-		{
-			return db.Cases.OrderByDescending(m => m.DateCreated).ToList();
-		}
+		//public List<Case> GetCases()
+		//{
+		//	return db.Cases.OrderByDescending(m => m.DateCreated).ToList();
+		//}
 
-        public List<Case> GetCases(int? categoryID)
-		{
-			return db.Cases.Where(m => m.CategoryID == categoryID).OrderByDescending(m => m.DateCreated).ToList();
-		}
+  //      public List<Case> GetCases(int? categoryID)
+		//{
+		//	return db.Cases.Where(m => m.CategoryID == categoryID).OrderByDescending(m => m.DateCreated).ToList();
+		//}
 
-        public List<Case> GetCases(int categoryID)
-		{
-            return db.Cases.Where(m => m.CategoryID == categoryID).OrderByDescending(m => m.DateCreated).ToList();
-		}
+  //      public List<Case> GetCases(int categoryID)
+		//{
+  //          return db.Cases.Where(m => m.CategoryID == categoryID).OrderByDescending(m => m.DateCreated).ToList();
+		//}
 
-		public void UploadCasePicture(Case _case, HttpPostedFileBase file)
-		{
-            var fileName = string.Format("{0}-{1}", _case.CaseID, Studio.Helpers.Utilities.GenerateSlug(_case.Name, 43));
+		//public void UploadCasePicture(Case _case, HttpPostedFileBase file)
+		//{
+  //          var fileName = string.Format("{0}-{1}", _case.CaseID, Studio.Helpers.Utilities.GenerateSlug(_case.Name, 43));
 
-            _case.PictureFile = Studio.Helpers.IO.UploadImageFile(file.InputStream, _case.PictureFolder, fileName, 800, 600, Studio.ImageHelper.ImageSaveType.Cut);
+  //          _case.PictureFile = Studio.Helpers.IO.UploadImageFile(file.InputStream, _case.PictureFolder, fileName, 800, 600, Studio.ImageHelper.ImageSaveType.Cut);
 
-			//var picture = string.Format("{0}-{1}.jpg", _case.CaseID, Studio.Helpers.Utilities.GenerateSlug(_case.Name, 43));
+		//	//var picture = string.Format("{0}-{1}.jpg", _case.CaseID, Studio.Helpers.Utilities.GenerateSlug(_case.Name, 43));
 
-			//Studio.Helpers.IO.DeleteFile(_case.PictureFolder, _case.PictureFile);
-			//_case.PictureFile = picture;
+		//	//Studio.Helpers.IO.DeleteFile(_case.PictureFolder, _case.PictureFile);
+		//	//_case.PictureFile = picture;
 
-            //var filePath = HttpContext.Current.Server.MapPath(_case.PictureFolder + "/" + _case.PictureFile);
+  //          //var filePath = HttpContext.Current.Server.MapPath(_case.PictureFolder + "/" + _case.PictureFile);
 
-            //file.SaveAs(filePath);
-			//Studio.Helpers.IO.UploadImageFile(file.InputStream, _case.PictureFolder, _case.PictureFile, 630);
-		}
+  //          //file.SaveAs(filePath);
+		//	//Studio.Helpers.IO.UploadImageFile(file.InputStream, _case.PictureFolder, _case.PictureFile, 630);
+		//}
 
-		//case category
-		public void InsertCaseCategory(CaseCategory caseCategory)
-		{
-			db.CaseCategories.Add(caseCategory);
+		////case category
+		//public void InsertCaseCategory(CaseCategory caseCategory)
+		//{
+		//	db.CaseCategories.Add(caseCategory);
 
-            Save();
-		}
+  //          Save();
+		//}
 
-		public CaseCategory GetCaseCategory(int caseCategoryID)
-		{
-			return db.CaseCategories.Find(caseCategoryID);
-		}
+		//public CaseCategory GetCaseCategory(int caseCategoryID)
+		//{
+		//	return db.CaseCategories.Find(caseCategoryID);
+		//}
 
-		public void UpdateCaseCategory(CaseCategory caseCategory)
-		{
-			var c = GetCaseCategory(caseCategory.CategoryID);
+		//public void UpdateCaseCategory(CaseCategory caseCategory)
+		//{
+		//	var c = GetCaseCategory(caseCategory.CategoryID);
 
-			c.CategoryDescription = caseCategory.CategoryDescription;
-			c.CategoryName = caseCategory.CategoryName;
+		//	c.CategoryDescription = caseCategory.CategoryDescription;
+		//	c.CategoryName = caseCategory.CategoryName;
 
-            Save();
-		}
+  //          Save();
+		//}
 
-		public void DeleteCaseCategory(int caseCategoryID)
-		{
-			var c = GetCaseCategory(caseCategoryID);
+		//public void DeleteCaseCategory(int caseCategoryID)
+		//{
+		//	var c = GetCaseCategory(caseCategoryID);
 
-			db.CaseCategories.Remove(c);
-            Save();
-		}
+		//	db.CaseCategories.Remove(c);
+  //          Save();
+		//}
 
-		public List<CaseCategory> GetCaseCategories()
-		{
-			return db.CaseCategories.ToList();
-		}
+		//public List<CaseCategory> GetCaseCategories()
+		//{
+		//	return db.CaseCategories.ToList();
+		//}
 
 
-		public BaseObject<int> InsertPicture(Picture picture)
-		{
-			BaseObject<int> obj = new BaseObject<int>();
-			try
-			{
-				db.Pictures.Add(picture);
-				db.SaveChanges();
+		//public BaseObject<int> InsertPicture(Picture picture)
+		//{
+		//	BaseObject<int> obj = new BaseObject<int>();
+		//	try
+		//	{
+		//		db.Pictures.Add(picture);
+		//		db.SaveChanges();
 
-				obj.Tag = 1;
-				obj.Result = picture.ID;
-			}
-			catch (Exception e)
-			{
-				obj.Tag = -1;
-				obj.Message = e.Message;
-			}
+		//		obj.Tag = 1;
+		//		obj.Result = picture.ID;
+		//	}
+		//	catch (Exception e)
+		//	{
+		//		obj.Tag = -1;
+		//		obj.Message = e.Message;
+		//	}
 
-			return obj;
-		}
+		//	return obj;
+		//}
 
 		public BaseObject InsertLink(Links links)
 		{

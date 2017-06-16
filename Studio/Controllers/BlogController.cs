@@ -142,7 +142,8 @@ namespace Studio.Controllers
                 System.Web.HttpContext.Current.Response.Status = "404 Moved Permanently";
                 //System.Web.HttpContext.Current.Response.AddHeader("Location", "");
                 //Response.Redirect("/404.html");
-                return View("NotFound");
+                //return View("NotFound");
+                Response.End();
             }
 
             //var blogComment = new BlogComment();
@@ -178,14 +179,25 @@ namespace Studio.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddComment(BlogComment blogComment)
+        public ActionResult AddComment(BlogComment blogComment, string CaptchaCode)
         {
-            if (ModelState.IsValid)
+            try
             {
-                bs.InsertBlogComment(blogComment);
-            }
+                if (Session["Captcha"] != null && Session["Captcha"].ToString() == CaptchaCode)
+                {
+                    bs.InsertBlogComment(blogComment);
 
-            return RedirectToAction("GetApprovedCommentOfPost", new { id = blogComment.BlogID });
+                    return Json(new { code = 1}, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { code = -1 }, JsonRequestBehavior.AllowGet);
+
+                throw new Exception();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
     }

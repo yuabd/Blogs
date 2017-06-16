@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -36,12 +36,11 @@ namespace Studio.Models
 		[MaxLength(56)]	//50 + "-" + 99,000
 		public string Slug { get; set; }
         
+		public virtual List<BlogTag> BlogTags { get; set; }
 		
-		public virtual List<BlogTag> BlogTags { get { return new BlogService().GetBlogTags(BlogID).ToList(); } }
+		public virtual List<BlogComment> BlogComments { get; set; }
 		
-		public virtual List<BlogComment> BlogComments { get { return new BlogService().GetBlogComments(BlogID).ToList(); } }
-		
-		public virtual BlogCategory BlogCategory { get { return new BlogService().GetBlogCategory(CategoryID); } }
+		public virtual BlogCategory BlogCategory { get; set; }
 
 		[NotMapped]
 		public string PictureThumbnail { get { return string.IsNullOrEmpty(PictureFile) ? "default.jpg" : PictureFile; } }

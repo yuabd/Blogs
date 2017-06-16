@@ -5,6 +5,8 @@ using System.Web;
 using Studio.Models;
 using System.Web.Mvc;
 using Studio.Models.Others;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Studio.Services
 {
@@ -51,7 +53,7 @@ namespace Studio.Services
 			b.PageTitle = blog.PageTitle;
 			b.MetaDescription = blog.MetaDescription;
 			b.MetaKeywords = blog.MetaKeywords;
-			b.Slug = blog.BlogID.ToString();
+			//b.Slug = blog.BlogID.ToString();
 			b.IsPublic = blog.IsPublic;
 
 			// file
@@ -180,33 +182,61 @@ namespace Studio.Services
 			db.BlogComments.Add(blogComment);
 			db.SaveChanges();
 
-			//try
-			//{
-			//	var subject = "有新的评论需要您审核-厦门巨易网络科技有限公司";
+            try
+            {
+                var movie = db.Blogs.FirstOrDefault(m => m.BlogID == blogComment.BlogID);
 
-			//	var message = string.Format("<p>Hi {0},</p>" +
-			//		"<p>评论信息:</p>" +
-			//		"{1}" +
-			//		"<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}'>{3}</a></p>" +
-			//		"<p><a href='http://www.henhaoji.com.cn/admin/blog/PendingComments'>点击审核</a></p>",
-			//		blogComment.Name,
-			//		blogComment.Message,
-			//		blogComment.Blog.Slug,
-			//		blogComment.Blog.BlogTitle
-			//		);
-            
-			//	Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
+                var subject = "有新的评论需要您审核-Yuabd's Blog";
 
-			//	mailBag.ToMailAddress = "jerry@henhaoji.com.cn";
-			//	mailBag.CcMailAddress = "yuabd1991@gmail.com";
-			//	mailBag.Subject = subject;
-			//	mailBag.Message = message;
-			//	mailBag.Send(true);
-			//}
-			//catch (Exception e)
-			//{
-			//}
-		}
+                var message = string.Format("<p>Hi {0},</p>" +
+                    "<p>评论信息:</p>" +
+                    "{1}" +
+                    "<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}'>{3}</a></p>" +
+                    "<p><a href='http://www.henhaoji.com.cn/admin/blog/PendingComments'>点击审核</a></p>",
+                    blogComment.Name,
+                    blogComment.Message,
+                    movie.Slug,
+                    movie.BlogTitle
+                    );
+
+                IDictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters.Add("apiUser", "henhaoji");
+                parameters.Add("apiKey", "Nca7r8U1ho2eYXpX");
+                parameters.Add("from", "noreply@henhaoji.com.cn");
+                parameters.Add("fromName", "Yuabd's Blog");
+                parameters.Add("to", "287313827@qq.com");
+                parameters.Add("subject", subject);
+                parameters.Add("html", message);
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://api.sendcloud.net");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    // HTTP GET
+                    HttpResponseMessage response = new System.Net.Http.HttpResponseMessage();
+
+                    response = client.PostAsync("/apiv2/mail/send", new FormUrlEncodedContent(parameters)).Result;
+
+                    var product = "";
+                    if (response.IsSuccessStatusCode)
+                    {
+                        product = response.Content.ReadAsStringAsync().Result;
+                    }
+                }
+
+                //Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
+
+                //mailBag.ToMailAddress = "jerry@henhaoji.com.cn";
+                //mailBag.CcMailAddress = "yuabd1991@gmail.com";
+                //mailBag.Subject = subject;
+                //mailBag.Message = message;
+                //mailBag.Send(true);
+            }
+            catch (Exception e)
+            {
+            }
+        }
 
 		public void UpdateBlogComment(BlogComment blogComment)
 		{
@@ -239,33 +269,59 @@ namespace Studio.Services
 			//c.BlogID
 			db.SaveChanges();
 
-			// notify posting user
+            // notify posting user
 
-			//try
-			//{
-			//	var subject = "您的评论已经审核通过-厦门巨易网络科技有限公司";
+            try
+            {
+                var subject = "您的评论已经审核通过-Yuabd's Blog";
 
-			//	var message = string.Format("<p>Hi {0},</p>" +
-			//		"<p>您的评论已经被审核通过:</p>" +
-			//		"{1}" +
-			//		"<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}.html'>{3}</a></p>",
-			//		c.Name,
-			//		c.Message,
-			//		c.Blog.Slug,
-			//		c.Blog.BlogTitle
-			//		);
+                var message = string.Format("<p>Hi {0},</p>" +
+                    "<p>您的评论已经被审核通过:</p>" +
+                    "{1}" +
+                    "<p>文章: <a href='http://www.henhaoji.com.cn/Blog/Post/{2}.html'>{3}</a></p>",
+                    c.Name,
+                    c.Message,
+                    c.Blog.Slug,
+                    c.Blog.BlogTitle
+                    );
 
-			//	Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
+                IDictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters.Add("apiUser", "henhaoji");
+                parameters.Add("apiKey", "Nca7r8U1ho2eYXpX");
+                parameters.Add("from", "noreply@henhaoji.com.cn");
+                parameters.Add("fromName", "Yuabd's Blog");
+                parameters.Add("to", c.Email);
+                parameters.Add("subject", subject);
+                parameters.Add("html", message);
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://api.sendcloud.net");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-			//	mailBag.ToMailAddress = c.Email;
-			//	mailBag.Subject = subject;
-			//	mailBag.Message = message;
-			//	mailBag.Send(true);
-			//}
-			//catch (Exception e)
-			//{
-			//}
-		}
+                    // HTTP GET
+                    HttpResponseMessage response = new System.Net.Http.HttpResponseMessage();
+
+                    response = client.PostAsync("/apiv2/mail/send", new FormUrlEncodedContent(parameters)).Result;
+
+                    var product = "";
+                    if (response.IsSuccessStatusCode)
+                    {
+                        product = response.Content.ReadAsStringAsync().Result;
+                    }
+                }
+
+                //Studio.Models.Others.MailBag mailBag = new Studio.Models.Others.MailBag();
+
+                //mailBag.ToMailAddress = c.Email;
+                //mailBag.Subject = subject;
+                //mailBag.Message = message;
+                //mailBag.Send(true);
+            }
+            catch (Exception e)
+            {
+            }
+        }
 
 		public IQueryable<BlogComment> GetComments()
 		{

@@ -13,9 +13,6 @@
 
     <script>
         $(function () {
-            $('#word-count').readingTime({
-                wordCountTarget: '.words'
-            });
             $("img").lazyload({
                 effect: "fadeIn"
             });
@@ -135,11 +132,16 @@
                             <span class="input-group-addon captcha-addon">
                                 <img alt="Captcha" id="Captcha" src="/Blog/Captcha.html">
                             </span>
-                            @Html.TextBoxFor(m => m.BlogComment.CaptchaCode, new { @class = "form-control", placeholder = "Captcha Code" })
-                            @Html.ValidationMessageFor(m => m.BlogComment.CaptchaCode)
+                            <input class="form-control" data-val="true"
+                                   data-val-required="验证码是必需的。"
+                                   id="CaptchaCode" name="CaptchaCode"
+                                   placeholder="验证码" type="text" value="">
+
+                            <span class="field-validation-valid"
+                                  data-valmsg-for="CaptchaCode" data-valmsg-replace="true"></span>
                         </div>
-                        @Html.HiddenFor(m => m.BlogComment.BlogID)
-                        @Html.HiddenFor(m => m.BlogComment.IsPublic)
+                        <input id="BlogComment_BlogID" 
+                               name="BlogComment.BlogID" type="hidden" value="@Model.Blog.BlogID" />
                         <div class="form-group">
                             <button type="submit" class="btn btn-success">
                                 <i class="fa fa-fw fa-send"></i>
