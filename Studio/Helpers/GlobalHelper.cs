@@ -24,13 +24,12 @@ namespace Studio
             //WriteInLog(url);
             var list = new List<string>();
             list.Add("henhaoji.com.cn");
-            list.Add("xn--hstt5p.com");
-            list.Add("www.xn--hstt5p.com");
             list.Add("m.henhaoji.com.cn");
+            list.Add("www.henhaoji.com.cn");
 
             if (list.Contains(url))
             {
-                string newurl = "http://www.henhaoji.com.cn" + System.Web.HttpContext.Current.Request.RawUrl;
+                string newurl = "http://blog.henhaoji.com.cn" + System.Web.HttpContext.Current.Request.RawUrl;
                 System.Web.HttpContext.Current.Response.Clear();
                 System.Web.HttpContext.Current.Response.StatusCode = 301;
                 System.Web.HttpContext.Current.Response.Status = "301 Moved Permanently";
