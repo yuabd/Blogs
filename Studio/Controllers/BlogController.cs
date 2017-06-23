@@ -21,7 +21,7 @@ namespace Studio.Controllers
         public ActionResult Index(int? page, string keywords)
         {
             var blogs = bs.GetBlogs().Where(m => m.IsPublic == true);
-            
+
             if (!string.IsNullOrEmpty(keywords))
             {
                 var key = keywords.Split(' ');
@@ -37,18 +37,15 @@ namespace Studio.Controllers
 
             var pBlogs = new Paginated<Blog>(blogs.ToList(), page ?? 1, 8);
 
-            //var categories = bs.GetBlogCategories().ToList();
-
-            var popularTags = (from p in bs.GetTags()
-                               group p by new { p.Tag } into t
-                               orderby t.Count() descending
-                               select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
-
-            //var archives = bs.GetArchives().ToList();
+            var popularTags = bs.GetPopularTags().ToList();
 
             var model = new BlogsViewModel(pBlogs, null, popularTags, null);
+
             ViewBag.PageTitle = string.IsNullOrEmpty(keywords) ? "All Post" : "搜索结果: " + keywords;
-            ViewBag.Blog = "current";
+            if (page.HasValue)
+            {
+                ViewBag.PageTitle += "_第" + page + "页";
+            }
 
             return View(model);
         }
@@ -63,15 +60,19 @@ namespace Studio.Controllers
 
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
-            var categories = bs.GetBlogCategories().ToList();
+            //var categories = bs.GetBlogCategories().ToList();
             var popularTags = bs.GetPopularTags().ToList();
-            var archives = bs.GetArchives().ToList();
+            //var archives = bs.GetArchives().ToList();
 
-            var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
+            var model = new BlogsViewModel(pBlogs, null, popularTags, null);
 
-            ViewBag.PageTitle = bs.GetBlogCategory(id.Value).CategoryName;//.GetBlogCategoryName(ids);
-            ViewBag.Blog = "current";
+            ViewBag.PageTitle = bs.GetBlogCategory(id.Value).CategoryName;
+            //ViewBag.Blog = "current";
 
+            if (page.HasValue)
+            {
+                ViewBag.PageTitle += "_第" + page + "页";
+            }
             return View("Index", model);
         }
 
@@ -84,14 +85,15 @@ namespace Studio.Controllers
 
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
-            var categories = bs.GetBlogCategories().ToList();
-            var popularTags = bs.GetPopularTags().Take(10).ToList();
-            var archives = bs.GetArchives().ToList();
+            var popularTags = bs.GetPopularTags().ToList();
 
-            var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
+            var model = new BlogsViewModel(pBlogs, null, popularTags, null);
 
             ViewBag.PageTitle = "Tag: " + id;
-            ViewBag.Blog = "current";
+            if (page.HasValue)
+            {
+                ViewBag.PageTitle += "_第" + page + "页";
+            }
 
             return View("Index", model);
         }
@@ -117,15 +119,18 @@ namespace Studio.Controllers
 
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
-            var categories = bs.GetBlogCategories().ToList();
-            var popularTags = bs.GetPopularTags().Take(10).ToList();
-            var archives = bs.GetArchives().ToList();
+            //var categories = bs.GetBlogCategories().ToList();
+            //var popularTags = bs.GetPopularTags().Take(10).ToList();
+            //var archives = bs.GetArchives().ToList();
+            var popularTags = bs.GetPopularTags().ToList();
 
-            var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
+            var model = new BlogsViewModel(pBlogs, null, popularTags, null);
 
             ViewBag.PageTitle = string.Format("{0}{1}", string.IsNullOrEmpty(id) ? "" : (id + "年"), month);
-
-            ViewBag.Blog = "current";
+            if (page.HasValue)
+            {
+                ViewBag.PageTitle += "_第" + page + "页";
+            }
             return View("Index", model);
         }
 
@@ -187,7 +192,7 @@ namespace Studio.Controllers
                 {
                     bs.InsertBlogComment(blogComment);
 
-                    return Json(new { code = 1}, JsonRequestBehavior.AllowGet);
+                    return Json(new { code = 1 }, JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(new { code = -1 }, JsonRequestBehavior.AllowGet);

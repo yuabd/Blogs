@@ -1,4 +1,10 @@
 ﻿@model IList<Studio.Models.Others.Anonymous>
+
+@{
+    var bs = new Studio.Services.BlogService();
+    var ss = new Studio.Services.SiteService();
+}
+
 <aside class="col-lg-3 hidden-md hidden-sm hidden-xs">
     <div class="hidden-xs">
         <section class="blog-info-phone visible-xs">
@@ -109,7 +115,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Recent Comments</div>
             <div class="list-group">
-                @foreach (var item in new Studio.Services.BlogService().GetComments().Where(m => m.IsPublic == true).Take(10).ToList())
+                @foreach (var item in bs.GetComments().Where(m => m.IsPublic == true).Take(10).ToList())
                 {
                     <div class="list-group-item">
                         <strong data-toggle="tooltip" data-placement="top" title="" data-original-title="@item.DateCreated">
@@ -127,21 +133,29 @@
             </div>
         </div>
     </section>
-    <div class="bor"></div>
-    <section class="friend-anks">
-        <div class="panel panel-default">
-            <div class="panel-heading">Friends Link</div>
+    @if (HttpContext.Current.Request.Url.ToString().ToLower() == "http://blog.henhaoji.com.cn/")
+    {
 
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <i class="fa fa-fw fa-link text-muted icon-fdlink"></i>
-                    <a href="http://bt.henhaoji.com.cn" target="_blank">
-                        很好记bt
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section>
+        <section class="friend-anks">
+            <div class="panel panel-default">
+                <div class="panel-heading">Friends Link</div>
+
+                <ul class="list-group">
+                    @foreach (var item in ss.GetLinks())
+                    {
+                        <li class="list-group-item">
+                            <i class="fa fa-fw fa-link text-muted icon-fdlink"></i>
+                            <a href="@item.LinkUrl" target="_blank">
+                                @item.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </section>
+        <div class="bor"></div>
+    }
+
     <div class="bor"></div>
     <section class="visible-lg visible-xs visible-md visible-sm visible-xs">
         <a data-type="13" data-tmpl="230x312" data-tmplid="210" data-rd="2" data-style="2" data-border="1" href="#"></a>
@@ -151,7 +165,7 @@
 
 
 <script type="text/javascript">
-    (function(win,doc){
+    (function (win, doc) {
         var s = doc.createElement("script"), h = doc.getElementsByTagName("head")[0];
         if (!win.alimamatk_show) {
             s.charset = "gbk";
@@ -167,5 +181,5 @@
         };
         win.alimamatk_onload = win.alimamatk_onload || [];
         win.alimamatk_onload.push(o);
-    })(window,document);
+    })(window, document);
 </script>
