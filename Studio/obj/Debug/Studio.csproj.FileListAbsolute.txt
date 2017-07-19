@@ -75,6 +75,7 @@ G:\github\Blogs\Studio\bin\EntityFramework.SqlServer.dll
 G:\github\Blogs\Studio\bin\EntityFramework.SqlServerCompact.dll
 G:\github\Blogs\Studio\bin\Microsoft.CSharp.dll
 G:\github\Blogs\Studio\bin\Microsoft.Web.Infrastructure.dll
+G:\github\Blogs\Studio\bin\MonoTorrent.dll
 G:\github\Blogs\Studio\bin\Newtonsoft.Json.dll
 G:\github\Blogs\Studio\bin\System.Data.SqlServerCe.dll
 G:\github\Blogs\Studio\bin\System.Web.Helpers.dll
@@ -100,6 +101,7 @@ G:\github\Blogs\Studio\bin\System.Web.WebPages.Razor.xml
 G:\github\Blogs\Studio\obj\Debug\Studio.Migrations.InitialCreate.resources
 G:\github\Blogs\Studio\obj\Debug\Studio.Migrations.InitialCreate1.resources
 G:\github\Blogs\Studio\obj\Debug\Studio.Migrations.InitialCreate2.resources
+G:\github\Blogs\Studio\obj\Debug\Studio.Migrations.InitialCreate3.resources
 G:\github\Blogs\Studio\obj\Debug\Studio.csproj.GenerateResource.Cache
 G:\github\Blogs\Studio\obj\Debug\Studio.dll
 G:\github\Blogs\Studio\obj\Debug\Studio.pdb

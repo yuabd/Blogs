@@ -10,6 +10,43 @@ using System.Net.Http.Headers;
 
 namespace Studio.Services
 {
+    public class BlogHelper
+    {
+        public void InsertBlog(Blog blog, HttpPostedFileBase file)
+        {
+            using (BlogService bs = new BlogService())
+            {
+                bs.InsertBlog(blog, file);
+            }
+        }
+
+        public Blog GetBlog(int blogID)
+        {
+            using (BlogService bs = new BlogService())
+            {
+                return bs.GetBlog(blogID);
+            }
+        }
+
+        public void DeleteBlog(int blogID)
+        {
+            using (BlogService bs = new BlogService())
+            {
+                bs.DeleteBlog(blogID);
+            }
+        }
+
+        public Blog GetBlog(string slug)
+        {
+            using (BlogService bs = new BlogService())
+            {
+                return bs.GetBlog(slug);
+            }
+        }
+
+
+    }
+
 	public class BlogService : DbAccess
 	{
 		//private SiteDataContext db = new SiteDataContext();
@@ -145,19 +182,8 @@ namespace Studio.Services
             {
                 month = "January";
             }
-            //if (string.IsNullOrEmpty(year))
-            //{
-            //    year = DateTime.Now.Year.ToString();
-            //}
-            //DateTime fromTime = new DateTime();
-            //if (!string.IsNullOrEmpty(year) && !string.IsNullOrEmpty(month))
-            //{
-            DateTime  fromTime = Convert.ToDateTime(year + "/" + month);
-            //}
-            //else if(!string.IsNullOrEmpty())
-            //{
 
-            //}
+            DateTime  fromTime = Convert.ToDateTime(year + "/" + month);
 			
 			DateTime toTime = fromTime;
 			if (type == "year")

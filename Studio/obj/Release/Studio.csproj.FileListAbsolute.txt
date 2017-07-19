@@ -49,6 +49,11 @@ G:\juyi\代码\公司\projects\Studio\bin\Antlr3.Runtime.pdb
 G:\juyi\代码\公司\projects\Studio\bin\EntityFramework.SqlServerCompact.xml
 G:\juyi\代码\公司\projects\Studio\bin\Newtonsoft.Json.xml
 G:\juyi\代码\公司\projects\Studio\bin\System.Web.Optimization.xml
+G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate.resources
+G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate1.resources
+G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate2.resources
+G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate3.resources
+G:\github\Blogs\Studio\obj\Release\Studio.csproj.GenerateResource.Cache
 G:\github\Blogs\Studio\bin\Studio.dll.config
 G:\github\Blogs\Studio\bin\Studio.dll
 G:\github\Blogs\Studio\bin\Studio.pdb
@@ -76,6 +81,7 @@ G:\github\Blogs\Studio\bin\EntityFramework.SqlServer.dll
 G:\github\Blogs\Studio\bin\EntityFramework.SqlServerCompact.dll
 G:\github\Blogs\Studio\bin\Microsoft.CSharp.dll
 G:\github\Blogs\Studio\bin\Microsoft.Web.Infrastructure.dll
+G:\github\Blogs\Studio\bin\MonoTorrent.dll
 G:\github\Blogs\Studio\bin\Newtonsoft.Json.dll
 G:\github\Blogs\Studio\bin\System.Data.SqlServerCe.dll
 G:\github\Blogs\Studio\bin\System.Web.Helpers.dll
@@ -98,10 +104,6 @@ G:\github\Blogs\Studio\bin\System.Web.Razor.xml
 G:\github\Blogs\Studio\bin\System.Web.WebPages.xml
 G:\github\Blogs\Studio\bin\System.Web.WebPages.Deployment.xml
 G:\github\Blogs\Studio\bin\System.Web.WebPages.Razor.xml
-G:\github\Blogs\Studio\obj\Release\Studio.csprojResolveAssemblyReference.cache
-G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate.resources
-G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate1.resources
-G:\github\Blogs\Studio\obj\Release\Studio.Migrations.InitialCreate2.resources
-G:\github\Blogs\Studio\obj\Release\Studio.csproj.GenerateResource.Cache
 G:\github\Blogs\Studio\obj\Release\Studio.dll
 G:\github\Blogs\Studio\obj\Release\Studio.pdb
+G:\github\Blogs\Studio\obj\Release\Studio.csprojResolveAssemblyReference.cache

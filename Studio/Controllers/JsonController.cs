@@ -13,5 +13,10 @@ namespace Studio.Controllers
         {
             return View();
         }
+
+        public ActionResult JsHtmlFormat()
+        {
+            return View();
+        }
     }
 }

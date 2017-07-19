@@ -46,7 +46,12 @@ namespace Studio.Controllers
 
             var model = new BlogsViewModel(pBlogs, null, popularTags, null);
             ViewBag.PageTitle = "yuabd's Blog";
-            ViewBag.Blog = "current";
+            //ViewBag.Blog = "current";
+
+            if (page.HasValue)
+            {
+                ViewBag.PageTitle += "_第" + page + "页";
+            }
 
             return View("~/Views/Blog/Index.cshtml",model);
         }

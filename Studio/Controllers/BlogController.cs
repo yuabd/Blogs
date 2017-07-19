@@ -60,9 +60,7 @@ namespace Studio.Controllers
 
             var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8);
 
-            //var categories = bs.GetBlogCategories().ToList();
             var popularTags = bs.GetPopularTags().ToList();
-            //var archives = bs.GetArchives().ToList();
 
             var model = new BlogsViewModel(pBlogs, null, popularTags, null);
 
