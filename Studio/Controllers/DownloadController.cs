@@ -8,6 +8,7 @@ using System.Xml.Linq;
 
 namespace Studio.Controllers
 {
+	[DomainFilter]
     public class DownloadController : Controller
     {
         // GET: DownloadDefault

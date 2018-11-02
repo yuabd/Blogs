@@ -10,7 +10,7 @@ using Studio.Models.Site;
 
 namespace Studio.Controllers
 {
-	[TestFilter]
+	[DomainFilter]
     public class AccountController : Controller
     {
 		private MembershipService membershipService = new MembershipService();

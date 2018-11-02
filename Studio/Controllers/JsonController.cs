@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Studio.Controllers
 {
+	[DomainFilter]
     public class JsonController : Controller
     {
         // GET: Json

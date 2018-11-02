@@ -11,7 +11,7 @@ using Studio.Helpers;
 
 namespace Studio.Controllers
 {
-    [TestFilter]
+    [DomainFilter]
     public class BlogController : BaseController
     {
         private BlogService bs = new BlogService();

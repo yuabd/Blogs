@@ -15,7 +15,7 @@ using Studio.Services;
 
 namespace Studio
 {
-    public class TestFilter : ActionFilterAttribute
+    public class DomainFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -39,7 +39,7 @@ namespace Studio
             var rawUrl = System.Web.HttpContext.Current.Request.RawUrl.ToLower();
             if (rawUrl.Equals("/company/index.html") || rawUrl.Equals("/company.html") || rawUrl.Equals("/company"))
             {
-                string newurl = "http://www.henhaoji.com.cn";
+                string newurl = "http://blog.henhaoji.com.cn";
                 System.Web.HttpContext.Current.Response.Clear();
                 System.Web.HttpContext.Current.Response.StatusCode = 301;
                 System.Web.HttpContext.Current.Response.Status = "301 Moved Permanently";

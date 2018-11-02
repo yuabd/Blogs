@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Studio.Controllers
 {
-    [TestFilter]
+    [DomainFilter]
     public class HomeController : Controller
     {
         private BlogService bs = new BlogService();
