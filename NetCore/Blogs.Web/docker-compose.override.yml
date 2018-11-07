@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  blogs.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"

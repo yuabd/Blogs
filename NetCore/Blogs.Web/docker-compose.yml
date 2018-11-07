@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  blogs.web:
+    image: blogsweb
+    build:
+      context: .
+      dockerfile: Blogs.Web/Dockerfile
