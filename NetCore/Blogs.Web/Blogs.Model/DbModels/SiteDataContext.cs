@@ -7,53 +7,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogs.Model.DbModels
 {
-	public abstract class DbAccess : IDisposable
-	{
-		protected SiteDataContext db { get; set; }
-
-		public DbAccess(SiteDataContext _db = null)
-		{
-			if (db == null)
-			{
-				db = new SiteDataContext();
-			}
-			else
-			{
-				db = _db;
-			}
-		}
-
-		#region IDisposable 成员
-
-		public void Dispose()
-		{
-			db.Dispose();
-			db = null;
-		}
-
-		#endregion
-	}
-
 	public class SiteDataContext : DbContext
 	{
-		public DbSet<Blog> Blogs { get; set; }
-		public DbSet<BlogComment> BlogComments { get; set; }
-		public DbSet<BlogCategory> BlogCategories { get; set; }
-		public DbSet<BlogTag> BlogTags { get; set; }
-		public DbSet<User> Users { get; set; }
-		public DbSet<UserRole> UserRoles { get; set; }
-		public DbSet<UserRoleJoin> UserRoleJoins { get; set; }
-		public DbSet<UserProfile> UserProfiles { get; set; }
+		public SiteDataContext(DbContextOptions<SiteDataContext> options)
+			: base(options)
+		{
+		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+
+			base.OnConfiguring(optionsBuilder);
+		}
+
+		public DbSet<Blog> Blog { get; set; }
+		public DbSet<BlogComment> BlogComment { get; set; }
+		public DbSet<BlogCategory> BlogCategory { get; set; }
+		public DbSet<BlogTag> BlogTag { get; set; }
+		public DbSet<User> User { get; set; }
+		public DbSet<UserRole> UserRole { get; set; }
+		public DbSet<UserRoleJoin> UserRoleJoin { get; set; }
+		public DbSet<UserProfile> UserProfile { get; set; }
 
 		//public DbSet<Magnet> Magnets { get; set; }
 		//public DbSet<MagnetFile> MagnetFiles { get; set; }
 
-		public DbSet<Links> Links { get; set; }
+		public DbSet<Links> Link { get; set; }
 
 		// Twist our database
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			//modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+			modelBuilder.Entity<BlogTag>().HasKey(m => new { m.BlogID, m.Tag });
+			modelBuilder.Entity<UserRoleJoin>().HasKey(m => new { m.UserID, m.RoleID });
+
 			base.OnModelCreating(modelBuilder);
 		}
 	}

@@ -9,11 +9,11 @@ namespace Blogs.Model.DbModels
 {
 	public class UserRoleJoin
 	{
-		[Key]
-		[Column(Order = 1)]
+		//[Key]
+		//[Column(Order = 1)]
 		public int UserID { get; set; }
-		[Key]
-		[Column(Order = 2)]
+		//[Key]
+		//[Column(Order = 2)]
 		public string RoleID { get; set; }
 
 		public virtual User User { get; set; }

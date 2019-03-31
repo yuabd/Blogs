@@ -1,0 +1,11 @@
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\bin\Release\netcoreapp2.0\Blogs.Model.deps.json
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\bin\Release\netcoreapp2.0\Blogs.Model.dll
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\bin\Release\netcoreapp2.0\Blogs.Model.pdb
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\bin\Release\netcoreapp2.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\bin\Release\netcoreapp2.0\Microsoft.EntityFrameworkCore.xml
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\obj\Release\netcoreapp2.0\Blogs.Model.csproj.CoreCompileInputs.cache
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\obj\Release\netcoreapp2.0\Blogs.Model.AssemblyInfoInputs.cache
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\obj\Release\netcoreapp2.0\Blogs.Model.AssemblyInfo.cs
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\obj\Release\netcoreapp2.0\Blogs.Model.csproj.CopyComplete
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\obj\Release\netcoreapp2.0\Blogs.Model.dll
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Model\obj\Release\netcoreapp2.0\Blogs.Model.pdb

@@ -2,13 +2,16 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace Blogs.Model.ViewModels
+namespace Blogs.Models
 {
 	public class Paginated<T> : List<T>
 	{
+		private IHttpContextAccessor _accessor;
+
 		// Required
 		public int PageIndex { get; private set; }
 		public int TotalRecords { get; private set; }
@@ -24,8 +27,9 @@ namespace Blogs.Model.ViewModels
 		// Private
 		private HtmlString _pageList;
 
-		public Paginated(IEnumerable<T> source, int pageIndex, int pageSize)
+		public Paginated(IQueryable<T> source, int pageIndex, int pageSize, IHttpContextAccessor accessor)
 		{
+			_accessor = accessor;
 			PageIndex = pageIndex;
 			TotalRecords = source.Count();
 			PageSize = pageSize;
@@ -51,9 +55,9 @@ namespace Blogs.Model.ViewModels
 			string pageParameter = "?" + pageParamName + "={0}";
 
 			int currentPage = 1;
-
-			if (HttpContext.Request[pageParamName] != null)
-				currentPage = Convert.ToInt32(HttpContext.Current.Request[pageParamName].ToString());
+			
+			if (!string.IsNullOrWhiteSpace(_accessor.HttpContext.Request.Query[pageParamName].ToString()))
+				currentPage = Convert.ToInt32(_accessor.HttpContext.Request.Query[pageParamName].ToString());
 
 			// calculate limits and parameters
 			int prevLimit = 1;
@@ -113,7 +117,7 @@ namespace Blogs.Model.ViewModels
 
 			pagesList = string.Format("<ul class=\"pagination\">{0}</ul>", pagesList);
 
-			_pageList = MvcHtmlString.Create(pagesList);
+			_pageList = new HtmlString(pagesList);
 
 			return _pageList;
 		}
@@ -131,16 +135,21 @@ namespace Blogs.Model.ViewModels
 
 		private string GetUrlParameterList(string pageParameterName)
 		{
-			var request = HttpContext.Current.Request;
+			var request = _accessor.HttpContext.Request;
 			var parameters = new Dictionary<string, object>();
-			request.QueryString.CopyTo(parameters);
+			//request.QueryString.(parameters);
+
+			//foreach (var item in request.Query.Keys)
+			//{
+			//	parameters.Add(item, request.Query[item].ToString());
+			//}
 
 			string parameterList = "";
-			foreach (KeyValuePair<string, object> item in parameters)
+			foreach (var item in request.Query.Keys)
 			{
-				if (item.Key != pageParameterName)
+				if (item != pageParameterName)
 				{
-					parameterList += string.Format("&{0}={1}", item.Key, HttpUtility.HtmlEncode(item.Value.ToString()));
+					parameterList += string.Format("&{0}={1}", item, HttpUtility.HtmlEncode(request.Query[item].ToString()));
 				}
 			}
 

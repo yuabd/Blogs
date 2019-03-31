@@ -1,0 +1,59 @@
+﻿@model Blogs.Model.ViewModels.BlogsViewModel
+@{
+	ViewData["Title"] = "帮助中心";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="col-lg-9 col-md-12">
+	<h3 class="h3-cat-list">
+		<span>
+			所有文章
+		</span>
+		<span class="badge hidden-xs">@ViewBag.Count</span>
+		<span class="badge visible-xs pull-right">@ViewBag.Count</span>
+	</h3>
+	<hr />
+	@foreach (var item in Model.Blogs)
+	{
+		<article class="article-post-summary">
+			<div class="post-date-box hidden-xs">
+				<h1 class="post-date-day">@item.DateCreated.Day</h1>
+				<div class="post-date-month">
+					@item.DateCreated.Month
+				</div>
+			</div>
+			<div class="post-summary-box">
+				<time datetime="@item.DateCreated" class="none">@item.DateCreated</time>
+
+				<h4 class="post-summary-title">
+					<a href="/blog/post/@(item.BlogID)" title="@item.BlogTitle">@item.BlogTitle</a>
+				</h4>
+
+				<p class="post-summary-text">
+					@Html.Raw(item.MetaDescription)
+				</p>
+				@if (item.BlogTags != null)
+				{
+					<div class="post-summary-tags">
+						@foreach (var tag in item.BlogTags)
+						{
+							<a href="/blog/tags/@(tag.Tag)" title="@tag.Tag" class="post-summary-tag">@tag.Tag</a>
+						}
+					</div>
+				}
+			</div>
+		</article>
+		<div class="bor hidden-xs"></div>
+		<hr class="hidden-xs">
+	}
+
+	<div class="pull-right">
+		<div>
+			@*@Model.Blogs.Pager("pager")*@
+		</div>
+	</div>
+</section>
+
+
+<!-- 侧边栏 -->
+@Html.Partial("~/Views/Shared/_BlogSidebar.cshtml", Model.PopularTags)

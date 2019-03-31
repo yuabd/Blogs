@@ -2,13 +2,15 @@
 
 <html>
 <head>
-	<title>@ViewBag.Title - Yuabd's Blog</title>
+	<title>@Html.Raw(ViewData["Title"]) - 很好记POS</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<meta name="description" content="@ViewBag.MetaDescription" />
-	<meta name="keywords" content="@ViewBag.MetaKeywords" />
+	<meta name="description" content="@Html.Raw(ViewData["MetaDescription"])" />
+	<meta name="keywords" content="@Html.Raw(ViewData["MetaKeywords"])" />
 
-	@Styles.Render("~/bundles/bootstrap")
+	@*@Styles.Render("~/bundles/bootstrap")*@
+	<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/css/style.css?v=1" rel="stylesheet" />
 
 	@RenderSection("head", false)
 
@@ -16,7 +18,7 @@
 <body>
 	<header class="ediblog-header">
 		<h1 class="hidden">
-			<a href="/">yuabd</a>
+			<a href="/">很好记POS</a>
 		</h1>
 		<div class="nav-container navbar-fixed-top">
 			<div class="container">
@@ -29,20 +31,20 @@
 						</button>
 						<div class="animbrand">
 							<a class="navbar-brand animate hidden-xs" id="yuabd-logo" href="/">
-								YUABD
+								很好记POS机官网
 							</a>
 						</div>
-						<a class="navbar-brand logo-mobile visible-xs" href="/">YUABD</a>
+						<a class="navbar-brand logo-mobile visible-xs" href="/">很好记POS机官网</a>
 					</div>
 
 					<div id="slidemenu">
-						<form class="navbar-form navbar-right visible-xs" role="form" action="/blog/index.html">
+						<form class="navbar-form navbar-right visible-xs" role="form" action="/blog/index">
 							<div class="form-group">
 								<input id="search-mobile" class="form-control" type="text" value="" title="Search" placeholder="Search" name="keywords" maxlength="30">
 							</div>
-							<button class="btn btn-success" type="submit"><i class="fa fa-search"></i> Search</button>
+							<button class="btn btn-success" type="submit"><i class="fa fa-search"></i> 搜索</button>
 						</form>
-						<form action="/blog/index.html" class="navbar-form navbar-right hidden-xs" method="get" role="search">
+						<form action="/blog/index" class="navbar-form navbar-right hidden-xs" method="get" role="search">
 							<div class="form-group disp-flex">
 								<input class="form-control" id="search" maxlength="30" name="keywords" placeholder="Search" title="Search" type="text" value="" />
 
@@ -55,46 +57,25 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle animate" data-toggle="dropdown">
 									<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-									POSTS
+									帮助中心
 									<b class="caret"></b>
 								</a>
 
 								<ul class="dropdown-menu category-menu" id="archives">
-									<li><a href="/blog/index.html">All Posts</a></li>
-									@foreach (var item in new Studio.Services.BlogService().GetBlogCategories().ToList())
-									{
-										<li>
-											<a href="/blog/Categories/@(item.CategoryID).html"
-											   title="@item.CategoryName">
-												@item.CategoryName
-											</a>
-										</li>
-									}
+									<li><a href="/blog/index">所有文档</a></li>
+									<li>
+										<a href="" title="刷卡机选择">刷卡机选择</a>
+									</li>
+									<li>
+										<a href="" title="刷卡技巧">刷卡技巧</a>
+									</li>
+									<li>
+										<a href="" title="常见问题">常见问题</a>
+									</li>
 								</ul>
 							</li>
 							<li>
-								<a href="http://www.henhaoji.com.cn/blog/post/google-hosts.html" class="animate">
-									<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-									2017 hosts下载
-								</a>
-							</li>
-							@*<li>
-									<a href="" class="animate">
-										<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-										磁力链接种子互转
-									</a>
-								</li>*@
-							<li>
-								<a href="/json/JsHtmlFormat.html" class="animate">
-									<span class="glyphicon glyphicon-console" aria-hidden="true"></span>
-									Html/Js解压
-								</a>
-							</li>
-							<li>
-								<a href="/json.html" class="animate">
-									<span class="glyphicon glyphicon-console" aria-hidden="true"></span>
-									Json在线编辑器
-								</a>
+								<a href="#" data-toggle="modal" data-target="#wechatmodal">快速预约</a>
 							</li>
 						</ul>
 					</div>
@@ -108,28 +89,20 @@
 		<section class="mobile-aboutme hidden-lg">
 			<section class="blog-info-phone visible-xs">
 				<div class="card-bkimg-container">
-					<img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
+					<img class="card-bkimg" alt="" src="~/images/wechat.jpg">
 				</div>
 				<div class="media">
-					<a class="pull-left" href="/home/about.html">
-						<img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="Yuabd" class="media-object img-circle blogger-head-pic">
+					<a class="pull-left" href="#" data-toggle="modal" data-target="#wechatmodal">
+						<img src="~/images/wechat.jpg" alt="Yuabd" class="media-object img-circle blogger-head-pic">
 					</a>
 					<div class="media-body">
 						<p>
-							.NET, Web Developer
+							9平台7210、Mpos全国自选商户，0.38秒到
 						</p>
 						<div class="btn-group btn-group-justified">
-							<a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
+							<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
 								<i class="fa fa-envelope"></i>
-								Email
-							</a>
-							<a href="https://github.com/yuabd" target="_blank" class="btn btn-primary" title="GitHub">
-								<i class="fa fa-github"></i>
-								GitHub
-							</a>
-							<a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
-								<i class="fa fa-weibo"></i>
-								Weibo
+								点击免费领取
 							</a>
 						</div>
 					</div>
@@ -138,25 +111,18 @@
 
 			<div class="container visible-md visible-sm animate">
 				<div class="media">
-					<a class="pull-left" href="/home/about.html">
-						<img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle blogger-head-pic">
+					<a class="pull-left" href="#" data-toggle="modal" data-target="#wechatmodal">
+						<img src="~/images/wechat.jpg" alt="yuabd" class="media-object img-circle blogger-head-pic">
 					</a>
 					<div class="media-body">
+
 						<p>
-							.NET, Web Developer
+							9平台7210、Mpos全国自选商户，0.38秒到
 						</p>
 						<div class="btn-group">
-							<a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
+							<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
 								<i class="fa fa-envelope"></i>
-								Email
-							</a>
-							<a href="https://github.com/yuabd" target="_blank" class="btn btn-primary" title="GitHub">
-								<i class="fa fa-github"></i>
-								GitHub
-							</a>
-							<a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
-								<i class="fa fa-weibo"></i>
-								Weibo
+								点击免费领取
 							</a>
 						</div>
 					</div>
@@ -165,36 +131,28 @@
 
 			<section class="blog-info-desktop-lg visible-lg">
 				<div class="card-bkimg-container">
-					<img class="card-bkimg" alt="" src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg">
+					<img class="card-bkimg" alt="" src="~/images/wechat.jpg">
 				</div>
 				<div class="blog-info-photo-text text-center">
-					<a href="/home/about.html">
-						<img src="~/App_Themes/home/images/6dc9f2c1gw1ea46so1oz1j20go0k0go4.jpg" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
+					<a href="#" data-toggle="modal" data-target="#wechatmodal">
+						<img src="~/images/wechat.jpg" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
 					</a>
 					<div class="bor"></div>
 					<div>
 						<h3 class="marginzero">
-							Yuabd
+							9平台7210、Mpos全国自选商户，0.38秒到
 						</h3>
 						<div class="bor"></div>
 						<p>
-							.NET, Web Developer
+							9平台7210、Mpos全国自选商户，0.38秒到
 						</p>
 					</div>
 				</div>
 				<div class="bor"></div>
 				<div class="btn-group btn-group-justified">
-					<a href="mailto:yuabd1991@gmail.com" class="btn btn-success">
+					<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
 						<i class="fa fa-envelope"></i>
-						Email
-					</a>
-					<a href="https://github.com/yuabd" target="_blank" class="btn btn-primary">
-						<i class="fa fa-github"></i>
-						GitHub
-					</a>
-					<a href="http://weibo.com/235755671" target="_blank" class="btn btn-warning">
-						<i class="fa fa-weibo"></i>
-						Weibo
+						点击免费领取
 					</a>
 				</div>
 			</section>
@@ -204,31 +162,71 @@
 				@RenderBody()
 			</div>
 		</div>
+	</div>
+	<div class="clearfix"></div>
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-sm-3">
+					<h4 class="d-none d-sm-block">
+						免费申请
+					</h4>
+					<p>
+						POS机免费送，0.38%费率期，有积分稳定不跳码。全国自选商户，365天刷卡秒到账，当天发货送货上门。
+					</p>
+				</div>
 
+				<div class="col-md-3 col-sm-3 d-none d-sm-block">
+					<h4>加盟我们</h4>
+					<p>
+						一台起做代理，万12分润，无需压机器，交易量越大，分润越高。拿机器量大才能跟支付公司谈更好的政策，为缓解库存压力和扩大业绩，
+						我们欢迎想要从事POS机行业的朋友加入我们的队伍，我们提供最好的招商政策，一起成长。
+					</p>
+				</div>
+
+				<div class="col-md-3 col-sm-3">
+					<h4 class="d-none d-sm-block">加微信免费领POS机</h4>
+					<div class="qrcode-link">
+						<img src="~/images/wechat.jpg" style="width: 150px;" />
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-3 d-none d-sm-block">
+					<h4>Friend Links</h4>
+
+					<ul class="list-unstyled"></ul>
+				</div>
+
+			</div>
+		</div>
+	</footer>
+	@*@Scripts.Render("~/bundles/jquery")*@
+
+	<div class="modal fade" id="wechatmodal" tabindex="-1" role="dialog" aria-labelledby="qrmodalLabel-wechat" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="qrmodalLabel-wechat">扫码免费领POS机</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<img src="~/images/wechat.jpg" style="width:100%;" class="m-auto img-fluid" />
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
-	@Scripts.Render("~/bundles/jquery")
+
+
+	<script src="~/js/jquery-3.1.1.js"></script>
+	<script src="~/js/bootstrap.min.js"></script>
+
 	@RenderSection("scripts", false)
 
-	<script type="text/javascript">
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?96344eb96cdcbf9cc02ec7ce06f25961";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-	</script>
 </body>
 </html>

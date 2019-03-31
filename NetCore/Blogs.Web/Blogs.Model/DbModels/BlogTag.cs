@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Blogs.Model.DbModels
 {
 	public class BlogTag
 	{
-		[Key, Column(Order = 1)]
+		//[Key, Column(Order = 1)]
 		public int BlogID { get; set; }
-		[Key, Column(Order = 2)]
+		//[Key, Column(Order = 2)]
 		[MaxLength(20)]
 		public string Tag { get; set; }
 
