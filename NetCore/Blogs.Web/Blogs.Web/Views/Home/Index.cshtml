@@ -7,22 +7,24 @@
 }
 
 @*<div class="jumbotron">
-	<h1>很好记POS</h1>
-	<p>...</p>
-	<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-</div>*@
+		<h1>很好记POS</h1>
+		<p>...</p>
+		<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+	</div>*@
 
 <h2 style="text-align:center;">智能POS机 <small>0.38秒到</small></h2>
 
 <div class="row">
 	<div class="col-sm-6 col-md-4">
 		<div class="thumbnail">
-			<img src="~/images/7210.jpg" alt="华智融7210多平台">
+			<img src="~/images/changjie.jpg" alt="畅捷H9、M70">
 			<div class="caption">
-				<h3>9平台华智融7210</h3>
-				<p>金控-金正宝、畅捷、点佰趣、付临门、乐刷、海科、瑞银信、星驿付、中付</p>
+				<h3>畅捷出纸大机器H9<small>wifi</small></h3>
+				<p>商户自选笔笔有积分</p>
+				<p>微信、支付宝0.38%</p>
+				<p>上市6年，从不跳码。全牌照，安全稳定。</p>
 				<p>
-					<a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#wechatmodal">立即领取</a>
+					<a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#wechatmodal">免费领取</a>
 				</p>
 			</div>
 		</div>
@@ -45,7 +47,7 @@
 				</ol>
 
 				<p>
-					<a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#wechatmodal">立即领取</a> 
+					<a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#wechatmodal">免费领取</a>
 				</p>
 			</div>
 		</div>
@@ -58,6 +60,18 @@
 				<p>常年不跳码</p>
 				<p>押金满返</p>
 				<p>
+					<a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#wechatmodal">免费领取</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-4">
+		<div class="thumbnail">
+			<img src="~/images/7210.jpg" alt="华智融7210多平台">
+			<div class="caption">
+				<h3>9平台华智融7210</h3>
+				<p>金控-金正宝、畅捷、点佰趣、付临门、乐刷、海科、瑞银信、星驿付、中付</p>
+				<p>
 					<a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#wechatmodal">立即领取</a>
 				</p>
 			</div>
@@ -65,5 +79,49 @@
 	</div>
 </div>
 
-<h2 style="text-align:center;"> 加盟与代理 <small>代理一台起，分润日结</small></h2>
+<section class="col-lg-12 col-md-12">
+	<h3 class="h3-cat-list">
+		<span>
+			最新文章
+		</span>
+		@*<span class="badge hidden-xs">@ViewBag.Count</span>
+			<span class="badge visible-xs pull-right">@ViewBag.Count</span>*@
+	</h3>
+	<hr />
+	@foreach (var item in Model)
+	{
+		<article class="article-post-summary">
+			<div class="post-date-box hidden-xs">
+				<h1 class="post-date-day">@item.DateCreated.Day</h1>
+				<div class="post-date-month">
+					@item.DateCreated.Month
+				</div>
+			</div>
+			<div class="post-summary-box">
+				<time datetime="@item.DateCreated" class="none">@item.DateCreated</time>
+
+				<h4 class="post-summary-title">
+					<a href="/blog/post/@(item.Slug)" title="@item.BlogTitle">@item.BlogTitle</a>
+				</h4>
+
+				<p class="post-summary-text">
+					@Html.Raw(item.MetaDescription)
+				</p>
+
+				<div class="post-summary-tags">
+					@foreach (var tag in item.BlogTags)
+					{
+						<a href="/blog/tags/@(tag.Tag)" title="@tag.Tag" class="post-summary-tag">@tag.Tag</a>
+					}
+				</div>
+			</div>
+		</article>
+		<div class="bor hidden-xs"></div>
+		<hr class="hidden-xs">
+	}
+</section>
+
+
+<h2 style="text-align:center;"> 加盟与代理 <small>代理一台起，分润日结,加微信了解详情。</small></h2>
+
 

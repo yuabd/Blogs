@@ -46,7 +46,7 @@ namespace Blogs.Web.Controllers
 
 			ViewBag.Count = blogs.Select(m => m.BlogID).Count();
 
-			var pBlogs = blogs..OrderByDescending(m => m.DateCreated).Skip((page.Value - 1) * 10).Take(10).ToList();
+			var pBlogs = blogs.OrderByDescending(m => m.DateCreated).Skip((page.Value - 1) * 10).Take(10).ToList();
 
 			var categories = db.BlogCategory.ToList();
 
@@ -256,6 +256,14 @@ namespace Blogs.Web.Controllers
 			var comments = db.BlogComment.AsNoTracking().Where(m => m.IsPublic == true && m.BlogID == id).ToList();
 
 			return View(comments);
+		}
+
+		[HttpGet]
+		public ActionResult GetCategories()
+		{
+			var categories = db.BlogCategory.AsNoTracking().ToList();
+
+			return Json(categories);
 		}
 
 		//[HttpPost]

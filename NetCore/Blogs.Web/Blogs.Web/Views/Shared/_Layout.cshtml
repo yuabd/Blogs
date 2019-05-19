@@ -61,18 +61,7 @@
 									<b class="caret"></b>
 								</a>
 
-								<ul class="dropdown-menu category-menu" id="archives">
-									<li><a href="/blog/index">所有文档</a></li>
-									<li>
-										<a href="" title="刷卡机选择">刷卡机选择</a>
-									</li>
-									<li>
-										<a href="" title="刷卡技巧">刷卡技巧</a>
-									</li>
-									<li>
-										<a href="" title="常见问题">常见问题</a>
-									</li>
-								</ul>
+								<ul class="dropdown-menu category-menu" id="categories"></ul>
 							</li>
 							<li>
 								<a href="#" data-toggle="modal" data-target="#wechatmodal">快速预约</a>
@@ -225,8 +214,49 @@
 
 	<script src="~/js/jquery-3.1.1.js"></script>
 	<script src="~/js/bootstrap.min.js"></script>
-
+	<script src="~/js/bootstrap.ediblog.slidemenu.min.js"></script>
+	<script src="~/js/jquery.lazyload.min.js"></script>
+	<script src="~/js/btvideo.app.js"></script>
 	@RenderSection("scripts", false)
+
+	<script>
+		$(function () {
+			$.ajax({
+				url: "/Blog/GetCategories",
+				type: "get",
+				success: function (res) {
+
+					//<li>
+					//	<a href="" title="刷卡机选择">刷卡机选择</a>
+					//</li>
+					//<li>
+					//	<a href="" title="刷卡技巧">刷卡技巧</a>
+					//</li>
+					//<li>
+					//	<a href="" title="常见问题">常见问题</a>
+					//</li>
+					var html = '<li><a href="/blog/index">所有文档</a></li>';
+					for (var i = 0; i < res.length; i++) {
+						html += '<li><a href="/blog/category/' + res[i].categoryID + '">' + res[i].categoryName + '</a></li>';
+					}
+
+					$("#categories").html(html);
+				}
+			})
+
+		})
+	</script>
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?80fb7adcf09e179855b314a2f2c794de";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
 
 </body>
 </html>
+
+

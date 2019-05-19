@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Quartz;
+using Quartz.Impl;
 
 namespace Blogs.Web
 {
@@ -35,6 +37,8 @@ namespace Blogs.Web
 			services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 			services.AddMvc();
+
+			//services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();//注册ISchedulerFactory的实例。
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +69,8 @@ namespace Blogs.Web
 			});
 
 			SiteDataContextInitializer.Seed(app.ApplicationServices);
+
+			app.UseAuthentication();
 		}
 	}
 }

@@ -6,6 +6,7 @@ using Blogs.Model.DbModels;
 using Blogs.Model.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blogs.Web.Controllers
 {
@@ -20,7 +21,8 @@ namespace Blogs.Web.Controllers
 
         public IActionResult Index()
         {
-			var blogs = db.Blog.Where(m => m.IsPublic == true).OrderByDescending(m => m.DateCreated).Take(10).ToList();
+			var blogs = db.Blog.Include(m => m.BlogTags).
+				Where(m => m.IsPublic == true).OrderByDescending(m => m.DateCreated).Take(6).ToList();
 
 			//if (!string.IsNullOrEmpty(keywords))
 			//{

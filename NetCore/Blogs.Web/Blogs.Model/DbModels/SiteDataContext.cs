@@ -16,7 +16,6 @@ namespace Blogs.Model.DbModels
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-
 			base.OnConfiguring(optionsBuilder);
 		}
 

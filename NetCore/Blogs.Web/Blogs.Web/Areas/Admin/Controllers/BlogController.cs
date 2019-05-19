@@ -5,26 +5,56 @@ using System.Threading.Tasks;
 using Blogs.Model.DbModels;
 using Blogs.Models;
 using Blogs.Web.Areas.Admin.Models;
+using Blogs.Web.JobWorks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Quartz;
 
 namespace Blogs.Web.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-    public class BlogController : Controller
-    {
+	public class BlogController : Controller
+	{
 		private SiteDataContext db;
 		private IHttpContextAccessor _accessor;
+		private readonly ISchedulerFactory _schedulerFactory;
+		private IScheduler _scheduler;
 
-		public BlogController(SiteDataContext _context, IHttpContextAccessor accessor)
+
+		public BlogController(SiteDataContext _context,
+			IHttpContextAccessor accessor,
+			ISchedulerFactory schedulerFactory)
 		{
 			db = _context;
 			_accessor = accessor;
+			this._schedulerFactory = schedulerFactory;
 		}
 
-        public IActionResult Index(int? page)
-        {
+		//[HttpGet]
+		//public async Task<string[]> Get51()
+		//{
+		//	//1、通过调度工厂获得调度器
+		//	_scheduler = await _schedulerFactory.GetScheduler();
+		//	//2、开启调度器
+		//	await _scheduler.Start();
+		//	//3、创建一个触发器
+		//	var trigger = TriggerBuilder.Create()
+		//					.WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever())//每两秒执行一次
+		//					.WithIdentity("trigger2", "group1")
+		//					.Build();
+		//	//4、创建任务
+		//	var jobDetail = JobBuilder.Create<Add51Job>()
+		//					.UsingJobData("key1", 1)  //通过在Trigger中添加参数值
+		//					.WithIdentity("job", "group")
+		//					.Build();
+		//	//5、将触发器和任务器绑定到调度器中
+		//	await _scheduler.ScheduleJob(jobDetail, trigger);
+		//	return await Task.FromResult(new string[] { "value1", "value2" });
+		//}
+
+		public IActionResult Index(int? page)
+		{
 			var blogs = db.Blog.OrderByDescending(m => m.DateCreated);
 			var pblogs = new Paginated<Blog>(blogs, page ?? 1, 25, _accessor);
 
@@ -93,7 +123,7 @@ namespace Blogs.Web.Areas.Admin.Controllers
 
 				db.SaveChanges();
 
-				return RedirectToAction("Index", new { Area = "Admin" });
+				return Redirect("/Admin/Blog/Index");
 			}
 			else
 			{
@@ -160,12 +190,12 @@ namespace Blogs.Web.Areas.Admin.Controllers
 
 				db.SaveChanges();
 
-				return RedirectToAction("Index");
+				return Redirect("/Admin/Blog/Index");
 			}
 			else
 			{
 				var categories = db.BlogCategory.AsNoTracking().ToList();
-				var model = new BlogViewModel(blog, blogTags,categories);
+				var model = new BlogViewModel(blog, blogTags, categories);
 				return View(model);
 			}
 		}
@@ -276,11 +306,11 @@ namespace Blogs.Web.Areas.Admin.Controllers
 					db.SaveChanges();
 				}
 
-				return RedirectToAction("Categories");
+				return Redirect("/Admin/Blog/Categories");
 			}
 			else
 			{
-				return RedirectToAction("Categories");
+				return Redirect("/Admin/Blog/Categories");
 			}
 		}
 
@@ -291,9 +321,8 @@ namespace Blogs.Web.Areas.Admin.Controllers
 			db.BlogCategory.Remove(category);
 
 			db.SaveChanges();
-			//blogService.Save();
 
-			return RedirectToAction("Categories");
+			return Redirect("/Admin/Blog/Categories");
 		}
 	}
 }
