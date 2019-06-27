@@ -18,17 +18,18 @@ namespace Blogs.Web.Areas.Admin.Controllers
 	{
 		private SiteDataContext db;
 		private IHttpContextAccessor _accessor;
-		private readonly ISchedulerFactory _schedulerFactory;
-		private IScheduler _scheduler;
+		//private readonly ISchedulerFactory _schedulerFactory;
+		//private IScheduler _scheduler;
 
 
 		public BlogController(SiteDataContext _context,
-			IHttpContextAccessor accessor,
-			ISchedulerFactory schedulerFactory)
+			IHttpContextAccessor accessor
+			//,ISchedulerFactory schedulerFactory
+			)
 		{
 			db = _context;
 			_accessor = accessor;
-			this._schedulerFactory = schedulerFactory;
+			//this._schedulerFactory = schedulerFactory;
 		}
 
 		//[HttpGet]
@@ -177,6 +178,8 @@ namespace Blogs.Web.Areas.Admin.Controllers
 				var bt = db.BlogTag.Where(m => m.BlogID == blog.BlogID).ToList();
 
 				db.BlogTag.RemoveRange(bt);
+
+				db.SaveChanges();
 
 				foreach (BlogTag tag in blogTags)
 				{

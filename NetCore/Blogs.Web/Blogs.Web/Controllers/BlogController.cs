@@ -6,6 +6,7 @@ using Blogs.Model.DbModels;
 using Blogs.Model.ViewModels;
 using Blogs.Model.ViewModels.Others;
 using Blogs.Models;
+using Blogs.Web.Filters;
 using Blogs.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogs.Web.Controllers
 {
+	[DomainFilter]
     public class BlogController : Controller
     {
 		private SiteDataContext db;
@@ -184,9 +186,9 @@ namespace Blogs.Web.Controllers
 		}
 
 		//[GenerateStaticFileAttribute]
-		public ActionResult Post(int id)
+		public async Task<ActionResult> Post(int id)
 		{
-			var blog = db.Blog.Include(m => m.BlogTags).Include(m => m.BlogCategory).AsNoTracking().Where(m => m.BlogID == id).FirstOrDefault();
+			var blog = await db.Blog.Include(m => m.BlogTags).Include(m => m.BlogCategory).Where(m => m.BlogID == id).FirstOrDefaultAsync();
 
 			if (blog == null)
 			{
@@ -206,17 +208,20 @@ namespace Blogs.Web.Controllers
 			//blogComment.IsPublic = true;
 			//blogComment.ValidationCodeSource = DateTime.Now.Millisecond.ToString();
 
-			ViewBag.CommentCount = db.BlogComment.Where(m => m.BlogID == blogID).Where(m => m.IsPublic == true).Select(m => m.BlogID).Count();
+			blog.PageVisits += 1;
+			await db.SaveChangesAsync();
+
+			ViewBag.CommentCount = await db.BlogComment.Where(m => m.BlogID == blogID && m.IsPublic == true).Select(m => m.BlogID).CountAsync();
 			//var categories = bs.GetBlogCategories().ToList();
-			var popularTags = (from p in db.BlogTag.AsNoTracking()
+			var popularTags = await (from p in db.BlogTag.AsNoTracking()
 							   group p by new { p.Tag } into t
 							   orderby t.Count() descending
-							   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
+							   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToListAsync();
 			//var archives = bs.GetArchives().ToList();
 
 			var preNextBlog = new PreNextBlog();
 
-			var pre = (from l in db.Blog
+			var pre = await (from l in db.Blog
 					   where l.BlogID < blogID
 					   orderby l.BlogID descending
 					   select new BlogIDName()
@@ -224,9 +229,9 @@ namespace Blogs.Web.Controllers
 						   ID = l.BlogID,
 						   Slug = l.Slug,
 						   Title = l.BlogTitle
-					   }).FirstOrDefault();
+					   }).FirstOrDefaultAsync();
 
-			var next = (from l in db.Blog
+			var next = await (from l in db.Blog
 						where l.BlogID > blogID
 						orderby l.BlogID
 						select new BlogIDName()
@@ -234,7 +239,7 @@ namespace Blogs.Web.Controllers
 							ID = l.BlogID,
 							Slug = l.Slug,
 							Title = l.BlogTitle
-						}).FirstOrDefault();
+						}).FirstOrDefaultAsync();
 			preNextBlog.PreBlog = pre;
 			preNextBlog.NextBlog = next;
 

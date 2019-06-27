@@ -7,6 +7,18 @@
 
 @section head{
 	<script src="~/js/jquery.validate.min.js"></script>
+	<script type="text/javascript">
+		$.extend($.validator.defaults, {
+			showErrors: function (errorMap, errorList) {
+				var msg = "";
+				$.each(errorList, function (i, v) {
+					msg += (v.message + "\r\n");
+				});
+				if (msg != "")
+					alert(msg);
+			}
+		});
+	</script>
 	<script src="~/js/jquery.validate.unobtrusive.min.js"></script>
 	<script src="~/lib/xheditor/xheditor-1.1.14-zh-cn.min.js"></script>
 
@@ -21,8 +33,8 @@
 
 <h2>编辑博客</h2>
 
-@using (Html.BeginForm("Edit", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+<form action="/admin/blog/edit" method="post" enctype="multipart/form-data">
+
 	@Html.Partial("_Form")
 
 	@Html.HiddenFor(m => m.Blog.BlogID)
@@ -31,4 +43,5 @@
 	<div class="section">
 		<button type="submit" class="button-save">提交</button>
 	</div>
-}
+
+</form>

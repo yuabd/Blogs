@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /bin/
+Disallow: /log/
+Disallow: /Admin/
+Disallow: /?*

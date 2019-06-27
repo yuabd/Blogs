@@ -11,7 +11,7 @@ using System;
 namespace Blogs.Web.Migrations
 {
     [DbContext(typeof(SiteDataContext))]
-    [Migration("20190117152057_InitialCreate")]
+    [Migration("20190611125114_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

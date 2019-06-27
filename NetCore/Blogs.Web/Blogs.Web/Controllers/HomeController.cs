@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blogs.Model.DbModels;
 using Blogs.Model.ViewModels;
+using Blogs.Web.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogs.Web.Controllers
 {
+	[DomainFilter]
     public class HomeController : Controller
     {
 		private SiteDataContext db;

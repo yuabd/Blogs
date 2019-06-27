@@ -1,0 +1,9 @@
+
+NetCore/Blogs.Web/Blogs.Web/bin
+NetCore/Blogs.Web/Blogs.Web/obj
+NetCore/Blogs.Web/Blogs.Web/appsettings.json
+Studio/bin
+Studio/obj
+Studio/Web.config
+Studio/Web.Debug.config
+Studio/Web.Release.config
