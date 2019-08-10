@@ -1,0 +1,131 @@
+﻿@model Blogs.Model.DbModels.POS_MCC
+
+<script type="text/javascript">
+	var selectItems = '@Html.Raw(Model.NoPointBankStr)'.split(';');
+	var selectIds = [];
+	$(function () {
+		$("#DateCreated").datepicker();
+		$("#add-form").dialog({ autoOpen: false, modal: true, title: '选择无积分银行', width: 550 });
+		
+		$.ajax({
+			url: "/Admin/Pos/GetBanks",
+			data: {},
+			success: function (result) {
+				var html = "";
+				for (var i = 0; i < result.length; i++) {
+					html += "<input type='checkbox' class='bankItem' name='" + result[i].bankName + "' id='" + result[i].bankID + "' />" +
+						"<label for='" + result[i].bankID + "'>" + result[i].bankName + "</label>";
+				}
+				$("#banks").html(html);
+				
+				for (var i = 0; i < selectItems.length; i++) {
+					if (selectItems[i] != '')
+						$("input[name='" + selectItems[i] + "']").prop("checked", true);
+				}
+			}
+		})
+
+		$("#bank").click(function () {
+			$("#add-form").dialog("open");
+		});
+	});
+
+	function SaveClick() {
+		var items = $(".bankItem:checked");
+		selectItems = [], selectIds = [];
+		var str = "";
+		for (var i = 0; i < items.length; i++) {
+			selectIds.push($(items[i]).attr("id"));
+			selectItems.push($(items[i]).attr("name"));
+			str += $(items[i]).attr("name") + ";";
+		}
+		if (str == '')
+			str = "无";
+
+		$("#NoPointBankStr").val(str);
+		$("#noPointStr").html(str);
+
+		$('#add-form').dialog('close');
+	}
+</script>
+
+<div class="section">
+	<div class="section-header">
+		<h3>MCC</h3>
+	</div>
+	<div class="section-body">
+		<div class="row">
+			@Html.TextBoxFor(m => m.MCC, (!string.IsNullOrWhiteSpace(Model.MCC) ? new Dictionary<string,object>(){{ "readonly", "readonly"}} : null) ) <cite>*</cite>
+			@Html.ValidationMessageFor(m => m.MCC)
+		</div>
+	</div>
+</div>
+<div class="section">
+	<div class="section-header">
+		<h3>内容</h3>
+	</div>
+	<div class="section-body">
+		@Html.TextAreaFor(m => m.Description, new { @rows = 10 , cols= 100, style="width: 100%" })
+	</div>
+</div>
+<div class="section">
+	<div class="section-header">
+		<h3>日期</h3>
+	</div>
+	<div class="section-body">
+		<div class="row">
+			@Html.TextBoxFor(m => m.DateCreated, new { @class = "small" })
+		</div>
+	</div>
+</div>
+<div class="section">
+	<div class="section-header">
+		<h3>是否有积分?</h3>
+	</div>
+	<div class="section-body">
+		<div class="row">
+			@Html.CheckBoxFor(m => m.IsPoint) 有
+		</div>
+	</div>
+</div>
+<div class="section">
+	<div class="section-header">
+		<h3>无积分银行</h3>
+	</div>
+	<div class="section-body">
+		<div class="row">
+			@Html.HiddenFor(m => m.NoPointBankStr)
+			<span id="noPointStr">@Model.NoPointBankStr</span>
+			<a href="javascript:void(0);" id="bank">选择</a>
+		</div>
+	</div>
+</div>
+<div class="section">
+	<div class="section-header">
+		<h3>费率</h3>
+	</div>
+	<div class="section-body">
+		<div class="row">
+			<label>费率%:</label>
+			@Html.TextBoxFor(m => m.Rate, new { @class = "large", maxlength="5" })
+			@Html.ValidationMessageFor(m => m.Rate)
+		</div>
+		<div class="row">
+			<label>费改前费率%:</label>
+			@Html.TextBoxFor(m => m.OldRate, new { @class = "large", maxlength = "5" })
+			@Html.ValidationMessageFor(m => m.OldRate)
+		</div>
+	</div>
+</div>
+
+<div id="add-form">
+	<br />
+		<div class="row">
+			<label>银行:</label>
+			<ul id="banks">
+			</ul>
+		</div>
+		<p>
+	<button type="button" onclick="SaveClick()">Save</button> or <a href="#" onclick="$('#add-form').dialog('close');">Cancel</a>
+		</p>
+</div>

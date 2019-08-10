@@ -24,6 +24,7 @@
 	<div class="section-body">
 		@*@Html.TextAreaFor(m => m.Blog.BlogContent, new { @rows = 30 , style="width: 100%" })*@
 		<textarea id="Blog_BlogContent" name="Blog.BlogContent" rows="30" style="width: 100%">@Model.Blog.BlogContent</textarea>
+		@Html.ValidationMessageFor(m => m.Blog.BlogContent)
 	</div>
 </div>
 <div class="section">
@@ -94,7 +95,7 @@
 	</div>
 	<div class="section-body">
 		<div class="row">
-			<input type="file" name="PictureFile" /> 当前照片: <a href="@Model.Blog.PictureFolder/@Model.Blog.PictureFile" target="_blank">@Model.Blog.PictureFile</a> <br />
+			<input type="file" name="PictureFile" /> 当前照片: @*<a href="@Model.Blog.PictureFolder/@Model.Blog.PictureFile" target="_blank">@Model.Blog.PictureFile</a>*@ <br />
 			大小 (W x H): 640 x 280 / 格式: JPG
 		</div>
 	</div>

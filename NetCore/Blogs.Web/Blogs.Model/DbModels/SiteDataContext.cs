@@ -4,18 +4,27 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Blogs.Model.DbModels
 {
 	public class SiteDataContext : DbContext
 	{
-		public SiteDataContext(DbContextOptions<SiteDataContext> options)
+		public SiteDataContext(DbContextOptions<SiteDataContext> options, ILoggerFactory Mlogger)
 			: base(options)
 		{
+			_Mlogger = Mlogger;
+			_Mlogger.CreateLogger("EF");
 		}
+
+		//创建日志工厂
+		private static ILoggerFactory _Mlogger;
+				// .AddDebug((categoryName, logLevel) => (logLevel == LogLevel.Information) && (categoryName == DbLoggerCategory.Database.Command.Name))
+				//.AddConsole((categoryName, logLevel) => (logLevel == LogLevel.Information) && (categoryName == DbLoggerCategory.Database.Command.Name));
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
+			optionsBuilder.UseLoggerFactory(_Mlogger);
 			base.OnConfiguring(optionsBuilder);
 		}
 
@@ -28,6 +37,15 @@ namespace Blogs.Model.DbModels
 		public DbSet<UserRoleJoin> UserRoleJoin { get; set; }
 		public DbSet<UserProfile> UserProfile { get; set; }
 
+		public DbSet<POS_Bank> POS_Bank { get; set; }
+		public DbSet<POS_MCC> POS_MCC { get; set; }
+		public DbSet<POS_MCCBankNoPoint> POS_MCCBankNoPoint { get; set; }
+
+		public DbSet<POS_Agency> POS_Agency { get; set; }
+		public DbSet<POS_MerchantArea> POS_MerchantArea { get; set; }
+		public DbSet<POS_PaymentLicense> POS_PaymentLicense { get; set; }
+
+
 		//public DbSet<Magnet> Magnets { get; set; }
 		//public DbSet<MagnetFile> MagnetFiles { get; set; }
 
@@ -39,6 +57,14 @@ namespace Blogs.Model.DbModels
 			//modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 			modelBuilder.Entity<BlogTag>().HasKey(m => new { m.BlogID, m.Tag });
 			modelBuilder.Entity<UserRoleJoin>().HasKey(m => new { m.UserID, m.RoleID });
+
+			modelBuilder.Entity<POS_Bank>().HasKey(m => new { m.BankID });
+			modelBuilder.Entity<POS_MCC>().HasKey(m => new { m.MCC });
+			modelBuilder.Entity<POS_MCCBankNoPoint>().HasKey(m => new { m.BankID, m.MCC });
+			modelBuilder.Entity<POS_Agency>().HasKey(m => new { m.AgencyID });
+			modelBuilder.Entity<POS_MerchantArea>().HasKey(m => new { m.ID });
+			modelBuilder.Entity<POS_PaymentLicense>().HasKey(m => new { m.LicenseID });
+
 
 			base.OnModelCreating(modelBuilder);
 		}

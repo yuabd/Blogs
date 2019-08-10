@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>网站地图-很好记POS机官网-华智融7210多平台-POS机申请-免费POS机领取 - 很好记POS</title>
+</head>
+<body>
+	@{ var domain = "http://www.henhaoji.com.cn";}
+	<h2>分类</h2>
+	<ol>
+		@foreach (var item in ViewBag.Category)
+		{
+			<li>
+				<a href="@domain/blog/category/@item.CategoryID">@item.CategoryName</a>
+			</li>
+		}
+	</ol>
+	<h2>文档</h2>
+	<ol>
+		@foreach (var item in ViewBag.Blogs)
+		{
+			<li>
+				<a href="@domain/blog/post/@item.BlogID" title="@item.BlogTitle">@item.BlogTitle</a>
+				<ul>
+					@foreach (var tag in item.MetaKeywords.Split(',', StringSplitOptions.RemoveEmptyEntries))
+					{
+						<li>
+							<a href="@domain/blog/tags/@tag" title="@tag">@tag</a>
+						</li>
+					}
+				</ul>
+			</li>
+		}
+	</ol>
+
+	<h2>mcc</h2>
+	<ol>
+		<li>
+			<a href="@domain/mcc" title="mcc查询工具">mcc查询工具</a>
+		</li>
+		<li>
+			<a href="@domain/blog/post/21" title="银盛通pos机是一清机吗？安全吗？跳码吗？">银盛通pos机是一清机吗？安全吗？跳码吗？</a>
+		</li>
+		@*@foreach (var item in ViewBag.mccs)
+		{
+			<li>
+				<a href="@domain/mcc/result?mcc=@item.MCC">@item.MCC</a>
+			</li>
+		}*@
+	</ol>
+
+	@*<h2>pos商户地区代码</h2>
+	<ol>
+		@foreach (var item in ViewBag.Areas)
+		{
+			<li>
+				<a href="@domain/mcc/result?mcc=@item.MerchantAreaCode">@item.MerchantAreaName</a>
+			</li>
+		}
+	</ol>
+	<h2>收单机构</h2>
+	<ol>
+		@foreach (var item in ViewBag.Agency)
+		{
+			<li>
+				<a href="@domain/mcc/result?mcc=@item.AgencyCode">@item.AgencyName</a>
+			</li>
+		}
+	</ol>
+	<h2>支付牌照</h2>
+	<ol>
+		@foreach (var item in ViewBag.License)
+		{
+			<li>
+				<a href="@domain/mcc/result?mcc=@item.LicenseID">@item.CompanyName</a>
+			</li>
+		}
+	</ol>*@
+</body>
+</html>

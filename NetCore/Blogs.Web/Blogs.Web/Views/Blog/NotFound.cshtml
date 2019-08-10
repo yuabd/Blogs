@@ -1,5 +1,21 @@
-﻿@{
-	ViewBag.Title = "您访问的页面被外星人劫走了NoFound";
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
-}
-@Html.Partial("_NotFound")
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<title>404 Not Found</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="refresh" content="5; url=/" />
+</head>
+<body style="padding-top: 40px;">
+	<div class="container">
+		<div class="content">
+			<img src="/App_Themes/home/images/dog-sniffing-ground.png" class="img-responsive center-block" style="margin-bottom: 40px;" />
+			<div>
+				<h1 class="align-center text-center">We can't find this shit.</h1>
+				<div class="text-center">Redirecting to <a class="btn btn-sm btn-default" href="/">Home Page</a> in 5 seconds.</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

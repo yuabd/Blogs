@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Blogs.Model.DbModels;
 using Blogs.Model.ViewModels;
 using Blogs.Model.ViewModels.Others;
-using Blogs.Models;
 using Blogs.Web.Filters;
 using Blogs.Web.Models;
 using Microsoft.AspNetCore.Http;
@@ -15,8 +14,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Blogs.Web.Controllers
 {
 	[DomainFilter]
-    public class BlogController : Controller
-    {
+	public class BlogController : Controller
+	{
 		private SiteDataContext db;
 		private IHttpContextAccessor _accessor;
 
@@ -26,51 +25,83 @@ namespace Blogs.Web.Controllers
 			_accessor = accessor;
 		}
 
-		public IActionResult Index(int? page, string keywords)
-        {
+		//[ResponseCache(Duration = 3600)]
+		public async Task<IActionResult> Index(int? page, string keywords)
+		{
+			string type = "index";
 			if (!page.HasValue)
 			{
 				page = 1;
 			}
 
-			var blogs = db.Blog.Include(m => m.BlogTags).Where(m => m.IsPublic == true);
+			var blogs = from m in db.Blog.AsNoTracking()
+						//join t in db.BlogTag.AsNoTracking() on m.BlogID equals t.BlogID
+						where m.IsPublic == true
+						orderby m.DateCreated descending
+						select new Blog()
+						{
+							AuthorID = m.AuthorID,
+							BlogID = m.BlogID,
+							//BlogTags = t,
+							BlogTitle = m.BlogTitle,
+							DateCreated = m.DateCreated,
+							CategoryID = m.CategoryID,
+							Slug = m.Slug,
+							PageVisits = m.PageVisits,
+							PageTitle = m.PageTitle,
+							MetaDescription = m.MetaDescription,
+							MetaKeywords = m.MetaKeywords
+						};
 
 			if (!string.IsNullOrEmpty(keywords))
 			{
+				type = "search";
 				var key = keywords.Split(' ');
 				foreach (var item in key)
 				{
 					blogs = (from l in blogs
-							 where l.BlogTitle.Contains(item) || l.BlogContent.Contains(item)
+							 where l.BlogTitle.Contains(item)// || l.BlogContent.Contains(item)
 							 select l);
 				}
+				ViewBag.Keywords = keywords;
 			}
 
-			ViewBag.Count = blogs.Select(m => m.BlogID).Count();
+			ViewBag.Count = await blogs.Select(m => m.BlogID).CountAsync();
 
-			var pBlogs = blogs.OrderByDescending(m => m.DateCreated).Skip((page.Value - 1) * 10).Take(10).ToList();
+			var pBlogs = new Paginated<Blog>(page ?? 1, 10, _accessor);
+			await pBlogs.Init(blogs.OrderByDescending(m => m.DateCreated));
 
-			var categories = db.BlogCategory.ToList();
+			var popularTags = await (from p in db.BlogTag.AsNoTracking()
+									 group p by new { p.Tag } into t
+									 orderby t.Count() descending
+									 select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToListAsync();
 
-			var popularTags = (from p in db.BlogTag.AsNoTracking()
-							   group p by new { p.Tag } into t
-							   orderby t.Count() descending
-							   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
+			var ids = pBlogs.Select(m => m.BlogID).ToList();
+			var tags = await db.BlogTag.Where(m => ids.Contains(m.BlogID)).ToListAsync();
+
+			foreach (var item in pBlogs)
+			{
+				item.BlogTags = tags.Where(m => m.BlogID == item.BlogID).ToList();
+			}
 
 			var archives = new List<Archive>();
 
-			var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
-			ViewBag.PageTitle = "帮助中心";
+			var model = new BlogsViewModel(pBlogs, null, popularTags, archives);
+			ViewBag.PageTitle = "Pos机文档";
 			//ViewBag.Blog = "current";
+			ViewBag.Type = type;
 
-			if (page.HasValue)
+			await GetHotAndNewBlogs();
+
+			if (page.HasValue && page.Value > 1)
 			{
 				ViewBag.PageTitle += "_第" + page + "页";
 			}
 
 			return View(model);
-        }
+		}
 
+		//[ResponseCache(Duration = int.MaxValue)]
 		public async Task<IActionResult> Category(int id, int? page)
 		{
 			var category = await db.BlogCategory.Where(m => m.CategoryID == id).FirstOrDefaultAsync();
@@ -80,26 +111,50 @@ namespace Blogs.Web.Controllers
 				page = 1;
 			}
 
-			var blogs = db.Blog.Include(m => m.BlogTags).Where(m => m.IsPublic == true && m.CategoryID == id);
-			
-			ViewBag.Count = blogs.Select(m => m.BlogID).Count();
+			var blogs = db.Blog.Where(m => m.IsPublic == true && m.CategoryID == id)
+				.OrderByDescending(m => m.DateCreated).Select(m => new Blog()
+				{
+					AuthorID = m.AuthorID,
+					BlogID = m.BlogID,
+					BlogTitle = m.BlogTitle,
+					DateCreated = m.DateCreated,
+					CategoryID = m.CategoryID,
+					Slug = m.Slug,
+					PageVisits = m.PageVisits,
+					PageTitle = m.PageTitle,
+					MetaDescription = m.MetaDescription,
+					MetaKeywords = m.MetaKeywords
+				});
 
-			var pBlogs = blogs.OrderByDescending(m => m.DateCreated).Skip((page.Value - 1) * 10).Take(10).ToList();
+			ViewBag.Count = await blogs.Select(m => m.BlogID).CountAsync();
 
-			var categories = db.BlogCategory.ToList();
+			var pBlogs =
+				new Paginated<Blog>(page ?? 1, 10, _accessor); //blogs.OrderByDescending(m => m.DateCreated).Skip((page.Value - 1) * 10).Take(10).ToList();
+			await pBlogs.Init(blogs);
 
-			var popularTags = (from p in db.BlogTag
-							   group p by new { p.Tag } into t
-							   orderby t.Count() descending
-							   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
+			var popularTags = await (from p in db.BlogTag.AsNoTracking()
+									 group p by new { p.Tag } into t
+									 orderby t.Count() descending
+									 select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToListAsync();
+
+			var ids = pBlogs.Select(m => m.BlogID).ToList();
+			var tags = await db.BlogTag.Where(m => ids.Contains(m.BlogID)).ToListAsync();
+
+			foreach (var item in pBlogs)
+			{
+				item.BlogTags = tags.Where(m => m.BlogID == item.BlogID).ToList();
+			}
 
 			var archives = new List<Archive>();
 
-			var model = new BlogsViewModel(pBlogs, categories, popularTags, archives);
-			ViewBag.PageTitle = "帮助中心";
-			//ViewBag.Blog = "current";
+			var model = new BlogsViewModel(pBlogs, null, popularTags, archives);
+			ViewBag.PageTitle = category.CategoryName;
+			ViewBag.Type = "category";
+			ViewBag.Category = category;
 
-			if (page.HasValue)
+			await GetHotAndNewBlogs();
+
+			if (page.HasValue && page.Value > 1)
 			{
 				ViewBag.PageTitle += "_第" + page + "页";
 			}
@@ -107,36 +162,64 @@ namespace Blogs.Web.Controllers
 			return View("Index", model);
 		}
 
-		public ActionResult Tags(string id, int? page)
+		//[ResponseCache(Duration = 3600)]
+		public async Task<IActionResult> Tags(string id, int? page)
 		{
-			var blogs = (from b in db.Blog.AsNoTracking()
-						 join bc in db.BlogTag.AsNoTracking() on b.BlogID equals bc.BlogID
-						 where bc.Tag == id && b.IsPublic == true
-						 orderby b.DateCreated descending
-						 select b);
+			var blogs = (from m in db.Blog.AsNoTracking()
+						 join bc in db.BlogTag.AsNoTracking() on m.BlogID equals bc.BlogID
+						 where bc.Tag == id && m.IsPublic == true
+						 orderby m.DateCreated descending
+						 select new Blog()
+						 {
+							 AuthorID = m.AuthorID,
+							 BlogID = m.BlogID,
+							 //BlogTags = m.BlogTags,
+							 BlogTitle = m.BlogTitle,
+							 DateCreated = m.DateCreated,
+							 CategoryID = m.CategoryID,
+							 Slug = m.Slug,
+							 PageVisits = m.PageVisits,
+							 PageTitle = m.PageTitle,
+							 MetaDescription = m.MetaDescription,
+							 MetaKeywords = m.MetaKeywords
+						 });
 
-			ViewBag.Count = blogs.Select(m => m.BlogID).Count();
+			ViewBag.Count = await blogs.Select(m => m.BlogID).CountAsync();
 
-			var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8, _accessor);
+			var pBlogs = new Paginated<Blog>(page ?? 1, 10, _accessor);
+			await pBlogs.Init(blogs);
 
-			var popularTags = (from p in db.BlogTag.AsNoTracking()
-							   group p by new { p.Tag } into t
-							   orderby t.Count() descending
-							   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
+			var popularTags = await (from p in db.BlogTag.AsNoTracking()
+									 group p by new { p.Tag } into t
+									 orderby t.Count() descending
+									 select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToListAsync();
+
+			var ids = pBlogs.Select(m => m.BlogID).ToList();
+			var tags = await db.BlogTag.Where(m => ids.Contains(m.BlogID)).ToListAsync();
+
+			foreach (var item in pBlogs)
+			{
+				item.BlogTags = tags.Where(m => m.BlogID == item.BlogID).ToList();
+			}
 
 			var model = new BlogsViewModel(pBlogs, null, popularTags, null);
 
-			ViewBag.PageTitle = "Tag: " + id;
-			if (page.HasValue)
+			ViewBag.PageTitle = id;
+			if (page.HasValue && page.Value > 1)
 			{
 				ViewBag.PageTitle += "_第" + page + "页";
 			}
+			ViewBag.Type = "Tag";
+			ViewBag.Tag = id;
+
+			await GetHotAndNewBlogs();
 
 			return View("Index", model);
 		}
 
 		//[GenerateStaticFileAttribute]
-		public ActionResult Archives(string id, string month, int? page)
+		//[ResponseCache(Duration = 3600)]
+		public async Task<IActionResult> Archives(string id, string month, int? page)
 		{
 			string type = "month";
 
@@ -149,7 +232,7 @@ namespace Blogs.Web.Controllers
 			{
 				id = DateTime.Now.Year.ToString();
 			}
-			
+
 			if (string.IsNullOrEmpty(month))
 			{
 				month = "January";
@@ -163,22 +246,22 @@ namespace Blogs.Web.Controllers
 			else if (type == "month")
 				toTime = fromTime.AddMonths(1);
 
-			var blogs  = db.Blog.AsNoTracking().Where(b => b.DateCreated >= fromTime && b.DateCreated <= toTime && b.IsPublic == true).OrderByDescending(b => b.DateCreated);
+			var blogs = db.Blog.AsNoTracking().Where(b => b.DateCreated >= fromTime && b.DateCreated <= toTime && b.IsPublic == true).OrderByDescending(b => b.DateCreated);
 
-			ViewBag.Count = blogs.Select(m => m.BlogID).Count();
+			ViewBag.Count = await blogs.Select(m => m.BlogID).CountAsync();
 
-			var pBlogs = new Paginated<Blog>(blogs, page ?? 1, 8, _accessor);
-			
+			var pBlogs = new Paginated<Blog>(page ?? 1, 10, _accessor);
+			await pBlogs.Init(blogs);
 
-			var popularTags = (from p in db.BlogTag.AsNoTracking()
-							   group p by new { p.Tag } into t
-							   orderby t.Count() descending
-							   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
+			var popularTags = await (from p in db.BlogTag.AsNoTracking()
+									 group p by new { p.Tag } into t
+									 orderby t.Count() descending
+									 select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToListAsync();
 
 			var model = new BlogsViewModel(pBlogs, null, popularTags, null);
 
 			ViewBag.PageTitle = string.Format("{0}{1}", string.IsNullOrEmpty(id) ? "" : (id + "年"), month);
-			if (page.HasValue)
+			if (page.HasValue && page.Value > 1)
 			{
 				ViewBag.PageTitle += "_第" + page + "页";
 			}
@@ -186,64 +269,65 @@ namespace Blogs.Web.Controllers
 		}
 
 		//[GenerateStaticFileAttribute]
+		//[ResponseCache(Duration = int.MaxValue)]
 		public async Task<ActionResult> Post(int id)
 		{
 			var blog = await db.Blog.Include(m => m.BlogTags).Include(m => m.BlogCategory).Where(m => m.BlogID == id).FirstOrDefaultAsync();
 
 			if (blog == null)
 			{
-				//string newurl = "http://www.henhaoji.com.cn" + System.Web.HttpContext.Current.Request.RawUrl;
-				//System.Web.HttpContext.Current.Response.Clear();
-				//System.Web.HttpContext.Current.Response.StatusCode = 404;
-				//System.Web.HttpContext.Current.Response.Status = "404 Moved Permanently";
-				//System.Web.HttpContext.Current.Response.AddHeader("Location", "");
-				//Response.Redirect("/404.html");
-				//return View("NotFound");
-				//Response.End();
+				string newurl = "http://www.henhaoji.com.cn" + _accessor.HttpContext.Request.QueryString.ToString();
+				_accessor.HttpContext.Response.Clear();
+				_accessor.HttpContext.Response.StatusCode = 404;
+				_accessor.HttpContext.Response.Headers.TryAdd("Location", "");
+				_accessor.HttpContext.Response.Redirect("/Home/Error");
+				//return View("/Home/Error");
+				//_accessor.HttpContext.Response.();
+			}
+			else
+			{
+				blog.PageVisits += 1;
+				await db.SaveChangesAsync();
 			}
 
-			//var blogComment = new BlogComment();
 			var blogID = blog == null ? 0 : blog.BlogID;
-			//blogComment.BlogID = blogID;
-			//blogComment.IsPublic = true;
-			//blogComment.ValidationCodeSource = DateTime.Now.Millisecond.ToString();
 
-			blog.PageVisits += 1;
-			await db.SaveChangesAsync();
-
-			ViewBag.CommentCount = await db.BlogComment.Where(m => m.BlogID == blogID && m.IsPublic == true).Select(m => m.BlogID).CountAsync();
-			//var categories = bs.GetBlogCategories().ToList();
+			ViewBag.CommentCount = 0;// await db.BlogComment.Where(m => m.BlogID == blogID && m.IsPublic == true).Select(m => m.BlogID).CountAsync();
+									 //var categories = bs.GetBlogCategories().ToList();
 			var popularTags = await (from p in db.BlogTag.AsNoTracking()
-							   group p by new { p.Tag } into t
-							   orderby t.Count() descending
-							   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToListAsync();
+									 group p by new { p.Tag } into t
+									 orderby t.Count() descending
+									 select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToListAsync();
 			//var archives = bs.GetArchives().ToList();
 
 			var preNextBlog = new PreNextBlog();
 
-			var pre = await (from l in db.Blog
-					   where l.BlogID < blogID
-					   orderby l.BlogID descending
-					   select new BlogIDName()
-					   {
-						   ID = l.BlogID,
-						   Slug = l.Slug,
-						   Title = l.BlogTitle
-					   }).FirstOrDefaultAsync();
+			var pre = await (from l in db.Blog.AsNoTracking()
+							 where l.BlogID < blogID && l.IsPublic == true
+							 orderby l.BlogID descending
+							 select new BlogIDName()
+							 {
+								 ID = l.BlogID,
+								 Slug = l.Slug,
+								 Title = l.BlogTitle
+							 }).FirstOrDefaultAsync();
 
-			var next = await (from l in db.Blog
-						where l.BlogID > blogID
-						orderby l.BlogID
-						select new BlogIDName()
-						{
-							ID = l.BlogID,
-							Slug = l.Slug,
-							Title = l.BlogTitle
-						}).FirstOrDefaultAsync();
+			var next = await (from l in db.Blog.AsNoTracking()
+							  where l.BlogID > blogID && l.IsPublic == true
+							  orderby l.BlogID
+							  select new BlogIDName()
+							  {
+								  ID = l.BlogID,
+								  Slug = l.Slug,
+								  Title = l.BlogTitle
+							  }).FirstOrDefaultAsync();
+
 			preNextBlog.PreBlog = pre;
 			preNextBlog.NextBlog = next;
 
-			var model = new BlogViewModel(blog, new BlogComment(), null, null, popularTags, null, preNextBlog);
+			await GetHotAndNewBlogs();
+
+			var model = new BlogViewModel(blog, popularTags, preNextBlog);
 
 			ViewBag.Blog = "current";
 			return View(model);
@@ -263,12 +347,43 @@ namespace Blogs.Web.Controllers
 			return View(comments);
 		}
 
-		[HttpGet]
-		public ActionResult GetCategories()
+		[HttpGet]//,ResponseCache(Duration = int.MaxValue)]
+		public async Task<IActionResult> GetCategories()
 		{
-			var categories = db.BlogCategory.AsNoTracking().ToList();
+			var categories = await db.BlogCategory.AsNoTracking().ToListAsync();
 
 			return Json(categories);
+		}
+
+		private async Task GetHotAndNewBlogs()
+		{
+			ViewBag.Hots = await db.Blog.AsNoTracking().Where(m => m.IsPublic).OrderByDescending(m => m.PageVisits).Take(6).ToListAsync();
+			ViewBag.News = await db.Blog.AsNoTracking().Where(m => m.IsPublic).OrderByDescending(m => m.DateCreated).Take(6).ToListAsync();
+		}
+
+		/// <summary>
+		/// 赞
+		/// </summary>
+		/// <returns></returns>
+		[Route("~/like/{id}")]
+		public async Task<ActionResult> Like(int id)
+		{
+			var ses = HttpContext.Request.Cookies["like-" + id];
+
+			if (ses == null)
+			{
+				var movie = await db.Blog.Where(m => m.BlogID == id).FirstOrDefaultAsync();
+
+				movie.Like += 1;
+
+				db.SaveChanges();
+
+				HttpContext.Response.Cookies.Append("like-" + id, id.ToString());
+
+				return Json(new { IsSuccess = 1 });
+			}
+
+			return Json(new { Message = "你已经点过赞了！" });
 		}
 
 		//[HttpPost]

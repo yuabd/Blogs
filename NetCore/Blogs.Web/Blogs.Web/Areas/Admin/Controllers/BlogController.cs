@@ -3,33 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Blogs.Model.DbModels;
-using Blogs.Models;
 using Blogs.Web.Areas.Admin.Models;
 using Blogs.Web.JobWorks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+//using Quartz;
+using Microsoft.AspNetCore.Authorization;
+using Blogs.Model.ViewModels.Others;
+using Microsoft.AspNetCore.Hosting;
 using Quartz;
+using Blogs.Web.Models;
 
 namespace Blogs.Web.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+	[Area("Admin"), Authorize]
 	public class BlogController : Controller
 	{
 		private SiteDataContext db;
 		private IHttpContextAccessor _accessor;
 		//private readonly ISchedulerFactory _schedulerFactory;
 		//private IScheduler _scheduler;
-
+		private readonly IHostingEnvironment _hostingEnvironment;
 
 		public BlogController(SiteDataContext _context,
 			IHttpContextAccessor accessor
 			//,ISchedulerFactory schedulerFactory
+			, IHostingEnvironment hostingEnvironment
 			)
 		{
 			db = _context;
 			_accessor = accessor;
 			//this._schedulerFactory = schedulerFactory;
+			_hostingEnvironment = hostingEnvironment;
 		}
 
 		//[HttpGet]
@@ -38,7 +44,7 @@ namespace Blogs.Web.Areas.Admin.Controllers
 		//	//1、通过调度工厂获得调度器
 		//	_scheduler = await _schedulerFactory.GetScheduler();
 		//	//2、开启调度器
-		//	await _scheduler.Start();
+		//	//await _scheduler.Start();
 		//	//3、创建一个触发器
 		//	var trigger = TriggerBuilder.Create()
 		//					.WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever())//每两秒执行一次
@@ -50,14 +56,37 @@ namespace Blogs.Web.Areas.Admin.Controllers
 		//					.WithIdentity("job", "group")
 		//					.Build();
 		//	//5、将触发器和任务器绑定到调度器中
-		//	await _scheduler.ScheduleJob(jobDetail, trigger);
+		//	var l = await _scheduler.ScheduleJob(jobDetail, trigger);
+
+		//	await _scheduler.Start();
+
+
 		//	return await Task.FromResult(new string[] { "value1", "value2" });
 		//}
 
-		public IActionResult Index(int? page)
+		public async Task<IActionResult> Index(string keywords, int? page)
 		{
-			var blogs = db.Blog.OrderByDescending(m => m.DateCreated);
-			var pblogs = new Paginated<Blog>(blogs, page ?? 1, 25, _accessor);
+			var blogs = db.Blog.Select(m => new Blog()
+			{
+				AuthorID = m.AuthorID,
+				BlogID = m.BlogID,
+				//BlogTags = m.BlogTags,
+				BlogTitle = m.BlogTitle,
+				DateCreated = m.DateCreated,
+				CategoryID = m.CategoryID,
+				Slug = m.Slug,
+				PageVisits = m.PageVisits,
+				PageTitle = m.PageTitle,
+				MetaDescription = m.MetaDescription,
+				MetaKeywords = m.MetaKeywords,
+				IsPublic = m.IsPublic
+			});
+
+			if (!string.IsNullOrWhiteSpace(keywords))
+				blogs = blogs.Where(m => m.BlogTitle.Contains(keywords));
+
+			var pblogs = new Paginated<Blog>(page ?? 1, 25, _accessor);
+			await pblogs.Init(blogs.OrderByDescending(m => m.DateCreated));
 
 			return View(pblogs);
 		}
@@ -73,7 +102,7 @@ namespace Blogs.Web.Areas.Admin.Controllers
 
 			var categories = db.BlogCategory.AsNoTracking().ToList();
 
-			var model = new BlogViewModel(blog, blogTags, categories);
+			var model = new Admin.Models.BlogViewModel(blog, blogTags, categories);
 
 			return View(model);
 		}
@@ -130,7 +159,7 @@ namespace Blogs.Web.Areas.Admin.Controllers
 			{
 				var categories = db.BlogCategory.AsNoTracking().ToList();
 
-				var model = new BlogViewModel(blog, blogTags, categories);
+				var model = new Admin.Models.BlogViewModel(blog, blogTags, categories);
 
 				return View(model);
 			}
@@ -141,8 +170,7 @@ namespace Blogs.Web.Areas.Admin.Controllers
 			var blog = db.Blog.Where(m => m.BlogID == id).FirstOrDefault();
 			var blogTags = db.BlogTag.Where(m => m.BlogID == id).ToList();
 			var categories = db.BlogCategory.AsNoTracking().ToList();
-
-			var model = new BlogViewModel(blog, blogTags, categories);
+			var model = new Admin.Models.BlogViewModel(blog, blogTags, categories);
 
 			return View(model);
 		}
@@ -198,7 +226,7 @@ namespace Blogs.Web.Areas.Admin.Controllers
 			else
 			{
 				var categories = db.BlogCategory.AsNoTracking().ToList();
-				var model = new BlogViewModel(blog, blogTags, categories);
+				var model = new Admin.Models.BlogViewModel(blog, blogTags, categories);
 				return View(model);
 			}
 		}
@@ -326,6 +354,35 @@ namespace Blogs.Web.Areas.Admin.Controllers
 			db.SaveChanges();
 
 			return Redirect("/Admin/Blog/Categories");
+		}
+
+		public ActionResult UploadPicture(IFormFile filedata)
+		{
+			xheditorModel model = new xheditorModel();
+
+			try
+			{
+				if (filedata.Length > 0)
+				{
+					var fileName = Guid.NewGuid().ToString();
+					var file = Helpers.IO.UploadImageFile(filedata.OpenReadStream(), $"Pictures/Blog", fileName);
+
+					model.msg = "/" + file;
+				}
+
+				//JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+				//return this.Content(javaScriptSerializer.Serialize(model));
+
+				return Json(model);
+			}
+			catch (Exception e)
+			{
+				throw e;
+			}
+			finally
+			{
+				filedata = null;
+			}
 		}
 	}
 }

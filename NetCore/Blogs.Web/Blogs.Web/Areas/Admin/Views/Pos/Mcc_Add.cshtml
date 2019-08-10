@@ -1,0 +1,20 @@
+﻿
+@{
+	ViewData["Title"] = "Mcc_Add";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section head{
+	<script src="~/js/jquery.validate.min.js"></script>
+	<script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<h2>增加博客</h2>
+
+<form enctype="multipart/form-data" action="/Admin/Pos/Mcc_Add" method="post">
+	@Html.Partial("_Form")
+
+	<div class="section">
+		<button type="submit" class="button-save">提交</button>
+	</div>
+</form>

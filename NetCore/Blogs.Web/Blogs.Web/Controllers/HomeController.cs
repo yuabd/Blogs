@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Blogs.Model.DbModels;
@@ -21,46 +22,36 @@ namespace Blogs.Web.Controllers
 			db = _context;
 		}
 
-        public IActionResult Index()
+		//[ResponseCache(Duration = int.MaxValue)]
+		public async Task<IActionResult> Index()
         {
-			var blogs = db.Blog.Include(m => m.BlogTags).
-				Where(m => m.IsPublic == true).OrderByDescending(m => m.DateCreated).Take(6).ToList();
+			var blogs = await db.Blog.
+				Where(m => m.IsPublic == true).Select(m => new Blog()
+				{
+					AuthorID = m.AuthorID,
+					BlogID = m.BlogID,
+					//BlogTags = m.BlogTags,
+					BlogTitle = m.BlogTitle,
+					DateCreated = m.DateCreated,
+					CategoryID = m.CategoryID,
+					Slug = m.Slug,
+					PageVisits = m.PageVisits,
+					PageTitle = m.PageTitle,
+					MetaDescription = m.MetaDescription,
+					MetaKeywords = m.MetaKeywords
+				}).OrderByDescending(m => m.DateCreated).Take(6).ToListAsync();
 
-			//if (!string.IsNullOrEmpty(keywords))
-			//{
-			//	var key = keywords.Split(' ');
-			//	foreach (var item in key)
-			//	{
-			//		blogs = (from l in blogs
-			//				 where l.BlogTitle.Contains(item) || l.BlogContent.Contains(item)
-			//				 select l);
-			//	}
-			//}
+			var ids = blogs.Select(m => m.BlogID).ToList();
+			var tags = await db.BlogTag.Where(m => ids.Contains(m.BlogID)).ToListAsync();
 
-			//ViewBag.Count = blogs.Select(m => m.BlogID).Count();
+			foreach (var item in blogs)
+			{
+				item.BlogTags = tags.Where(m => m.BlogID == item.BlogID).ToList();
+			}
 
-			//var pBlogs = new Paginated<Blog>(blogs.ToList(), page ?? 1, 8);
 
-			////var categories = bs.GetBlogCategories().ToList();
-
-			////var popularTags = (from p in bs.GetTags()
-			////				   group p by new { p.Tag } into t
-			////				   orderby t.Count() descending
-			////				   select new Anonymous { Tag = t.Key.Tag, Num = t.Count() }).Take(10).ToList();
-
-			////var archives = bs.GetArchives().ToList();
-
-			//var model = new BlogsViewModel(pBlogs, null, , null);
-			//ViewBag.PageTitle = "yuabd's Blog";
-			////ViewBag.Blog = "current";
-
-			//if (page.HasValue)
-			//{
-			//	ViewBag.PageTitle += "_第" + page + "页";
-			//}
-
-			//return View("~/Views/Blog/Index.cshtml", model);
-
+			ViewBag.Links = await db.Link.OrderBy(m => m.SortOrder).ToListAsync();
+			
 			return View(blogs);
 		}
 

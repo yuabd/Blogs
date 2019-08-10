@@ -94,10 +94,10 @@ namespace Blogs.Web.JobWorks
 					articles.Add(article);
 				}
 
-				return Task.Run(() =>
-				{
-					db.AddAsync(articles);
-				});
+				//return Task.Run(() =>
+				//{
+				//	db.AddAsync(articles);
+				//});
 			}
 			catch (System.Exception ex)
 			{

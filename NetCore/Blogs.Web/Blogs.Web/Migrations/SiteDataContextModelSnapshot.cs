@@ -17,7 +17,7 @@ namespace Blogs.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
+                .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Blogs.Model.DbModels.Blog", b =>
@@ -41,6 +41,8 @@ namespace Blogs.Web.Migrations
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<bool>("IsPublic");
+
+                    b.Property<int>("Like");
 
                     b.Property<string>("MetaDescription")
                         .HasMaxLength(150);
@@ -173,6 +175,152 @@ namespace Blogs.Web.Migrations
                     b.ToTable("Link");
                 });
 
+            modelBuilder.Entity("Blogs.Model.DbModels.POS_Agency", b =>
+                {
+                    b.Property<int>("AgencyID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AgencyCode")
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                    b.Property<string>("AgencyName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("AgencyID");
+
+                    b.ToTable("POS_Agency");
+                });
+
+            modelBuilder.Entity("Blogs.Model.DbModels.POS_Bank", b =>
+                {
+                    b.Property<int>("BankID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(15);
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("BankID");
+
+                    b.ToTable("POS_Bank");
+                });
+
+            modelBuilder.Entity("Blogs.Model.DbModels.POS_MCC", b =>
+                {
+                    b.Property<string>("MCC")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(4);
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<bool>("IsPoint");
+
+                    b.Property<string>("NoPointBankStr")
+                        .IsRequired()
+                        .HasMaxLength(300);
+
+                    b.Property<decimal>("OldRate");
+
+                    b.Property<decimal>("Rate");
+
+                    b.Property<long>("VisitCount");
+
+                    b.HasKey("MCC");
+
+                    b.ToTable("POS_MCC");
+                });
+
+            modelBuilder.Entity("Blogs.Model.DbModels.POS_MCCBankNoPoint", b =>
+                {
+                    b.Property<int>("BankID");
+
+                    b.Property<string>("MCC")
+                        .HasMaxLength(4);
+
+                    b.HasKey("BankID", "MCC");
+
+                    b.HasIndex("MCC");
+
+                    b.ToTable("POS_MCCBankNoPoint");
+                });
+
+            modelBuilder.Entity("Blogs.Model.DbModels.POS_MerchantArea", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MerchantAreaCode")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.Property<string>("MerchantAreaName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("MerchantProvince")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<long>("VisitCount");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("POS_MerchantArea");
+                });
+
+            modelBuilder.Entity("Blogs.Model.DbModels.POS_PaymentLicense", b =>
+                {
+                    b.Property<string>("LicenseID")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("BusType")
+                        .IsRequired()
+                        .HasMaxLength(300);
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Scope")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<long>("VisitCount");
+
+                    b.HasKey("LicenseID");
+
+                    b.ToTable("POS_PaymentLicense");
+                });
+
             modelBuilder.Entity("Blogs.Model.DbModels.User", b =>
                 {
                     b.Property<int>("UserID")
@@ -291,6 +439,19 @@ namespace Blogs.Web.Migrations
                     b.HasOne("Blogs.Model.DbModels.Blog", "Blog")
                         .WithMany("BlogTags")
                         .HasForeignKey("BlogID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Blogs.Model.DbModels.POS_MCCBankNoPoint", b =>
+                {
+                    b.HasOne("Blogs.Model.DbModels.POS_Bank", "POS_Bank")
+                        .WithMany()
+                        .HasForeignKey("BankID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Blogs.Model.DbModels.POS_MCC", "POS_MCC")
+                        .WithMany()
+                        .HasForeignKey("MCC")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

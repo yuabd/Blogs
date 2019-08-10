@@ -53,10 +53,8 @@ namespace Studio.Controllers
 
 		public ActionResult Logout()
 		{
-			FormsAuthentication.SignOut();
-			Session.Abandon();
-
-			return Redirect("/");
+			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+			return RedirectToAction(nameof(HomeController.Index), "Home");
 		}
 
     }

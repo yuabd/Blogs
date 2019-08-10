@@ -1,6 +1,6 @@
-﻿@model Blogs.Model.ViewModels.BlogsViewModel
+﻿@model Blogs.Web.Models.BlogsViewModel
 @{
-	ViewData["Title"] = "帮助中心";
+	ViewData["Title"] = ViewBag.PageTitle;
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,6 +13,27 @@
 		<span class="badge visible-xs pull-right">@ViewBag.Count</span>
 	</h3>
 	<hr />
+
+	<ul class="breadcrumb">
+		<li><a href="/">主页</a></li>
+		@if (ViewBag.Type == "index")
+		{
+			<li>pos文档中心</li>
+		}
+		else if (ViewBag.Type == "search")
+		{
+			<li>"@(Html.Raw(ViewBag.Keywords))"的搜索结果</li>
+		}
+		else if (ViewBag.Type == "category")
+		{
+			<li>@Html.Raw(ViewBag.Category.CategoryName)</li>
+		}
+		else if (ViewBag.Type == "Tag")
+		{
+			<li>标签：@Html.Raw(ViewBag.Tag)</li>
+		}
+	</ul>
+
 	@foreach (var item in Model.Blogs)
 	{
 		<article class="article-post-summary">
@@ -26,21 +47,28 @@
 				<time datetime="@item.DateCreated" class="none">@item.DateCreated</time>
 
 				<h4 class="post-summary-title">
-					<a href="/blog/post/@(item.BlogID)" title="@item.BlogTitle">@item.BlogTitle</a>
+					<a href="/blog/post/@(item.BlogID)" title="@Html.Raw(item.BlogTitle)">@Html.Raw(item.BlogTitle)</a>
 				</h4>
 
 				<p class="post-summary-text">
 					@Html.Raw(item.MetaDescription)
 				</p>
-				@if (item.BlogTags != null)
-				{
-					<div class="post-summary-tags">
-						@foreach (var tag in item.BlogTags)
-						{
-							<a href="/blog/tags/@(tag.Tag)" title="@tag.Tag" class="post-summary-tag">@tag.Tag</a>
-						}
-					</div>
-				}
+
+				@*@if (!string.IsNullOrWhiteSpace(item.MetaKeywords))
+					{
+						<div class="post-summary-tags">
+							@foreach (var tag in item.MetaKeywords.Split(',', StringSplitOptions.RemoveEmptyEntries))
+							{
+								<a href="/blog/tags/@(Html.Raw(tag))" title="@Html.Raw(tag)" class="post-summary-tag">@Html.Raw(tag)</a>
+							}
+						</div>
+					}*@
+				<div class="post-summary-tags">
+					@foreach (var tag in item.BlogTags)
+					{
+						<a href="/blog/tags/@(Html.Raw(tag.Tag))" title="@Html.Raw(tag.Tag)" class="post-summary-tag">@Html.Raw(tag.Tag)</a>
+					}
+				</div>
 			</div>
 		</article>
 		<div class="bor hidden-xs"></div>
@@ -49,7 +77,7 @@
 
 	<div class="pull-right">
 		<div>
-			@*@Model.Blogs.Pager("pager")*@
+			@Model.Blogs.Pager("pager")
 		</div>
 	</div>
 </section>

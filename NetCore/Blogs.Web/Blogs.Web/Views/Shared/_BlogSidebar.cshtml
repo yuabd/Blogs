@@ -2,109 +2,147 @@
 
 
 <aside class="col-lg-3 hidden-md hidden-sm hidden-xs">
-    <div class="hidden-xs">
-		<section class="blog-info-phone visible-xs">
+	<div class="hidden-xs">
+		@*<section class="blog-info-phone visible-xs">
+				<div class="media">
+					<div class="media-body">
+						<p>
+							8平台+10固定商户7210、大POS机0.55起，花呗0.38
+						</p>
+						<div class="btn-group btn-group-justified">
+							<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
+								<i class="fa fa-envelope"></i>
+								点击免费领取
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>*@
+
+		<div class="container visible-md visible-sm animate">
 			<div class="media">
+				<a class="pull-left" href="#" data-toggle="modal" data-target="#wechatmodal">
+					<img data-original="/images/wechat.jpg?v=1" alt="yuabd" class="media-object img-circle blogger-head-pic">
+				</a>
 				<div class="media-body">
 					<p>
-						9平台7210、Mpos全国自选商户，0.38秒到
+						8平台+10固定商户7210、大POS机0.55起，花呗0.38
 					</p>
-					<div class="btn-group btn-group-justified">
-						<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
+					<div class="btn-group">
+						<a href="#" onclick="trackOutboundLink('咨询', 'PC打开')" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
 							<i class="fa fa-envelope"></i>
 							点击免费领取
 						</a>
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
 
-        <div class="container visible-md visible-sm animate">
-            <div class="media">
-                <a class="pull-left" href="#" data-toggle="modal" data-target="#wechatmodal">
-                    <img src="~/images/wechat.jpg" alt="yuabd" class="media-object img-circle blogger-head-pic">
-                </a>
-                <div class="media-body">
-					<p>
-						9平台7210、Mpos全国自选商户，0.38秒到
-					</p>
-                    <div class="btn-group">
-						<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
-							<i class="fa fa-envelope"></i>
-							点击免费领取
-						</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <section class="blog-info-desktop-lg visible-lg">
-            <div class="card-bkimg-container">
-                <img class="card-bkimg" alt="" src="~/images/wechat.jpg">
-            </div>
-            <div class="blog-info-photo-text text-center">
-                <a href="#" data-toggle="modal" data-target="#wechatmodal">
-                    <img src="~/images/wechat.jpg" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
-                </a>
-                <div class="bor"></div>
-                <div>
+		<section class="blog-info-desktop-lg visible-lg">
+			<div class="card-bkimg-container">
+				<img class="card-bkimg" alt="" src="~/images/wechat.jpg?v=1">
+			</div>
+			<div class="blog-info-photo-text text-center">
+				<a href="#" data-toggle="modal" data-target="#wechatmodal">
+					<img data-original="/images/wechat.jpg?v=1" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
+				</a>
+				<div class="bor"></div>
+				<div>
 					<h3 class="marginzero">
 						很好记POS
 					</h3>
-                    <div class="bor"></div>
+					<div class="bor"></div>
 					<p>
-						9平台7210、Mpos全国自选商户，0.38秒到
+						8平台+10固定商户7210、大POS机0.55起，花呗0.38
 					</p>
-                </div>
-            </div>
-            <div class="bor"></div>
-            <div class="btn-group btn-group-justified">
-				<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
+				</div>
+			</div>
+			<div class="bor"></div>
+			<div class="btn-group btn-group-justified">
+				<a href="#" onclick="trackOutboundLink('咨询', 'PC打开')" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
 					<i class="fa fa-envelope"></i>
 					点击免费领取
 				</a>
-            </div>
-        </section>
+			</div>
+		</section>
 
-        <div class="bor"></div>
-    </div>
-    <div class="bor"></div>
-    <section class="top-tags">
-        <div class="panel panel-default">
-            <div class="panel-heading">热门话题</div>
-            <div class="panel-body">
-                <div class="toptags-list">
-                    @foreach (var item in Model)
-                    {
-                        <a href="/blog/tags/@(item.Tag)">@item.Tag</a>
-                    }
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="bor"></div>
-    @*<section class="recent-comments">
-        <div class="panel panel-default">
-            <div class="panel-heading">Recent Comments</div>
-            <div class="list-group">
-                @foreach (var item in )
-                {
-                    <div class="list-group-item">
-                        <strong data-toggle="tooltip" data-placement="top" title="" data-original-title="@item.DateCreated">
-                            <i class="fa fa-user"></i>
-                            @item.Name
-                        </strong>
-                        <p class="justifytext text-muted recent-comment-item-content">
-                            @item.Message
-                        </p>
-                    </div>
-                    <div class="recent-comment-item-footer">
-                        <a href="/blog/post/@(item.Blog.Slug).html" target="_blank"><i class="fa fa-bookmark-o"></i> @item.Blog.BlogTitle</a>
-                    </div>
-                }
-            </div>
-        </div>
-    </section>*@
+		<div class="bor"></div>
+	</div>
+	<div class="bor"></div>
+	<section class="top-tags">
+		<div class="panel panel-default">
+			<div class="panel-heading">热门话题</div>
+			<div class="panel-body">
+				<div class="toptags-list">
+					@foreach (var item in Model)
+					{
+						<a href="/blog/tags/@(Html.Raw(item.Tag))" title="@Html.Raw(item.Tag)">@Html.Raw(item.Tag)</a>
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="bor"></div>
+	@*<section class="recent-comments">
+			<div class="panel panel-default">
+				<div class="panel-heading">Recent Comments</div>
+				<div class="list-group">
+						@foreach (var item in )
+						{
+							<div class="list-group-item">
+								<strong data-toggle="tooltip" data-placement="top" title="" data-original-title="@item.DateCreated">
+									<i class="fa fa-user"></i>
+									@item.Name
+								</strong>
+								<p class="justifytext text-muted recent-comment-item-content">
+									@item.Message
+								</p>
+							</div>
+							<div class="recent-comment-item-footer">
+								<a href="/blog/post/@(item.Blog.Slug).html" target="_blank"><i class="fa fa-bookmark-o"></i> @item.Blog.BlogTitle</a>
+							</div>
+						}
+				</div>
+			</div>
+		</section>*@
+	@if (ViewBag.Hots != null)
+	{
+		<section class="cat-list mb-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">热门文章</div>
+				<div class="panel-body">
+					<div class="list-group list-group-flush">
+						@foreach (var item in ViewBag.Hots)
+						{
+							<a class="list-group-item list-group-item-action" title="@item.BlogTitle" href="/blog/post/@item.BlogID">
+								@item.BlogTitle
+							</a>
+						}
+					</div>
+				</div>
+			</div>
+		</section>
 
-    <div class="bor"></div>
+		<div class="bor"></div>
+	}
+	@if (ViewBag.News != null)
+	{
+		<section class="cat-list mb-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">最新文章</div>
+				<div class="panel-body">
+					<div class="list-group list-group-flush">
+						@foreach (var item in ViewBag.News)
+						{
+							<a class="list-group-item list-group-item-action" title="@item.BlogTitle" href="/blog/post/@item.BlogID">
+								@item.BlogTitle
+							</a>
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="bor"></div>
+	}
 </aside>

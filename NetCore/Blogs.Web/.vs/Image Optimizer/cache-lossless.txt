@@ -1,0 +1,13 @@
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\account-home-background1.png|57574
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\MPos.jpg|42486
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\ui-bg_glass_65_ffffff_1x400.png|81
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\ui-bg_glass_75_dadada_1x400.png|88
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\ui-bg_glass_75_e6e6e6_1x400.png|88
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\lkl.jpg|61633
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\ui-bg_flat_0_aaaaaa_40x100.png|86
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\ui-bg_glass_95_fef1ec_1x400.png|113
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\ui-bg_flat_75_ffffff_40x100.png|74
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\ui-bg_highlight-soft_75_cccccc_1x100.png|86
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\ui-bg_glass_55_fbf9ee_1x400.png|112
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\xiandai.jpg|42526
+C:\Users\yuabd\Documents\GitHub\Blogs\NetCore\Blogs.Web\Blogs.Web\wwwroot\images\yst.jpg|79997

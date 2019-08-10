@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -8,9 +10,8 @@
 	<meta name="description" content="@Html.Raw(ViewData["MetaDescription"])" />
 	<meta name="keywords" content="@Html.Raw(ViewData["MetaKeywords"])" />
 
-	@*@Styles.Render("~/bundles/bootstrap")*@
-	<link href="~/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="~/css/style.css?v=1" rel="stylesheet" />
+	@*<link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css?v=1" rel="stylesheet" />*@
+	<link href="~/css/style.min.css" asp-append-version="true" rel="stylesheet" />
 
 	@RenderSection("head", false)
 
@@ -35,33 +36,41 @@
 							</a>
 						</div>
 						<a class="navbar-brand logo-mobile visible-xs" href="/">很好记POS机官网</a>
+						<a href="/" class="glyphicon glyphicon-home visible-xs pull-right navbar-brand" style="font-size: 26px;"></a>
 					</div>
 
 					<div id="slidemenu">
-						<form class="navbar-form navbar-right visible-xs" role="form" action="/blog/index">
+						<form class="navbar-form navbar-right visible-xs" role="form" onsubmit="return searchContent('mobile')" action="/blog/index">
 							<div class="form-group">
-								<input id="search-mobile" class="form-control" type="text" value="" title="Search" placeholder="Search" name="keywords" maxlength="30">
+								<input id="search-mobile" class="form-control" type="text" value="@ViewBag.Keywords" title="输入你想搜索的内容" placeholder="输入你想搜索的内容" name="keywords" maxlength="30">
 							</div>
-							<button class="btn btn-success" type="submit"><i class="fa fa-search"></i> 搜索</button>
+							<button class="btn btn-success searchBtn" type="submit"><i class="fa fa-search"></i> 搜索</button>
 						</form>
-						<form action="/blog/index" class="navbar-form navbar-right hidden-xs" method="get" role="search">
+						<form action="/blog/index" class="navbar-form navbar-right hidden-xs" method="get" onsubmit="return searchContent('pc')" role="search">
 							<div class="form-group disp-flex">
-								<input class="form-control" id="search" maxlength="30" name="keywords" placeholder="Search" title="Search" type="text" value="" />
+								<input class="form-control" id="search" maxlength="30" name="keywords" placeholder="输入你想搜索的内容" title="输入你想搜索的内容" type="text" value="@ViewBag.Keywords" />
 
-								<button type="submit" class="btn-search">
+								<button type="submit" class="btn-search searchBtn">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 								</button>
 							</div>
 						</form>
 						<ul class="nav navbar-nav">
+							<li>
+								<a href="/">首页</a>
+							</li>
+							<li>
+								<a href="/mcc">MCC查询工具</a>
+							</li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle animate" data-toggle="dropdown">
 									<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
 									帮助中心
 									<b class="caret"></b>
 								</a>
-
-								<ul class="dropdown-menu category-menu" id="categories"></ul>
+								<ul class="dropdown-menu category-menu" id="categories">
+									<li><a href="/blog/index">所有文档</a></li>
+								</ul>
 							</li>
 							<li>
 								<a href="#" data-toggle="modal" data-target="#wechatmodal">快速预约</a>
@@ -75,74 +84,26 @@
 	<div id="page-cover" class="visible-xs">
 	</div>
 	<div id="page-content" class="content">
-		<section class="mobile-aboutme hidden-lg">
+		<section class="mobile-aboutme visible-xs">
 			<section class="blog-info-phone visible-xs">
 				<div class="card-bkimg-container">
-					<img class="card-bkimg" alt="" src="~/images/wechat.jpg">
+					<img class="card-bkimg" alt="" data-original="/images/wechat.jpg?v=1">
 				</div>
 				<div class="media">
 					<a class="pull-left" href="#" data-toggle="modal" data-target="#wechatmodal">
-						<img src="~/images/wechat.jpg" alt="Yuabd" class="media-object img-circle blogger-head-pic">
+						<img data-original="/images/wechat.jpg?v=1" alt="Yuabd" class="media-object img-circle blogger-head-pic">
 					</a>
 					<div class="media-body">
 						<p>
-							9平台7210、Mpos全国自选商户，0.38秒到
+							8平台+10固定商户7210、大POS机0.55起，花呗0.38
 						</p>
 						<div class="btn-group btn-group-justified">
-							<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
+							<a href="#" onclick="trackOutboundLink('咨询', 'mobile打开')" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
 								<i class="fa fa-envelope"></i>
 								点击免费领取
 							</a>
 						</div>
 					</div>
-				</div>
-			</section>
-
-			<div class="container visible-md visible-sm animate">
-				<div class="media">
-					<a class="pull-left" href="#" data-toggle="modal" data-target="#wechatmodal">
-						<img src="~/images/wechat.jpg" alt="yuabd" class="media-object img-circle blogger-head-pic">
-					</a>
-					<div class="media-body">
-
-						<p>
-							9平台7210、Mpos全国自选商户，0.38秒到
-						</p>
-						<div class="btn-group">
-							<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
-								<i class="fa fa-envelope"></i>
-								点击免费领取
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<section class="blog-info-desktop-lg visible-lg">
-				<div class="card-bkimg-container">
-					<img class="card-bkimg" alt="" src="~/images/wechat.jpg">
-				</div>
-				<div class="blog-info-photo-text text-center">
-					<a href="#" data-toggle="modal" data-target="#wechatmodal">
-						<img src="~/images/wechat.jpg" alt="yuabd" class="media-object img-circle center-block blogger-head-pic">
-					</a>
-					<div class="bor"></div>
-					<div>
-						<h3 class="marginzero">
-							9平台7210、Mpos全国自选商户，0.38秒到
-						</h3>
-						<div class="bor"></div>
-						<p>
-							9平台7210、Mpos全国自选商户，0.38秒到
-						</p>
-					</div>
-				</div>
-				<div class="bor"></div>
-				<div class="btn-group btn-group-justified">
-					<a href="#" data-toggle="modal" data-target="#wechatmodal" class="btn btn-success">
-						<i class="fa fa-envelope"></i>
-						点击免费领取
-					</a>
 				</div>
 			</section>
 		</section>
@@ -161,14 +122,14 @@
 						免费申请
 					</h4>
 					<p>
-						POS机免费送，0.38%费率期，有积分稳定不跳码。全国自选商户，365天刷卡秒到账，当天发货送货上门。
+						POS机免费送，0.38%费率期，有积分稳定不跳码。全国自选行业，365天刷卡秒到账，当天发货送货上门。
 					</p>
 				</div>
 
 				<div class="col-md-3 col-sm-3 d-none d-sm-block">
 					<h4>加盟我们</h4>
 					<p>
-						一台起做代理，万12分润，无需压机器，交易量越大，分润越高。拿机器量大才能跟支付公司谈更好的政策，为缓解库存压力和扩大业绩，
+						一台起做代理，分润日结，无需压机器，交易量越大，分润越高。拿机器量大才能跟支付公司谈更好的政策，为缓解库存压力和扩大业绩，
 						我们欢迎想要从事POS机行业的朋友加入我们的队伍，我们提供最好的招商政策，一起成长。
 					</p>
 				</div>
@@ -176,14 +137,24 @@
 				<div class="col-md-3 col-sm-3">
 					<h4 class="d-none d-sm-block">加微信免费领POS机</h4>
 					<div class="qrcode-link">
-						<img src="~/images/wechat.jpg" style="width: 150px;" />
+						<img data-original="/images/wechat.jpg?v=1" style="width: 150px;" />
+						<p style="color: white;">微信号：ozqiaomami</p>
 					</div>
 				</div>
 
 				<div class="col-md-3 col-sm-3 d-none d-sm-block">
-					<h4>Friend Links</h4>
+					<h4>友情链接</h4>
 
-					<ul class="list-unstyled"></ul>
+					<ul class="list-unstyled">
+						@if (ViewBag.Links != null)
+						{
+							@foreach (var item in ViewBag.Links)
+							{
+								<a href="@item.LinkUrl" target="_blank">@Html.Raw(item.Name)</a>
+							}
+						}
+						<li><a href="/sitemap">sitemap</a></li>
+					</ul>
 				</div>
 
 			</div>
@@ -201,7 +172,8 @@
 					</button>
 				</div>
 				<div class="modal-body text-center">
-					<img src="~/images/wechat.jpg" style="width:100%;" class="m-auto img-fluid" />
+					<img src="~/images/wechat.jpg?v=1" style="width:100%;" class="m-auto img-fluid" />
+					<p>微信号：ozqiaomami</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -210,51 +182,21 @@
 		</div>
 	</div>
 
-
-
-	<script src="~/js/jquery-3.1.1.js"></script>
-	<script src="~/js/bootstrap.min.js"></script>
-	<script src="~/js/bootstrap.ediblog.slidemenu.min.js"></script>
-	<script src="~/js/jquery.lazyload.min.js"></script>
-	<script src="~/js/btvideo.app.js"></script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145345348-1"></script>
+	<environment names="Development">
+		<script src="~/js/jquery-3.1.1.js"></script>
+		<script src="~/js/bootstrap.min.js"></script>
+		<script src="~/js/bootstrap.ediblog.slidemenu.min.js"></script>
+		<script src="~/js/jquery.lazyload.min.js"></script>
+		<script src="~/js/henhaoji.app.js"></script>
+	</environment>
+	<environment names="Production">
+		<script src="~/js/henhaoji.app.min.js" asp-append-version="true"></script>
+	</environment>
 	@RenderSection("scripts", false)
 
-	<script>
-		$(function () {
-			$.ajax({
-				url: "/Blog/GetCategories",
-				type: "get",
-				success: function (res) {
 
-					//<li>
-					//	<a href="" title="刷卡机选择">刷卡机选择</a>
-					//</li>
-					//<li>
-					//	<a href="" title="刷卡技巧">刷卡技巧</a>
-					//</li>
-					//<li>
-					//	<a href="" title="常见问题">常见问题</a>
-					//</li>
-					var html = '<li><a href="/blog/index">所有文档</a></li>';
-					for (var i = 0; i < res.length; i++) {
-						html += '<li><a href="/blog/category/' + res[i].categoryID + '">' + res[i].categoryName + '</a></li>';
-					}
-
-					$("#categories").html(html);
-				}
-			})
-
-		})
-	</script>
-	<script>
-		var _hmt = _hmt || [];
-		(function () {
-			var hm = document.createElement("script");
-			hm.src = "https://hm.baidu.com/hm.js?80fb7adcf09e179855b314a2f2c794de";
-			var s = document.getElementsByTagName("script")[0];
-			s.parentNode.insertBefore(hm, s);
-		})();
-	</script>
 
 </body>
 </html>

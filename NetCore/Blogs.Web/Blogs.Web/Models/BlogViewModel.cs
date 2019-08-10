@@ -11,32 +11,33 @@ namespace Blogs.Web.Models
 	{
 		public Blog Blog { get; private set; }
 
-		public List<BlogComment> BlogComments { get; private set; }
+		//public List<BlogComment> BlogComments { get; private set; }
 
-		public BlogComment BlogComment { get; private set; }
+		//public BlogComment BlogComment { get; private set; }
 
-		public List<BlogCategory> Categories { get; private set; }
+		//public List<BlogCategory> Categories { get; private set; }
 
 		public List<Anonymous> PopularTags { get; private set; }
 
-		public List<Archive> Archives { get; private set; }
+		//public List<Archive> Archives { get; private set; }
 
 		public PreNextBlog PreNextBlog { get; set; }
 
 		public BlogViewModel(
 			Blog blog,
-			BlogComment blogComment,
-			List<BlogComment> blogComments,
-			List<BlogCategory> categories,
+			//BlogComment blogComment,
+			//List<BlogComment> blogComments,
+			//List<BlogCategory> categories,
 			List<Anonymous> popularTags,
-			List<Archive> archives, PreNextBlog preNextBlog)
+			//List<Archive> archives, 
+			PreNextBlog preNextBlog)
 		{
 			Blog = blog;
-			BlogComments = blogComments;
-			BlogComment = blogComment;
-			Categories = categories;
+			//BlogComments = blogComments;
+			//BlogComment = blogComment;
+			//Categories = categories;
 			PopularTags = popularTags;
-			Archives = archives;
+			//Archives = archives;
 			PreNextBlog = preNextBlog;
 		}
 	}

@@ -5,32 +5,14 @@
 	ViewBag.MetaKeywords = Model.Blog.MetaKeywords;
 	ViewBag.MetaDescription = Model.Blog.MetaDescription;
 }
-@section head {
-	@*@Styles.Render("~/bundles/postcss")*@
-}
-@section scripts{
-	<script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
-	<script src="~/js/jquery.validate.unobtrusive.min.js"></script>
-	<script src="~/js/jquery.validate.min.js"></script>
-	<script>
-		$(function () {
-			$("img").lazyload({
-				effect: "fadeIn"
-			});
-
-			$("#Captcha").on("click", function () { $(this).attr("src", "/Blog/Captcha"); })
-		});
-	</script>
-}
 
 <section class="col-lg-9 col-md-12">
 	<article>
 		<header class="post-header">
 			<h3 class="post-title">
-				@Model.Blog.BlogTitle
+				@Html.Raw(Model.Blog.BlogTitle)
 			</h3>
 			<hr class="hidden-xs post-header-hr">
-
 			<div class="visible-xs">
 				<div class="post-publish-info">
 					<time datetime="@Model.Blog.DateCreated">@Model.Blog.DateCreated</time>
@@ -44,23 +26,21 @@
 				</span>
 				<span class="badge pull-right">@Model.Blog.PageVisits Reads</span>
 			</div>
+
 			<div class="hidden-print">
 				<section class="post-cat-tag-info">
 					<div class="button pull-right hidden-xs">
 						<span class="toptags-list toptags-list-sm">
 							@foreach (var item in Model.Blog.BlogTags)
 							{
-								<a href="/blog/Tags/@(item.Tag)" rel="0">@item.Tag</a>
+								<a href="/blog/tags/@(Html.Raw(item.Tag))" rel="0">@Html.Raw(item.Tag)</a>
 							}
 						</span>
 					</div>
-					<ul class="list-inline">
-						<li>
-							<a class="btn btn-sm btn-default" href="/blog/category/@(Model.Blog.CategoryID)">
-								<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
-								@Model.Blog.BlogCategory.CategoryName
-							</a>
-						</li>
+					<ul class="breadcrumb">
+						<li><a href="/">主页</a></li>
+						<li><a href="/blog/category/@Model.Blog.BlogCategory.CategoryID">@Html.Raw(Model.Blog.BlogCategory.CategoryName)</a></li>
+						<li>正文</li>
 					</ul>
 				</section>
 			</div>
@@ -69,19 +49,30 @@
 		<section class="post-content clearfix">
 			@Html.Raw(Model.Blog.BlogContent)
 		</section>
+		<div class="post-slug-actions clearfix">
+			<div class="pull-right">
+				<button class="btn icon-btn btn-success btn-ratings"
+						data-postid="@Model.Blog.BlogID" data-islike="true">
+					<span class="glyphicon btn-glyphicon glyphicon-thumbs-up img-circle text-success"></span>
+					赞 (<span class="likehits-num">@Model.Blog.Like</span>)
+				</button>
+			</div>
+			<span class="text-muted none ratemessage">感谢点赞！</span>
+		</div>
 		<div class="bor visible-xs"></div>
 	</article>
 	<div class="hidden-print">
-		<hr class="hidden-xs">
+		<hr>
 		<div class="row">
 			<div class="col-md-6">
 				<strong>
-					Newer
+					上一篇
 				</strong>
 				<div>
 					@if (Model.PreNextBlog.PreBlog != null)
 					{
-						<a href="/Blog/Post/@(Model.PreNextBlog.PreBlog.ID)" title="@Model.PreNextBlog.PreBlog.Title">@Model.PreNextBlog.PreBlog.Title</a>
+						<a href="/blog/post/@(Model.PreNextBlog.PreBlog.ID)"
+						   title="@Html.Raw(Model.PreNextBlog.PreBlog.Title)">@Html.Raw(Model.PreNextBlog.PreBlog.Title)</a>
 					}
 					else
 					{
@@ -92,12 +83,13 @@
 
 			<div class="col-md-6">
 				<strong>
-					Older
+					下一篇
 				</strong>
 				<div>
 					@if (Model.PreNextBlog.NextBlog != null)
 					{
-						<a href="/Blog/Post/@(Model.PreNextBlog.NextBlog.ID)" title="@Model.PreNextBlog.NextBlog.Title">@Model.PreNextBlog.NextBlog.Title</a>
+						<a href="/blog/post/@(Model.PreNextBlog.NextBlog.ID)"
+						   title="@Html.Raw(Model.PreNextBlog.NextBlog.Title)">@Html.Raw(Model.PreNextBlog.NextBlog.Title)</a>
 					}
 					else
 					{
@@ -108,75 +100,31 @@
 		</div>
 
 		<div class="bor"></div>
-		@*<div class="panel panel-primary comment-form-containter">
-			<div class="panel-heading">Comments <span class="badge pull-right">@ViewBag.CommentCount</span></div>
-			<div class="panel-body">
-				<div>
-					<form action="/Blog/AddComment" data-ajax="true" data-ajax-complete="commentComplete" data-ajax-failure="commentBlowUp" data-ajax-loading="#loadingIndicator" data-ajax-mode="replace" data-ajax-success="commentSuccess" data-ajax-update="#ajaxTarget" id="form0" method="post" novalidate="novalidate">
-						<div class="form-group">
-							<div class="row">
-								<div class="col-md-4">
-									@Html.TextBoxFor(m => m.BlogComment.Name, new { @class = "form-control", placeholder = "Your Name" })
-									@Html.ValidationMessageFor(m => m.BlogComment.Name)
-								</div>
-								<div class="col-md-8">
-									@Html.TextBoxFor(m => m.BlogComment.Email, new { @class = "form-control", placeholder = "Email" })
-									@Html.ValidationMessageFor(m => m.BlogComment.Email)
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							@Html.TextAreaFor(m => m.BlogComment.Message, new { @class = "form-control", cols = "60", placeholder = "Say something", rows = "4" })
-							@Html.ValidationMessageFor(m => m.BlogComment.Message)
-						</div>
-						<div class="form-group input-group">
-							<span class="input-group-addon captcha-addon">
-								<img alt="Captcha" id="Captcha" src="/Blog/Captcha">
-							</span>
-							<input class="form-control" data-val="true"
-								   data-val-required="验证码是必需的。"
-								   id="CaptchaCode" name="CaptchaCode"
-								   placeholder="验证码" type="text" value="">
-
-							<span class="field-validation-valid"
-								  data-valmsg-for="CaptchaCode" data-valmsg-replace="true"></span>
-						</div>
-						<input id="BlogComment_BlogID"
-							   name="BlogComment.BlogID" type="hidden" value="@Model.Blog.BlogID" />
-						<div class="form-group">
-							<button type="submit" class="btn btn-success">
-								<i class="fa fa-fw fa-send"></i>
-								Submit
-							</button>
-							<a class="btn btn-primary" data-ajax="true" data-ajax-loading="#loadingIndicator" data-ajax-mode="replace" data-ajax-update="#ajaxTarget" href="/Blog/GetApprovedCommentOfPost/@(Model.Blog.BlogID).html">See All Comments</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>*@
-		<div class="loadercontainer">
-		</div>
-
-		<div id="loadingIndicator" class="mvcLoadingElement">
-			<div class="progress">
-				<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-					<span class="sr-only">Processing...</span>
-				</div>
-			</div>
-		</div>
-
-		<div id="thx-for-comment" class="alert alert-warning none">
-			Thanks, your comment is pending approval now. <br>
-			It will show up once blog administrator appoved your comment.
-		</div>
-
-		<div id="ajaxTarget">
-
-		</div>
-
-		<div class="bor"></div>
 	</div>
+	@if (ViewBag.Hots != null)
+	{
+		<div class="col-xs-12 visible-xs">
+			<hr>
+			<h3 class="h3-cat-list">
+				<span>
+					热门文章
+				</span>
+				<span class="pull-right"><a href="/blog/index">查看更多</a></span>
+			</h3>
+			<hr />
+			<div class="list-group">
+				@foreach (var item in ViewBag.Hots)
+				{
+					<a href="#" class="list-group-item" title="@item.BlogTitle">
+						<h4 class="list-group-item-heading">@item.BlogTitle</h4>
+					</a>
+				}
+			</div>
+		</div>
+	}
 </section>
 
-
 @Html.Partial("~/Views/Shared/_BlogSidebar.cshtml", Model.PopularTags)
+
+<div class="bor"></div>
+@Html.Partial("_Product")

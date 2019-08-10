@@ -3,20 +3,27 @@
 	ViewData["Title"] = "Index";
 }
 
-@model Blogs.Models.Paginated<Blogs.Model.DbModels.Blog>
+@model Blogs.Web.Models.Paginated<Blogs.Model.DbModels.Blog>
 
 <h2>博客文章</h2>
 
 <p>
 	<a href="/Admin/Blog/Add" id="add" class="button-add">添加文章</a>
 </p>
-
+<form action="/Admin/Blog/Index">
+	@Html.AntiForgeryToken()
+	<fieldset>
+		<legend>查询</legend>
+		关键词:<input type="text" name="keywords" value="@ViewBag.keywords" />
+		<button>查询</button>
+	</fieldset>
+</form>
 <table class="grid">
 	<tr>
 		<th>
 			#
 		</th>
-		<th>图片</th>
+		@*<th>图片</th>*@
 		<th>
 			标题
 		</th>
@@ -42,11 +49,11 @@
 			<td>
 				@item.BlogID
 			</td>
-			<td>
+			@*<td>
 				<img src="@item.PictureFolder/@item.PictureThumbnail" style="width:150px;" alt="" />
-			</td>
+			</td>*@
 			<td style="width:30%">
-				<a href="/Blog/Post/@(item.Slug)" target="_blank">@item.BlogTitle</a>
+				<a href="/blog/post/@(item.Slug)" target="_blank">@item.BlogTitle</a>
 			</td>
 			<td>
 				@item.AuthorID<br />

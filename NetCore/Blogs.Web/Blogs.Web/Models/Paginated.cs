@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
-namespace Blogs.Models
+namespace Blogs.Web.Models
 {
 	public class Paginated<T> : List<T>
 	{
@@ -27,21 +29,30 @@ namespace Blogs.Models
 		// Private
 		private HtmlString _pageList;
 
-		public Paginated(IQueryable<T> source, int pageIndex, int pageSize, IHttpContextAccessor accessor)
+		public Paginated(int pageIndex, int pageSize, IHttpContextAccessor accessor)
 		{
 			_accessor = accessor;
 			PageIndex = pageIndex;
-			TotalRecords = source.Count();
+			//TotalRecords = source.Count();
 			PageSize = pageSize;
 
-			TotalPages = (int)Math.Ceiling(TotalRecords / (double)PageSize);
+			//TotalPages = (int)Math.Ceiling(TotalRecords / (double)PageSize);
 			PageRange = 10;
 
 			PreviousNext = true;
 			Continued = true;
 			Advanced = true;
 
-			this.AddRange(source.Skip((PageIndex - 1) * PageSize).Take(PageSize));
+			//this.AddRange(source.Skip((PageIndex - 1) * PageSize).Take(PageSize));
+			//Init(source);
+		}
+
+		public async Task Init(IQueryable<T> source)
+		{
+			TotalRecords = await source.Select(m => 1).CountAsync();
+			TotalPages = (int)Math.Ceiling(TotalRecords / (double)PageSize);
+			var list = await source.Skip((PageIndex - 1) * PageSize).Take(PageSize).ToListAsync();
+			this.AddRange(list);
 		}
 
 		public HtmlString Pager()
@@ -125,7 +136,7 @@ namespace Blogs.Models
 		private string GetPageParameterName(string pagerID)
 		{
 			// if pageID is not the default means several pagers in one page then change param Page to ID_Page
-			string pageParamName = "Page";
+			string pageParamName = "page";
 
 			if (pagerID.ToLower() != "pager")
 				pageParamName = pagerID.ToString() + "_page";
