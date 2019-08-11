@@ -1833,7 +1833,8 @@ section.content {
 		}
 
 	.card-bkimg-container {
-		height: 70px
+		height: 100px;
+		color: red;
 	}
 
 	.card-bkimg {

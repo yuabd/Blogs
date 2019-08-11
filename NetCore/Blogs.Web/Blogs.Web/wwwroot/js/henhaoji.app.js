@@ -34,8 +34,8 @@ var rator = {
 	var s = document.getElementsByTagName("script")[0];
 	s.parentNode.insertBefore(bp, s);
 	//360
-	var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?fec170ad4760d4f9221b8542112c3156" : "https://jspassport.ssl.qhimg.com/11.0.1.js?fec170ad4760d4f9221b8542112c3156";
-	document.write('<script src="' + src + '" id="sozz"><\/script>');
+	//var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?fec170ad4760d4f9221b8542112c3156" : "https://jspassport.ssl.qhimg.com/11.0.1.js?fec170ad4760d4f9221b8542112c3156";
+	//document.write('<script src="'+src+'" id="sozz"><\/script>');
 
 	$("img").lazyload({
 		effect: "fadeIn"
