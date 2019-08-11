@@ -7,3 +7,9 @@ Studio/obj
 Studio/Web.config
 Studio/Web.Debug.config
 Studio/Web.Release.config
+*.mdb  
+*.ldb
+*.config
+Debug/  
+Release/  
+obj/  
