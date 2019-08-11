@@ -1,9 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /bin/
-Disallow: /log/
-Disallow: /Admin/
-Disallow: /?*
-Disallow: /*.html
-Sitemap: http://www.henhaoji.com.cn/sitemap.xml
-Sitemap: http://www.henhaoji.com.cn/sitemap.txt
